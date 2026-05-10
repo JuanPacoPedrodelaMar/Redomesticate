@@ -34,7 +34,7 @@ public class SellingRandomEnchantedBook implements VillagerTrades.ItemListing {
                 .getRandomElementOf(ModTags.TradableEnchantmentKey, random);
         int i;
         ItemStack itemstack;
-        if (!optional.isEmpty()) {
+        if (optional.isPresent()) {
             Holder<Enchantment> holder = optional.get();
             Enchantment enchantment = holder.value();
             int j = Math.max(enchantment.getMinLevel(), 0);

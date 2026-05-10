@@ -27,7 +27,6 @@ public class PetBedItem extends BlockItem {
     }
 
     public void onDestroyed(@NotNull ItemEntity itemEntity) {
-
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.evandev.redomesticate.server.misc;
+package com.evandev.redomesticate.registry;
 
 import com.evandev.redomesticate.Constants;
 import net.minecraft.core.RegistryAccess;
@@ -15,5 +15,8 @@ public class ModDamageTypes {
     public static DamageSource causeSiphonDamage(RegistryAccess registryAccess) {
         return new DamageSource(registryAccess.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(SIPHON));
 
+    }
+
+    public static void init() {
     }
 }

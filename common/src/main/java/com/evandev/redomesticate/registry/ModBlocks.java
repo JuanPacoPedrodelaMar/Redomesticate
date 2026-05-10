@@ -7,7 +7,7 @@ import com.evandev.redomesticate.server.block.DrumBlock;
 import com.evandev.redomesticate.server.block.DyeColors;
 import com.evandev.redomesticate.server.block.PetBedBlock;
 import com.evandev.redomesticate.server.block.WaywardLanternBlock;
-import com.evandev.redomesticate.server.item.DIBlockItem;
+import com.evandev.redomesticate.server.item.ModBlockItem;
 import com.evandev.redomesticate.server.item.PetBedItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.DyeColor;
@@ -42,7 +42,7 @@ public class ModBlocks {
 
     public static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block) {
         RegistryObject<Block> blockObj = DEF_REG.register(name, block);
-        ModItems.DEF_REG.register(name, () -> new DIBlockItem(blockObj, new Item.Properties()));
+        ModItems.DEF_REG.register(name, () -> new ModBlockItem(blockObj, new Item.Properties()));
         return blockObj;
     }
 

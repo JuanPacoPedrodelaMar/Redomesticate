@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.datagen;
 
-import com.evandev.redomesticate.server.misc.ModDamageTypes;
+import com.evandev.redomesticate.registry.ModDamageTypes;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.damagesource.DamageEffects;
 import net.minecraft.world.damagesource.DamageScaling;

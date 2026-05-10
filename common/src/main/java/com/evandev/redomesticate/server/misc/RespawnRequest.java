@@ -10,12 +10,12 @@ import net.minecraft.world.entity.EntityType;
 import java.util.logging.Level;
 
 public class RespawnRequest {
-    private String entityType;
-    private String dimension;
-    private CompoundTag entityData;
-    private BlockPos bedPosition;
-    private long timestamp;
-    private String nametag;
+    private final String entityType;
+    private final String dimension;
+    private final CompoundTag entityData;
+    private final BlockPos bedPosition;
+    private final long timestamp;
+    private final String nametag;
 
     public RespawnRequest(String entityType, String dimension, CompoundTag entityData, BlockPos bedPosition, long timestamp, String nametag) {
         this.entityType = entityType;

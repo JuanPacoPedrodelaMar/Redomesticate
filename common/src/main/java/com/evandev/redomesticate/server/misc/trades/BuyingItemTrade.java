@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.NotNull;
 
 public class BuyingItemTrade implements VillagerTrades.ItemListing {
     private final Item tradeItem;
@@ -28,8 +29,7 @@ public class BuyingItemTrade implements VillagerTrades.ItemListing {
     }
 
     @Override
-    public MerchantOffer getOffer(Entity entity, RandomSource rng) {
-
+    public MerchantOffer getOffer(@NotNull Entity entity, @NotNull RandomSource rng) {
         return new MerchantOffer(new ItemCost(this.tradeItem, this.itemCount), new ItemStack(Items.EMERALD, this.emeralds), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

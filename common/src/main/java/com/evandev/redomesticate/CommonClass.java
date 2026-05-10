@@ -5,6 +5,7 @@ import com.evandev.redomesticate.client.render.OreColorRegistry;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.*;
 import com.evandev.redomesticate.server.entity.HighlightedBlockEntity;
+import com.evandev.redomesticate.registry.ModEffects;
 
 public class CommonClass {
 
@@ -24,6 +25,8 @@ public class CommonClass {
         ModBlocks.init();
         ModItems.init();
         ModEntities.init();
+        ModEffects.init();
+        ModDamageTypes.init();
         ModBlockEntities.init();
         ModDataComponents.init();
         ModEnchantments.init();

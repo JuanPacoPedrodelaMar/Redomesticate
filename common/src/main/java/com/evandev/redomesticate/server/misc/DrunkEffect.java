@@ -8,14 +8,9 @@ public class DrunkEffect extends MobEffect {
         super(type, color);
     }
 
-
     @Override
     public boolean shouldApplyEffectTickThisTick(int tick, int amp) {
-        if (tick % 5 == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return tick % 5 == 0;
     }
 
     @Override

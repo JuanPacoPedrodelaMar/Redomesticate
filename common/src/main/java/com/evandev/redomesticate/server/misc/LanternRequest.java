@@ -8,14 +8,14 @@ import net.minecraft.world.entity.EntityType;
 import java.util.UUID;
 
 public class LanternRequest {
-    private String entityType;
-    private long timestamp;
-    private String nametag;
+    private final String entityType;
+    private final long timestamp;
+    private final String nametag;
 
-    private UUID petUUID;
-    private UUID ownerUUID;
+    private final UUID petUUID;
+    private final UUID ownerUUID;
 
-    private BlockPos chunkPosition;
+    private final BlockPos chunkPosition;
 
     public LanternRequest(UUID petUUID, String entityType, UUID ownerUUID, BlockPos chunkPosition, long timestamp, String nametag) {
         this.petUUID = petUUID;

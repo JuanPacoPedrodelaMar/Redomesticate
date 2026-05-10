@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
+import org.jetbrains.annotations.NotNull;
 
 public class SellingOneOfTheseItemsTrade implements VillagerTrades.ItemListing {
     private final ImmutableSet<ItemLike> sellingItems;
@@ -17,7 +18,6 @@ public class SellingOneOfTheseItemsTrade implements VillagerTrades.ItemListing {
     private final int maxUses;
     private final int xpValue;
     private final float priceMultiplier;
-
 
     public SellingOneOfTheseItemsTrade(ImmutableSet<ItemLike> sellingItems, int emeraldCount, int sellingItemCount, int maxUses, int xpValue) {
         this(sellingItems, emeraldCount, sellingItemCount, maxUses, xpValue, 0.05F);
@@ -33,7 +33,7 @@ public class SellingOneOfTheseItemsTrade implements VillagerTrades.ItemListing {
     }
 
     @Override
-    public MerchantOffer getOffer(Entity trader, RandomSource rand) {
+    public MerchantOffer getOffer(@NotNull Entity trader, RandomSource rand) {
         return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCount), new ItemStack(this.sellingItems.asList().get(rand.nextInt(sellingItems.size() - 1)).asItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }

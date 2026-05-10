@@ -7,11 +7,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.jetbrains.annotations.NotNull;
 
-public class DIBlockItem extends BlockItem {
+public class ModBlockItem extends BlockItem {
 
     private final RegistryObject<Block> blockSupplier;
 
-    public DIBlockItem(RegistryObject<Block> blockSupplier, Properties props) {
+    public ModBlockItem(RegistryObject<Block> blockSupplier, Properties props) {
         super(null, props);
         this.blockSupplier = blockSupplier;
     }

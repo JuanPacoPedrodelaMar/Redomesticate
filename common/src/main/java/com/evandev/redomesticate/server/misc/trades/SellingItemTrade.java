@@ -9,6 +9,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
 public class SellingItemTrade implements VillagerTrades.ItemListing {
     private final ItemStack sellingItem;
@@ -44,7 +45,7 @@ public class SellingItemTrade implements VillagerTrades.ItemListing {
     }
 
     @Override
-    public MerchantOffer getOffer(Entity trader, RandomSource rand) {
+    public MerchantOffer getOffer(@NotNull Entity trader, @NotNull RandomSource rand) {
         return new MerchantOffer(new ItemCost(Items.EMERALD, this.emeraldCount), new ItemStack(this.sellingItem.getItem(), this.sellingItemCount), this.maxUses, this.xpValue, this.priceMultiplier);
     }
 }
