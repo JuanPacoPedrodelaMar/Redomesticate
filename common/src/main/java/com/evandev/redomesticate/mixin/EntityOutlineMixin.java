@@ -1,4 +1,4 @@
-package com.evandev.redomesticate.mixin.client;
+package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.client.OutlineColorCallback;
 import net.minecraft.world.entity.Entity;

@@ -10,8 +10,6 @@ import com.evandev.redomesticate.server.block.entity.PetBedBlockEntity;
 import com.evandev.redomesticate.server.entity.ChainLightningEntity;
 import com.evandev.redomesticate.server.entity.GiantBubbleEntity;
 import com.evandev.redomesticate.server.entity.PsychicWallEntity;
-import com.evandev.redomesticate.server.entity.RecallBallEntity;
-import com.evandev.redomesticate.server.item.Type;
 import com.evandev.redomesticate.server.misc.*;
 import com.evandev.redomesticate.server.misc.trades.BuyingItemTrade;
 import com.evandev.redomesticate.server.misc.trades.EnchantItemTrade;
@@ -48,6 +46,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
@@ -66,6 +65,7 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
@@ -373,7 +373,7 @@ public class ServerProxy {
                     newDamage = originalDamage + 5;
                 }
             } else if (chance < 0.8) {
-                Holder<net.minecraft.world.effect.MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
+                Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
                 monster.addEffect(new MobEffectInstance(drunkHolder, 20 * 5));
             } else {
                 monster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 50, false, false));
@@ -386,11 +386,11 @@ public class ServerProxy {
     public static void onEntityHurt(LivingEntity hurtEntity, DamageSource source, float originalDamage, float newDamage) {
         var attacker = source.getEntity();
         if (TameableUtils.hasEnchant(hurtEntity, ModEnchantments.CHAOS) && attacker instanceof LivingEntity) {
-            Holder<net.minecraft.world.effect.MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
+            Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
             ((LivingEntity) attacker).addEffect(new MobEffectInstance(drunkHolder, 120, 1));
         }
         var shareEnchantLevel = TameableUtils.getEnchantLevel(hurtEntity, ModEnchantments.SHARE);
-        if (shareEnchantLevel > 0 && attacker instanceof LivingEntity attackerLiving) {
+        if (shareEnchantLevel > 0 && attacker instanceof LivingEntity) {
             var monsterEntities = TameableUtils.getNearbyMobs(hurtEntity, 20).stream().filter(i -> i instanceof Enemy).collect(Collectors.toSet());
             if (monsterEntities.size() > 1) {
                 monsterEntities.forEach(i -> {
@@ -518,7 +518,7 @@ public class ServerProxy {
         }
         List<Monster> genericMobs = attacker.level().getEntitiesOfClass(Monster.class, LivingUtils.getBoundingBoxAroundEntity(attacker, 10.0F));
         Random random = new Random();
-        Holder<net.minecraft.world.effect.MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
+        Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
 
         if (attacker.hasEffect(drunkHolder) && attacker instanceof Monster monster) {
             double x = attacker.getX();
@@ -651,7 +651,7 @@ public class ServerProxy {
                     int[] punchProgress = TameableUtils.getShadowPunchTimes(mob);
                     if (punching != null && punching.isAlive() && mob.hasLineOfSight(punching) && mob.distanceTo(punching) < 16) {
                         int[] striking = TameableUtils.getShadowPunchStriking(mob);
-                        if (punchProgress == null || punchProgress.length < shadowHandsLevel) {
+                        if (punchProgress.length < shadowHandsLevel) {
                             int[] clean = new int[shadowHandsLevel];
                             TameableUtils.setShadowPunchTimes(mob, clean);
                             TameableUtils.setShadowPunchStriking(mob, clean);
@@ -852,7 +852,7 @@ public class ServerProxy {
             }
             if (itemstack.is(ModItems.COLLAR_TAG.get())) {
                 if (!level.isClientSide && living.isAlive()) {
-                    var itemEnchantments = itemstack.getOrDefault(DataComponents.ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+                    var itemEnchantments = itemstack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY);
                     Map<ResourceLocation, Integer> entityEnchantments = TameableUtils.getEnchants(living);
                     if (itemstack.has(DataComponents.CUSTOM_NAME)) {
                         living.setCustomName(itemstack.getHoverName());

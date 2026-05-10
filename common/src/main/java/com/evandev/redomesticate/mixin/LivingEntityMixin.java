@@ -42,7 +42,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             cancellable = true
     )
     private void di_getWaterSlowdown(CallbackInfoReturnable<Float> cir) {
-        if (TameableUtils.isTamed(this) && isLandAndSea()) {
+        if (TameableUtils.isTamed(this) && redomesticate$isLandAndSea()) {
             cir.setReturnValue(0.98F);
         }
     }
@@ -61,7 +61,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/LivingEntity;readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
+            method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void citadel_readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         if (compoundNBT.contains(Constants.ENTITY_SYNC_DATA)) {
@@ -71,7 +71,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     }
 
     @Unique
-    private boolean isLandAndSea() {
+    private boolean redomesticate$isLandAndSea() {
         return TameableUtils.hasEnchant(((LivingEntity) (Entity) this), ModEnchantments.AMPHIBIOUS);
     }
 

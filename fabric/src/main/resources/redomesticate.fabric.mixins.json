@@ -4,6 +4,9 @@
   "package": "com.evandev.redomesticate.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "ExplosionMixin",
+    "ItemEntityMixin",
+    "FabricLivingEntityMixin"
   ],
   "client": [
   ],
