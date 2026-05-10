@@ -1,13 +1,10 @@
 package com.evandev.redomesticate.server.block;
 
-import com.evandev.redomesticate.registry.ModParticles;
 import com.evandev.redomesticate.registry.ModBlockEntities;
 import com.evandev.redomesticate.server.block.entity.WaywardLanternBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -38,16 +35,14 @@ import java.util.stream.Stream;
 
 public class WaywardLanternBlock extends BaseEntityBlock {
 
-    private static final VoxelShape SHAPE = Stream.of(
-            Block.box(6.5, 15.5, 6.5, 9.5, 19.5, 9.5),
-            Block.box(6, 5, 6, 10, 6, 10),
-            Block.box(6, 14.5, 6, 10, 15.5, 10),
-            Block.box(2, 13.5, 2, 14, 14.5, 14),
-            Block.box(4, 7, 4, 12, 14, 12),
-            Block.box(7, 0, 7, 9, 10, 9)
-    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
-
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    private static final VoxelShape SHAPE = Stream.of(
+            Block.box(7, 12, 7, 9, 16, 9),
+            Block.box(6, 11, 6, 10, 12, 10),
+            Block.box(2, 9, 2, 14, 11, 14),
+            Block.box(4, 2, 4, 12, 9, 12),
+            Block.box(6, 0, 6, 10, 2, 10)
+    ).reduce((v1, v2) -> Shapes.join(v1, v2, BooleanOp.OR)).get();
 
     public WaywardLanternBlock() {
         super(Properties.of().mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).sound(SoundType.LANTERN).strength(0.9F).lightLevel((i) -> 13).noOcclusion());
@@ -56,15 +51,6 @@ public class WaywardLanternBlock extends BaseEntityBlock {
 
     public @NotNull VoxelShape getShape(@NotNull BlockState p_49038_, @NotNull BlockGetter p_49039_, @NotNull BlockPos p_49040_, @NotNull CollisionContext p_49041_) {
         return SHAPE;
-    }
-
-    public void animateTick(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, RandomSource random) {
-        if (random.nextInt(4) == 0) {
-            level.addParticle(ModParticles.LANTERN_BUGS.get(), (double) pos.getX() + 0.5D + random.nextGaussian() * 1, (double) pos.getY() + 0.5D + random.nextGaussian() * 1, (double) pos.getZ() + 0.5D + random.nextGaussian() * 1, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D);
-        }
-        if (random.nextInt(2) == 0) {
-            level.addParticle(ParticleTypes.FLAME, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.65D, (double) pos.getZ() + 0.5D, 0, 0, 0);
-        }
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext context) {
@@ -90,7 +76,7 @@ public class WaywardLanternBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
+    protected @NotNull MapCodec<? extends BaseEntityBlock> codec() {
         return null;
     }
 

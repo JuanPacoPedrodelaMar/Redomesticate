@@ -43,7 +43,6 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.INTIMIDATION.get(), new ParticleIntimidation.Factory());
         ParticleFactoryRegistry.getInstance().register(ModParticles.BLIGHT.get(), ParticleBlight.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), ParticleQuestionMark.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(ModParticles.LANTERN_BUGS.get(), ParticleLanternBugs.Factory::new);
 
         ItemTooltipCallback.EVENT.register(ServerProxy::onItemTooltip);
 

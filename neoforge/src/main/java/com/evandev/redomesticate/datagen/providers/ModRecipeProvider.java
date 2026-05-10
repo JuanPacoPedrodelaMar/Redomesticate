@@ -35,7 +35,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ModBlocks.PetBedItems.forEach((color, item) -> {
             ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, item.get(), 1)
                     .unlockedBy("has_bone", has(Items.BONE))
-                    .requires(ModTags.PetBedKey)
+                    .requires(ModTags.PET_BED_KEY)
                     .requires(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color + "_dye")))
                     .save(pWriter, Constants.MOD_ID + ":pet_bed_from_dye_" + color);
             ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, item.get(), 1)

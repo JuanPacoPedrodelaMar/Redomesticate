@@ -33,7 +33,7 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .replace(false)
         ;
 
-        this.tag(ModTags.TradableEnchantmentKey)
+        this.tag(ModTags.TRADABLE_ENCHANTMENT_KEY)
                 .addOptional(ModEnchantments.AMPHIBIOUS.location())
                 .addOptional(ModEnchantments.HEALING_AURA.location())
                 .addOptional(ModEnchantments.CHAIN_LIGHTNING.location())
@@ -92,7 +92,7 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .replace(false)
         ;
 
-        this.tag(ModTags.INFUSE_EXTRA).addTag(ModTags.TradableEnchantmentKey);
+        this.tag(ModTags.INFUSE_EXTRA).addTag(ModTags.TRADABLE_ENCHANTMENT_KEY);
     }
 
     @Override

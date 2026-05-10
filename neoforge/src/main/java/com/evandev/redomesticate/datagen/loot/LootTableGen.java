@@ -63,7 +63,7 @@ public class LootTableGen {
                             .name("petshop_chest_collars")
                             .setRolls(UniformGenerator.between(1, 2))
                             .when(LootItemRandomChanceCondition.randomChance(0.5f))
-                            .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get()).setWeight(1).apply(EnchantRandomlyFunction.randomEnchantment().withOneOf(provider.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ModTags.TradableEnchantmentKey))))
+                            .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get()).setWeight(1).apply(EnchantRandomlyFunction.randomEnchantment().withOneOf(provider.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ModTags.TRADABLE_ENCHANTMENT_KEY))))
                             .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get()).setWeight(2))
 
                     )

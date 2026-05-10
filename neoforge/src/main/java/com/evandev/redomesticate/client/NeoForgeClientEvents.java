@@ -55,7 +55,6 @@ public class NeoForgeClientEvents {
             event.registerSpecial(ModParticles.INTIMIDATION.get(), new ParticleIntimidation.Factory());
             event.registerSpriteSet(ModParticles.BLIGHT.get(), ParticleBlight.Factory::new);
             event.registerSpriteSet(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), ParticleQuestionMark.Factory::new);
-            event.registerSpriteSet(ModParticles.LANTERN_BUGS.get(), ParticleLanternBugs.Factory::new);
         }
 
         @SubscribeEvent

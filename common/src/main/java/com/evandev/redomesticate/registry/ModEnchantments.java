@@ -87,7 +87,7 @@ public class ModEnchantments {
         var enchantments = context.lookup(Registries.ENCHANTMENT);
         var items = context.lookup(Registries.ITEM);
         register(context, CHAIN_LIGHTNING, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                        items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                         5,
                         2,
                         Enchantment.dynamicCost(8, 7),
@@ -96,7 +96,7 @@ public class ModEnchantments {
                 .exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.FROST_FANG), enchantments.getOrThrow(ModEnchantments.BUBBLING), enchantments.getOrThrow(ModEnchantments.MAGNETIC), enchantments.getOrThrow(ModEnchantments.SHADOW_HANDS)))
         );
         register(context, TOTAL_RECALL, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(8, 7),
@@ -104,7 +104,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, UNDEAD_CURSE))
         );
         register(context, REJUVENATION, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(8, 7),
@@ -112,7 +112,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, HEALING_AURA, HEALTH_SIPHON))
         );
         register(context, DEFUSAL, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(8, 7),
@@ -120,7 +120,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, DEFLECTION))
         );
         register(context, WARPING_BITE, Enchantment.enchantment(Enchantment.definition(
-                        items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                        items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                         5,
                         1,
                         Enchantment.dynamicCost(7, 7),
@@ -129,7 +129,7 @@ public class ModEnchantments {
                 .exclusiveWith(checkCompatible(enchantments, FROST_FANG, BUBBLING))
         );
         register(context, IMMUNITY_FRAME, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(5, 7),
@@ -137,7 +137,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.DEFLECTION), enchantments.getOrThrow(ModEnchantments.BLAZING_PROTECTION)))
         );
         register(context, UNDEAD_CURSE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -145,7 +145,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, TOTAL_RECALL))
         );
         register(context, HEALTH_BOOST, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(5, 7),
@@ -153,7 +153,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.HEALTH_SIPHON)))
         );
         register(context, FIREPROOF, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(5, 7),
@@ -161,7 +161,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.POISON_RESISTANCE), enchantments.getOrThrow(ModEnchantments.FROST_FANG), enchantments.getOrThrow(ModEnchantments.AMPHIBIOUS)))
         );
         register(context, DEFLECTION, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(5, 7),
@@ -169,7 +169,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.IMMUNITY_FRAME), enchantments.getOrThrow(ModEnchantments.DEFUSAL), enchantments.getOrThrow(ModEnchantments.PSYCHIC_WALL), enchantments.getOrThrow(ModEnchantments.BLAZING_PROTECTION)))
         );
         register(context, AMPHIBIOUS, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(6, 7),
@@ -177,7 +177,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.FIREPROOF), enchantments.getOrThrow(ModEnchantments.BLAZING_PROTECTION)))
         );
         register(context, SPEEDSTER, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(5, 7),
@@ -185,7 +185,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, HEALING_AURA, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 2,
                 Enchantment.dynamicCost(12, 7),
@@ -193,7 +193,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, VAMPIRE, HEALTH_SIPHON, REJUVENATION))
         );
         register(context, HEALTH_SIPHON, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(12, 7),
@@ -201,7 +201,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.HEALTH_BOOST), enchantments.getOrThrow(ModEnchantments.VAMPIRE), enchantments.getOrThrow(ModEnchantments.GLUTTONOUS), enchantments.getOrThrow(ModEnchantments.HEALING_AURA)))
         );
         register(context, VAMPIRE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 2,
                 Enchantment.dynamicCost(10, 7),
@@ -209,7 +209,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, MAGNETIC, HEALTH_SIPHON, GLUTTONOUS, HEALING_AURA))
         );
         register(context, BUBBLING, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 2,
                 Enchantment.dynamicCost(10, 7),
@@ -217,7 +217,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.CHAIN_LIGHTNING), enchantments.getOrThrow(ModEnchantments.FROST_FANG), enchantments.getOrThrow(ModEnchantments.SHADOW_HANDS), enchantments.getOrThrow(ModEnchantments.WARPING_BITE)))
         );
         register(context, LINKED_INVENTORY, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(5, 7),
@@ -225,7 +225,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, PSYCHIC_WALL, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(9, 7),
@@ -233,7 +233,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, MAGNETIC, DEFLECTION, SHEPHERD))
         );
         register(context, SHEPHERD, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 2,
                 Enchantment.dynamicCost(5, 7),
@@ -241,7 +241,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.MAGNETIC), enchantments.getOrThrow(ModEnchantments.ORE_SCENTING), enchantments.getOrThrow(ModEnchantments.PSYCHIC_WALL), enchantments.getOrThrow(ModEnchantments.BLIGHT_CURSE)))
         );
         register(context, MAGNETIC, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(11, 7),
@@ -249,7 +249,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.CHAIN_LIGHTNING), enchantments.getOrThrow(ModEnchantments.SHEPHERD), enchantments.getOrThrow(ModEnchantments.VAMPIRE), enchantments.getOrThrow(ModEnchantments.SHADOW_HANDS), enchantments.getOrThrow(ModEnchantments.PSYCHIC_WALL), enchantments.getOrThrow(ModEnchantments.INTIMIDATION)))
         );
         register(context, INFAMY_CURSE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(11, 7),
@@ -257,7 +257,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, GLUTTONOUS, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -265,7 +265,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, VAMPIRE, HEALTH_SIPHON))
         );
         register(context, INTIMIDATION, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 2,
                 Enchantment.dynamicCost(8, 7),
@@ -273,7 +273,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, MAGNETIC, WARPING_BITE))
         );
         register(context, ORE_SCENTING, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(9, 7),
@@ -281,7 +281,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, SHEPHERD))
         );
         register(context, POISON_RESISTANCE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(8, 7),
@@ -289,7 +289,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.FIREPROOF)))
         );
         register(context, MUFFLED, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(5, 7),
@@ -297,7 +297,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, DISK_JOCKEY))
         );
         register(context, DISK_JOCKEY, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(6, 7),
@@ -305,7 +305,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, SHADOW_HANDS, MUFFLED, BLAZING_PROTECTION))
         );
         register(context, CHARISMA, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 3,
                 Enchantment.dynamicCost(7, 7),
@@ -313,7 +313,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, SHADOW_HANDS, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 4,
                 Enchantment.dynamicCost(8, 7),
@@ -321,7 +321,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, CHAIN_LIGHTNING, MAGNETIC, BUBBLING, BLAZING_PROTECTION))
         );
         register(context, FROST_FANG, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(7, 7),
@@ -329,7 +329,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.CHAIN_LIGHTNING), enchantments.getOrThrow(ModEnchantments.FIREPROOF), enchantments.getOrThrow(ModEnchantments.WARPING_BITE), enchantments.getOrThrow(ModEnchantments.BLAZING_PROTECTION)))
         );
         register(context, TETHERED_TELEPORT, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -337,7 +337,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, IMMATURITY_CURSE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -345,7 +345,7 @@ public class ModEnchantments {
                 2))
         );
         register(context, BLAZING_PROTECTION, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -353,7 +353,7 @@ public class ModEnchantments {
                 2)).exclusiveWith(checkCompatible(enchantments, IMMUNITY_FRAME, DEFLECTION, AMPHIBIOUS, FROST_FANG, SHADOW_HANDS))
         );
         register(context, BLIGHT_CURSE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),
@@ -362,7 +362,7 @@ public class ModEnchantments {
 
         );
         register(context, VOID_CLOUD, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,
                 Enchantment.dynamicCost(4, 7),

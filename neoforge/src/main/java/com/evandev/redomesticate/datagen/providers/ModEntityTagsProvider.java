@@ -19,19 +19,19 @@ public class ModEntityTagsProvider extends EntityTypeTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        tag(ModTags.blacklisted).add(EntityType.PAINTING);
+        tag(ModTags.BLACKLISTED).add(EntityType.PAINTING);
         //For the plains & taiga pet store cage
-        this.tag(ModTags.petstore_cage_0).add(EntityType.WOLF).add(EntityType.CAT).add(EntityType.RABBIT);
+        this.tag(ModTags.PETSTORE_CAGE_0).add(EntityType.WOLF).add(EntityType.CAT).add(EntityType.RABBIT);
 //        For the desert pet store cage
-        this.tag(ModTags.petstore_cage_1).add(EntityType.FROG).add(EntityType.RABBIT);
+        this.tag(ModTags.PETSTORE_CAGE_1).add(EntityType.FROG).add(EntityType.RABBIT);
 //        For the snowy pet store cage
-        this.tag(ModTags.petstore_cage_2).add(EntityType.FOX).add(EntityType.RABBIT);
+        this.tag(ModTags.PETSTORE_CAGE_2).add(EntityType.FOX).add(EntityType.RABBIT);
         //For the savanna pet store cage
-        this.tag(ModTags.petstore_cage_3).add(EntityType.FROG).add(EntityType.PARROT);
+        this.tag(ModTags.PETSTORE_CAGE_3).add(EntityType.FROG).add(EntityType.PARROT);
         //For the plain pet store fish tank
-        this.tag(ModTags.petstore_fishtank).add(EntityType.TROPICAL_FISH);
+        this.tag(ModTags.PETSTORE_FISHTANK).add(EntityType.TROPICAL_FISH);
 
-        tag(ModTags.infamy_target_attracted).add(EntityType.DROWNED)
+        tag(ModTags.INFAMY_TARGET_ATTRACTED).add(EntityType.DROWNED)
                 .add(EntityType.HUSK).add(EntityType.ZOMBIE_VILLAGER).add(EntityType.ZOMBIE)
                 .add(EntityType.VEX).add(EntityType.SPIDER).add(EntityType.SLIME).add(EntityType.GHAST)
                 .add(EntityType.CAVE_SPIDER).add(EntityType.BLAZE).add(EntityType.MAGMA_CUBE)

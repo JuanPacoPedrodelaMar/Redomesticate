@@ -89,7 +89,7 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT);
 
-        for (Holder<Enchantment> enchantmentHolder : enchantRegistry.getTagOrEmpty(ModTags.TradableEnchantmentKey)) {
+        for (Holder<Enchantment> enchantmentHolder : enchantRegistry.getTagOrEmpty(ModTags.TRADABLE_ENCHANTMENT_KEY)) {
             var enchant = enchantmentHolder.value();
             for (int i = enchant.getMaxLevel(); i > enchant.getMinLevel() - 1; --i) {
                 if (levels >= enchant.getMinCost(i) && levels <= enchant.getMaxCost(i)) {

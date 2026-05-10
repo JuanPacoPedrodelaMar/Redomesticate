@@ -31,7 +31,7 @@ public class SellingRandomEnchantedBook implements VillagerTrades.ItemListing {
         Optional<Holder<Enchantment>> optional = trader.level()
                 .registryAccess()
                 .registryOrThrow(Registries.ENCHANTMENT)
-                .getRandomElementOf(ModTags.TradableEnchantmentKey, random);
+                .getRandomElementOf(ModTags.TRADABLE_ENCHANTMENT_KEY, random);
         int i;
         ItemStack itemstack;
         if (optional.isPresent()) {

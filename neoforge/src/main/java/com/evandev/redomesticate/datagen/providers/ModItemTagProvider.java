@@ -25,8 +25,8 @@ public class ModItemTagProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
-        this.tag(ModTags.COLLAR_TAG_tagkey).add(ModItems.COLLAR_TAG.get());
-        this.tag(ModTags.PetBedKey).add(ModBlocks.PetBedItems.values().stream().map(RegistryObject::get).toArray(Item[]::new));
+        this.tag(ModTags.COLLAR_TAG_KEY).add(ModItems.COLLAR_TAG.get());
+        this.tag(ModTags.PET_BED_KEY).add(ModBlocks.PetBedItems.values().stream().map(RegistryObject::get).toArray(Item[]::new));
     }
 
     @Override
