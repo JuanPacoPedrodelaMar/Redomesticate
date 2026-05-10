@@ -25,7 +25,7 @@ public class ShootTongueMixin {
             ),
             cancellable = true
     )
-    private void di_checkExtraStartConditions(ServerLevel level, Frog frog, CallbackInfoReturnable<Boolean> cir) {
+    private void checkExtraStartConditions(ServerLevel level, Frog frog, CallbackInfoReturnable<Boolean> cir) {
         if (frog instanceof ITameableEntity tameable && tameable.redomesticate$isTame()) {
             cir.setReturnValue(true);
         }
@@ -36,7 +36,7 @@ public class ShootTongueMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void di_eatEntity(ServerLevel level, Frog frog, CallbackInfo ci) {
+    private void eatEntity(ServerLevel level, Frog frog, CallbackInfo ci) {
         if (frog instanceof ITameableEntity tameable && tameable.redomesticate$isTame()) {
             ci.cancel();
             frog.playSound(SoundEvents.FROG_TONGUE);

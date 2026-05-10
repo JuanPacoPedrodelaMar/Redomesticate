@@ -6,6 +6,9 @@ import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.server.entity.ai.FollowOwner2Goal;
 import com.evandev.redomesticate.server.entity.ai.OwnerHurtTarget2Goal;
 import com.evandev.redomesticate.server.entity.ai.Sit2Goal;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -17,6 +20,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -27,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,9 +40,11 @@ public abstract class FoxMixin extends Animal implements ITameableEntity, IComma
 
     @Unique
     private static final EntityDataAccessor<Integer> redomesticate$COMMAND = SynchedEntityData.defineId(Fox.class, EntityDataSerializers.INT);
+
     @Shadow
     @Final
     private static EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_0;
+
     @Shadow
     @Final
     private static EntityDataAccessor<Optional<UUID>> DATA_TRUSTED_ID_1;
@@ -68,10 +74,10 @@ public abstract class FoxMixin extends Animal implements ITameableEntity, IComma
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/Fox;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(redomesticate$COMMAND, 0);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(redomesticate$COMMAND, 0);
     }
 
     @Inject(
@@ -79,7 +85,7 @@ public abstract class FoxMixin extends Animal implements ITameableEntity, IComma
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
     }
 
     @Inject(
@@ -87,7 +93,7 @@ public abstract class FoxMixin extends Animal implements ITameableEntity, IComma
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
     }
 
     public int redomesticate$getCommand() {
@@ -106,20 +112,20 @@ public abstract class FoxMixin extends Animal implements ITameableEntity, IComma
 
     }
 
-    // TODO: remove shift
-    @Inject(
+    @WrapOperation(
+            method = "aiStep()V",
             at = @At(
-                    shift = At.Shift.BEFORE,
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"
-            ),
-            method = {"aiStep()V"}
+            )
     )
-    private void aiStep(CallbackInfo ci) {
-        ItemStack stack = this.getItemBySlot(EquipmentSlot.MAINHAND);
-        if (!stack.isEmpty() && stack.getItem().isEdible() && stack.getItem().getFoodProperties() != null) {
-            this.heal(stack.getItem().getFoodProperties().getNutrition() * 2);
+    private ItemStack wrapFinishUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> original) {
+        FoodProperties food = instance.get(DataComponents.FOOD);
+        if (!instance.isEmpty() && food != null) {
+            this.heal(food.nutrition() * 2);
         }
+
+        return original.call(instance, level, livingEntity);
     }
 
     @Inject(

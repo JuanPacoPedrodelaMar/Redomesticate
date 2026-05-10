@@ -32,10 +32,10 @@ public abstract class CatMixin extends TamableAnimal implements ICommandableMob 
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/Cat;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(redomesticate$COMMAND, 0);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(redomesticate$COMMAND, 0);
     }
 
     @Inject(
@@ -43,7 +43,7 @@ public abstract class CatMixin extends TamableAnimal implements ICommandableMob 
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
     }
 
     @Inject(
@@ -51,7 +51,7 @@ public abstract class CatMixin extends TamableAnimal implements ICommandableMob 
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
     }
 
     @Inject(

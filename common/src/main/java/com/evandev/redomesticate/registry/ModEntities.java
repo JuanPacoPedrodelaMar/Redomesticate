@@ -51,9 +51,15 @@ public class ModEntities {
                     FollowingJukeboxEntity::new,
                     MobCategory.MISC)
             .sized(0.65F, 0.65F)
-            .setCustomClientFactory(FollowingJukeboxEntity::new)
             .fireImmune()
             .build("following_jukebox"));
+
+    public static final RegistryObject<EntityType<RecallBallEntity>> RECALL_BALL = DEF_REG.register("recall_ball", () -> EntityType.Builder.of(
+                    RecallBallEntity::new,
+                    MobCategory.MISC)
+            .sized(0.8F, 0.8F)
+            .fireImmune()
+            .build("recall_ball"));
 
     public static void init() {
     }

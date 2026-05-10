@@ -18,7 +18,6 @@ public class VillageHouseManager {
     public static final List<ResourceLocation> VILLAGE_REPLACEMENT_POOLS = List.of(ResourceLocation.parse("minecraft:village/plains/houses"), ResourceLocation.parse("minecraft:village/desert/houses"), ResourceLocation.parse("minecraft:village/savanna/houses"), ResourceLocation.parse("minecraft:village/snowy/houses"), ResourceLocation.parse("minecraft:village/taiga/houses"));
     private static final List<Pair<ResourceLocation, Consumer<StructureTemplatePool>>> REGISTRY = new ArrayList<>();
 
-
     public static void addToPool(StructureTemplatePool pool, StructurePoolElement element, int weight) {
         if (weight > 0 && pool != null) {
             ObjectArrayList<StructurePoolElement> templates = new ObjectArrayList<>(pool.templates);
@@ -31,17 +30,14 @@ public class VillageHouseManager {
                 rawTemplates.add(new Pair<>(element, weight));
                 pool.templates = templates;
                 pool.rawTemplates = rawTemplates;
-                Constants.LOG.info("Added to village structure pool");
             }
         }
-
     }
 
     public static void addAllHouses(RegistryAccess registryAccess) {
         int weight = ModConfig.get().petstoreVillageWeight;
         StructurePoolElement plains = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "plains_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/plains/houses"), (pool) -> VillageHouseManager.addToPool(pool, plains, weight)));
-
 
         StructurePoolElement desert = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "desert_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/desert/houses"), (pool) -> VillageHouseManager.addToPool(pool, desert, weight)));
@@ -50,7 +46,6 @@ public class VillageHouseManager {
         StructurePoolElement snowy = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "snowy_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/snowy/houses"), (pool) -> VillageHouseManager.addToPool(pool, snowy, weight)));
         StructurePoolElement taiga = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "taiga_petshop"), StructurePoolElement.EMPTY);
-
 
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/taiga/houses"), (pool) -> VillageHouseManager.addToPool(pool, taiga, weight)));
         try {
@@ -69,6 +64,5 @@ public class VillageHouseManager {
             Constants.LOG.error("Could not add village houses!");
             Constants.LOG.error(e.toString());
         }
-
     }
 }

@@ -20,25 +20,114 @@ public class ClothConfigIntegration {
 
         ConfigCategory general = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.general"));
         ConfigCategory loot = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.loot"));
-        ConfigCategory protection = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.protection"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
         // General Category
-        general.addEntry(entryBuilder.startBooleanToggle(Component.literal("Rotten Apple"), config.rottenApple).setDefaultValue(true).setSaveConsumer(val -> config.rottenApple = val).build());
-        general.addEntry(entryBuilder.startIntField(Component.literal("Pet Store Village Weight"), config.petstoreVillageWeight).setDefaultValue(17).setSaveConsumer(val -> config.petstoreVillageWeight = val).build());
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.trinaryCommandSystem"), config.trinaryCommandSystem)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.trinaryCommandSystem.tooltip"))
+                .setSaveConsumer(val -> config.trinaryCommandSystem = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableAxolotl"), config.tameableAxolotl)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.tameableAxolotl.tooltip"))
+                .setSaveConsumer(val -> config.tameableAxolotl = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableHorse"), config.tameableHorse)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.tameableHorse.tooltip"))
+                .setSaveConsumer(val -> config.tameableHorse = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableFox"), config.tameableFox)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.tameableFox.tooltip"))
+                .setSaveConsumer(val -> config.tameableFox = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableRabbit"), config.tameableRabbit)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.tameableRabbit.tooltip"))
+                .setSaveConsumer(val -> config.tameableRabbit = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableFrog"), config.tameableFrog)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.tameableFrog.tooltip"))
+                .setSaveConsumer(val -> config.tameableFrog = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.swingThroughPets"), config.swingThroughPets)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.swingThroughPets.tooltip"))
+                .setSaveConsumer(val -> config.swingThroughPets = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.rotten_apple"), config.rottenApple)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.rotten_apple.tooltip"))
+                .setSaveConsumer(val -> config.rottenApple = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petBedRespawns"), config.petBedRespawns)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.petBedRespawns.tooltip"))
+                .setSaveConsumer(val -> config.petBedRespawns = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.collarTag"), config.collarTag)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.collarTag.tooltip"))
+                .setSaveConsumer(val -> config.collarTag = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.rabbitsScareRavagers"), config.rabbitsScareRavagers)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.rabbitsScareRavagers.tooltip"))
+                .setSaveConsumer(val -> config.rabbitsScareRavagers = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.animal_tamer_villager"), config.animalTamerVillager)
+                .setDefaultValue(true)
+                .setSaveConsumer(val -> config.animalTamerVillager = val).build());
+
+        general.addEntry(entryBuilder.startIntField(Component.translatable("redomesticate.configuration.petstore_village_weight"), config.petstoreVillageWeight)
+                .setDefaultValue(17)
+                .setTooltip(Component.translatable("redomesticate.configuration.petstore_village_weight.tooltip"))
+                .setSaveConsumer(val -> config.petstoreVillageWeight = val).build());
 
         // Loot Category
-        loot.addEntry(entryBuilder.startDoubleField(Component.literal("Blazing Protection Loot Chance"), config.blazingProtectionLootChance).setDefaultValue(0.2D).setSaveConsumer(val -> config.blazingProtectionLootChance = val).build());
-        loot.addEntry(entryBuilder.startDoubleField(Component.literal("Bubbling Loot Chance"), config.bubblingLootChance).setDefaultValue(0.65D).setSaveConsumer(val -> config.bubblingLootChance = val).build());
-        loot.addEntry(entryBuilder.startDoubleField(Component.literal("Sinister Carrot Loot Chance"), config.sinisterCarrotLootChance).setDefaultValue(0.3D).setSaveConsumer(val -> config.sinisterCarrotLootChance = val).build());
+        loot.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petCurseEnchantmentsLootOnly"), config.petCurseEnchantmentsLootOnly)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.petCurseEnchantmentsLootOnly.tooltip"))
+                .setSaveConsumer(val -> config.petCurseEnchantmentsLootOnly = val).build());
 
-        // Protection Category
-        protection.addEntry(entryBuilder.startBooleanToggle(Component.literal("Protect Pets From Owner"), config.protectPetsFromOwner).setDefaultValue(true).setSaveConsumer(val -> config.protectPetsFromOwner = val).build());
-        protection.addEntry(entryBuilder.startBooleanToggle(Component.literal("Protect Pets From Pets"), config.protectPetsFromPets).setDefaultValue(true).setSaveConsumer(val -> config.protectPetsFromPets = val).build());
-        protection.addEntry(entryBuilder.startBooleanToggle(Component.literal("Protect Children"), config.protectChildren).setDefaultValue(true).setSaveConsumer(val -> config.protectChildren = val).build());
-        protection.addEntry(entryBuilder.startBooleanToggle(Component.literal("Reflect Damage"), config.reflectDamage).setDefaultValue(false).setSaveConsumer(val -> config.reflectDamage = val).build());
-        protection.addEntry(entryBuilder.startBooleanToggle(Component.literal("Display Hit Warning"), config.displayHitWarning).setDefaultValue(true).setSaveConsumer(val -> config.displayHitWarning = val).build());
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.blazing_protection_loot_chance"), config.blazingProtectionLootChance)
+                .setDefaultValue(0.2D)
+                .setTooltip(Component.translatable("redomesticate.configuration.blazing_protection_loot_chance.tooltip"))
+                .setSaveConsumer(val -> config.blazingProtectionLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.sinister_carrot_loot_chance"), config.sinisterCarrotLootChance)
+                .setDefaultValue(0.3D)
+                .setTooltip(Component.translatable("redomesticate.configuration.sinister_carrot_loot_chance.tooltip"))
+                .setSaveConsumer(val -> config.sinisterCarrotLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.bubbling_loot_chance"), config.bubblingLootChance)
+                .setDefaultValue(0.65D)
+                .setTooltip(Component.translatable("redomesticate.configuration.bubbling_loot_chance.tooltip"))
+                .setSaveConsumer(val -> config.bubblingLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.vampirism_loot_chance"), config.vampirismLootChance)
+                .setDefaultValue(0.22D)
+                .setTooltip(Component.translatable("redomesticate.configuration.vampirism_loot_chance.tooltip"))
+                .setSaveConsumer(val -> config.vampirismLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.voidCloudLootChance"), config.voidCloudLootChance)
+                .setDefaultValue(0.19D)
+                .setTooltip(Component.translatable("redomesticate.configuration.voidCloudLootChance.tooltip"))
+                .setSaveConsumer(val -> config.voidCloudLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.muffledLootChance"), config.muffledLootChance)
+                .setDefaultValue(0.19D)
+                .setTooltip(Component.translatable("redomesticate.configuration.muffledLootChance.tooltip"))
+                .setSaveConsumer(val -> config.muffledLootChance = val).build());
+
+        loot.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.ore_scenting_loot_chance"), config.oreScentingLootChance)
+                .setDefaultValue(0.15D)
+                .setTooltip(Component.translatable("redomesticate.configuration.ore_scenting_loot_chance.tooltip"))
+                .setSaveConsumer(val -> config.oreScentingLootChance = val).build());
 
         return builder.build();
     }

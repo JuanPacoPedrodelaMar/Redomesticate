@@ -37,16 +37,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
 @Mixin(Rabbit.class)
 public abstract class RabbitMixin extends Animal implements ITameableEntity, ICommandableMob {
 
+    @Unique
     private static final EntityDataAccessor<Optional<UUID>> OWNER_UUID = SynchedEntityData.defineId(Rabbit.class, EntityDataSerializers.OPTIONAL_UUID);
-    private static final EntityDataAccessor<Integer> COMMAND = SynchedEntityData.defineId(Rabbit.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> TAMED = SynchedEntityData.defineId(Rabbit.class, EntityDataSerializers.BOOLEAN);
+    @Unique
+    private static final EntityDataAccessor<Integer> redomesticate$COMMAND = SynchedEntityData.defineId(Rabbit.class, EntityDataSerializers.INT);
+    @Unique
+    private static final EntityDataAccessor<Boolean> redomesticate$TAMED = SynchedEntityData.defineId(Rabbit.class, EntityDataSerializers.BOOLEAN);
 
     @Shadow
     @Final
@@ -61,7 +64,7 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/Rabbit;registerGoals()V"}
+            method = {"registerGoals()V"}
     )
     private void registerGoals(CallbackInfo ci) {
         this.goalSelector.addGoal(1, new Sit2Goal(this));
@@ -76,12 +79,12 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/Rabbit;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(OWNER_UUID, Optional.empty());
-        this.entityData.define(COMMAND, 0);
-        this.entityData.define(TAMED, false);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(OWNER_UUID, Optional.empty());
+        builder.define(redomesticate$COMMAND, 0);
+        builder.define(redomesticate$TAMED, false);
     }
 
     @Inject(
@@ -89,7 +92,7 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
         compoundNBT.putBoolean("Tamed", this.redomesticate$isTame());
         if (this.redomesticate$getTameOwnerUUID() != null) {
             compoundNBT.putUUID("Owner", this.redomesticate$getTameOwnerUUID());
@@ -101,7 +104,7 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
         this.redomesticate$setTame(compoundNBT.getBoolean("Tamed"));
         UUID uuid;
         if (compoundNBT.hasUUID("Owner")) {
@@ -122,19 +125,19 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
     }
 
     public int redomesticate$getCommand() {
-        return this.entityData.get(COMMAND);
+        return this.entityData.get(redomesticate$COMMAND);
     }
 
     public void redomesticate$setCommand(int i) {
-        this.entityData.set(COMMAND, i);
+        this.entityData.set(redomesticate$COMMAND, i);
     }
 
     public boolean redomesticate$isTame() {
-        return this.entityData.get(TAMED);
+        return this.entityData.get(redomesticate$TAMED);
     }
 
     public void redomesticate$setTame(boolean b) {
-        this.entityData.set(TAMED, b);
+        this.entityData.set(redomesticate$TAMED, b);
         if (b) {
             redomesticate$removeUntamedGoals();
         }
@@ -210,7 +213,7 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
                 redomesticate$removeUntamedGoals();
             }
             if (!this.hasCustomName()) {
-                this.setCustomName(Component.translatable(Util.makeDescriptionId("entity", ResourceLocation.fromNamespaceAndPath("killer_bunny"))));
+                this.setCustomName(Component.translatable(Util.makeDescriptionId("entity", ResourceLocation.withDefaultNamespace("killer_bunny"))));
             }
         }
         this.entityData.set(DATA_TYPE_ID, type.id());
@@ -218,6 +221,6 @@ public abstract class RabbitMixin extends Animal implements ITameableEntity, ICo
 
     @Override
     public void redomesticate$sendCommandMessage(Player owner, int command, Component name) {
-        owner.displayClientMessage(Component.translatable("message.domesticationinnovation.command_" + command, name), true);
+        owner.displayClientMessage(Component.translatable("message.redomesticate.command_" + command, name), true);
     }
 }

@@ -14,13 +14,15 @@ import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.frog.FrogAi;
 import net.minecraft.world.entity.animal.frog.ShootTongue;
 import net.minecraft.world.entity.schedule.Activity;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Predicate;
 
 @Mixin(FrogAi.class)
 public class FrogAiMixin {
@@ -37,6 +39,7 @@ public class FrogAiMixin {
         brain.addActivity(ModActivities.FROG_STAY.get(), ImmutableList.of(Pair.of(0, new AmphibianStayBehavior())));
     }
 
+    // TODO: why is this unused
     @Unique
     private static boolean redomesticate$canAttack(Frog frog) {
         return !frog.isInLove();
@@ -70,13 +73,12 @@ public class FrogAiMixin {
     }
 
     @Inject(
-            method = {"Lnet/minecraft/world/entity/animal/frog/FrogAi;getTemptations()Lnet/minecraft/world/item/crafting/Ingredient;"},
-            at = @At(
-                    value = "TAIL"
-            ),
+            method = {"getTemptations()Ljava/util/function/Predicate;"},
+            at = @At("TAIL"),
             cancellable = true
     )
-    private static void getTemptationItems(CallbackInfoReturnable<Ingredient> cir) {
-        cir.setReturnValue(Ingredient.merge(ImmutableList.of(cir.getReturnValue(), Ingredient.of(ModTags.TAME_FROGS_WITH))));
+    private static void getTemptationItems(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
+        Predicate<ItemStack> original = cir.getReturnValue();
+        cir.setReturnValue(stack -> original.test(stack) || stack.is(ModTags.TAME_FROGS_WITH));
     }
 }

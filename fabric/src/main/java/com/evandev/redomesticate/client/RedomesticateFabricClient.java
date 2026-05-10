@@ -27,6 +27,7 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
         EntityRendererRegistry.register(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
         EntityRendererRegistry.register(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
+        EntityRendererRegistry.register(ModEntities.RECALL_BALL.get(), RecallBallRender::new);
         EntityRendererRegistry.register(ModEntities.FEATHER.get(), RenderFeather::new);
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.DEFLECTION_SHIELD.get(), new ParticleDeflectionShield.Factory());

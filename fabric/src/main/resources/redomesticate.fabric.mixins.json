@@ -5,8 +5,11 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ExplosionMixin",
+    "FabricEntityMixin",
+    "FabricLivingEntityMixin",
     "ItemEntityMixin",
-    "FabricLivingEntityMixin"
+    "ProjectileMixin",
+    "ServerPlayerMixin"
   ],
   "client": [
   ],

@@ -81,10 +81,6 @@
       "required": false
     },
     {
-      "id": "redomesticate:xp_transfer",
-      "required": false
-    },
-    {
       "id": "redomesticate:blight_curse",
       "required": false
     },
@@ -102,10 +98,6 @@
     },
     {
       "id": "redomesticate:void_cloud",
-      "required": false
-    },
-    {
-      "id": "redomesticate:insight",
       "required": false
     }
   ]

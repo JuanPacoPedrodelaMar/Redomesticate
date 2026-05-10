@@ -31,6 +31,4 @@ public class HighlightedBlockModel extends AdvancedEntityModel<RecallBallEntity>
     public Iterable<AdvancedModelBox> getAllParts() {
         return ImmutableList.of(box);
     }
-
-
 }

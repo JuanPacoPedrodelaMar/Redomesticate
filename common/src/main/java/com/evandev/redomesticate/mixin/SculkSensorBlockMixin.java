@@ -21,7 +21,7 @@ public class SculkSensorBlockMixin {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void di_onStepOn(Level level, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
+    private void onStepOn(Level level, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
         if (entity instanceof LivingEntity living && TameableUtils.isTamed(living) && TameableUtils.hasEnchant(living, ModEnchantments.MUFFLED)) {
             ci.cancel();
         }

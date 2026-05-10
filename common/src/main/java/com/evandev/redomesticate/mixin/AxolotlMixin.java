@@ -5,6 +5,7 @@ import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -25,8 +26,10 @@ import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -35,7 +38,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -58,12 +60,12 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/axolotl/Axolotl;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(OWNER_UUID, Optional.empty());
-        this.entityData.define(redomesticate$COMMAND, 0);
-        this.entityData.define(redomesticate$TAMED, false);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(OWNER_UUID, Optional.empty());
+        builder.define(redomesticate$COMMAND, 0);
+        builder.define(redomesticate$TAMED, false);
     }
 
     @Inject(
@@ -71,7 +73,7 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
         compoundNBT.putBoolean("Tamed", this.redomesticate$isTame());
         if (this.redomesticate$getTameOwnerUUID() != null) {
             compoundNBT.putUUID("Owner", this.redomesticate$getTameOwnerUUID());
@@ -83,7 +85,7 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
         this.redomesticate$setTame(compoundNBT.getBoolean("Tamed"));
         UUID uuid;
         if (compoundNBT.hasUUID("Owner")) {
@@ -108,13 +110,13 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
             method = {"saveToBucketTag(Lnet/minecraft/world/item/ItemStack;)V"}
     )
     private void writeAdditionalBucket(ItemStack stack, CallbackInfo ci) {
-        CompoundTag compoundNBT = stack.getOrCreateTag();
-        this.addAdditionalSaveData(compoundNBT);
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
-        compoundNBT.putBoolean("Tamed", this.redomesticate$isTame());
-        if (this.redomesticate$getTameOwnerUUID() != null) {
-            compoundNBT.putUUID("Owner", this.redomesticate$getTameOwnerUUID());
-        }
+        CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, compoundNBT -> {
+            compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+            compoundNBT.putBoolean("Tamed", this.redomesticate$isTame());
+            if (this.redomesticate$getTameOwnerUUID() != null) {
+                compoundNBT.putUUID("Owner", this.redomesticate$getTameOwnerUUID());
+            }
+        });
     }
 
     @Inject(
@@ -123,7 +125,7 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
     )
     private void readAdditionalBucket(CompoundTag compoundNBT, CallbackInfo ci) {
         this.readAdditionalSaveData(compoundNBT);
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
         this.redomesticate$setTame(compoundNBT.getBoolean("Tamed"));
         UUID uuid;
         if (compoundNBT.hasUUID("Owner")) {

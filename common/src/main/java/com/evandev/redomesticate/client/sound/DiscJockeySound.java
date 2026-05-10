@@ -5,10 +5,15 @@ import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DiscJockeySound extends AbstractTickableSoundInstance {
+    public static final Map<Integer, DiscJockeySound> DISC_JOCKEY_SOUND_MAP = new HashMap<>();
+
     private final FollowingJukeboxEntity box;
-    private int ticksExisted = 0;
     private final SoundEvent recordSound;
+    private int ticksExisted = 0;
 
     public DiscJockeySound(SoundEvent record, FollowingJukeboxEntity box) {
         super(record, SoundSource.RECORDS, box.level().getRandom());
@@ -23,7 +28,7 @@ public class DiscJockeySound extends AbstractTickableSoundInstance {
     }
 
     public boolean canPlaySound() {
-        return !this.box.isSilent() && ClientProxy.DISC_JOCKEY_SOUND_MAP.get(this.box.getId()) == this;
+        return !this.box.isSilent() && DISC_JOCKEY_SOUND_MAP.get(this.box.getId()) == this;
     }
 
     public boolean isNearest() {
@@ -39,7 +44,7 @@ public class DiscJockeySound extends AbstractTickableSoundInstance {
             this.z = this.box.getZ();
         } else {
             this.stop();
-            ClientProxy.DISC_JOCKEY_SOUND_MAP.remove(box.getId());
+            DISC_JOCKEY_SOUND_MAP.remove(box.getId());
         }
         ticksExisted++;
     }

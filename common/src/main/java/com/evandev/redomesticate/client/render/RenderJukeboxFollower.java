@@ -9,21 +9,21 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantments;
 import org.jetbrains.annotations.NotNull;
 
 public class RenderJukeboxFollower extends EntityRenderer<FollowingJukeboxEntity> {
 
-    private ItemStack jukebox = new ItemStack(Items.JUKEBOX);
+    private final ItemStack jukebox = new ItemStack(Items.JUKEBOX);
 
     public RenderJukeboxFollower(EntityRendererProvider.Context renderManagerIn) {
         super(renderManagerIn);
-        jukebox.enchant(Enchantments.VANISHING_CURSE, 1);
+        jukebox.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
     }
 
     @Override
@@ -42,5 +42,4 @@ public class RenderJukeboxFollower extends EntityRenderer<FollowingJukeboxEntity
     public @NotNull ResourceLocation getTextureLocation(@NotNull FollowingJukeboxEntity entity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
-
 }

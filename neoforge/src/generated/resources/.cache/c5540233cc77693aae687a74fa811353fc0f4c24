@@ -1,6 +1,0 @@
-// 1.21.1	2026-05-09T23:20:41.5611278	Redomesticate enchantment tags
-4eb3e3d0d209139782e3126c729996fc90bbee99 data/enchantinginfuser/tags/enchantment/infuse_extra.json
-a7ac06a6ee6ae50949eac650154a8122af2e2a28 data/minecraft/tags/enchantment/curse.json
-e861ed71bf7b61eb91e9854a46c4f5c7e4717014 data/minecraft/tags/enchantment/in_enchanting_table.json
-7ff7d67a2a310cb62a36a9a755e659612643f2e1 data/minecraft/tags/enchantment/treasure.json
-ab0bc2425b19cc5c26d95ca08ee2406cb043533c data/redomesticate/tags/enchantment/trade_enchantment_book.json

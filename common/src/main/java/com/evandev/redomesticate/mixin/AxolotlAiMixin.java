@@ -13,13 +13,15 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.animal.axolotl.AxolotlAi;
 import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.function.Predicate;
 
 @Mixin(AxolotlAi.class)
 public class AxolotlAiMixin {
@@ -59,14 +61,13 @@ public class AxolotlAiMixin {
 
 
     @Inject(
-            method = {"Lnet/minecraft/world/entity/animal/axolotl/AxolotlAi;getTemptations()Lnet/minecraft/world/item/crafting/Ingredient;"},
-            at = @At(
-                    value = "TAIL"
-            ),
+            method = {"getTemptations()Ljava/util/function/Predicate;"},
+            at = @At("TAIL"),
             cancellable = true
     )
-    private static void getTemptationItems(CallbackInfoReturnable<Ingredient> cir) {
-        cir.setReturnValue(Ingredient.merge(ImmutableList.of(cir.getReturnValue(), Ingredient.of(Items.TROPICAL_FISH))));
+    private static void getTemptationItems(CallbackInfoReturnable<Predicate<ItemStack>> cir) {
+        Predicate<ItemStack> original = cir.getReturnValue();
+        cir.setReturnValue(stack -> original.test(stack) || stack.is(Items.TROPICAL_FISH_BUCKET) || stack.is(Items.TROPICAL_FISH));
     }
 
     @Inject(

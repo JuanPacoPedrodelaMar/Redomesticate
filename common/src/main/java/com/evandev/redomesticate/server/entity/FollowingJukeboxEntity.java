@@ -1,12 +1,11 @@
 package com.evandev.redomesticate.server.entity;
 
+import com.evandev.redomesticate.client.ClientJukeboxHandler;
 import com.evandev.redomesticate.registry.ModEnchantments;
-import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.util.TameableUtils;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,11 +20,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PlayMessages;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,10 +33,6 @@ public class FollowingJukeboxEntity extends Entity {
 
     public FollowingJukeboxEntity(EntityType<?> type, Level level) {
         super(type, level);
-    }
-
-    public FollowingJukeboxEntity(PlayMessages.SpawnEntity spawnEntity, Level world) {
-        this(ModEntities.FOLLOWING_JUKEBOX.get(), world);
     }
 
     public void tick() {
@@ -66,7 +59,8 @@ public class FollowingJukeboxEntity extends Entity {
                 } else {
                     this.level().broadcastEntityEvent(this, (byte) 67);
                 }
-                if (following instanceof LivingEntity && !TameableUtils.hasEnchant((LivingEntity) following, ModEnchantments.DISK_JOCKEY)) {
+
+                if (following instanceof LivingEntity livingFollowing && !TameableUtils.hasEnchant(livingFollowing, ModEnchantments.DISK_JOCKEY)) {
                     this.setFollowingUUID(null);
                 }
             } else {
@@ -82,8 +76,8 @@ public class FollowingJukeboxEntity extends Entity {
 
     @Override
     protected void defineSynchedData(SynchedEntityData.@NotNull Builder builder) {
-        this.entityData.set(FOLLOWING_UUID, Optional.empty());
-        this.entityData.set(JUKEBOX_ITEM, ItemStack.EMPTY);
+        builder.define(FOLLOWING_UUID, Optional.empty());
+        builder.define(JUKEBOX_ITEM, ItemStack.EMPTY);
     }
 
     @Override
@@ -141,15 +135,6 @@ public class FollowingJukeboxEntity extends Entity {
         return ItemStack.EMPTY;
     }
 
-    @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
-    }
-
-    public boolean shouldRiderSit() {
-        return false;
-    }
-
     public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec3, @NotNull InteractionHand hand) {
         return interact(player, hand);
     }
@@ -167,7 +152,8 @@ public class FollowingJukeboxEntity extends Entity {
             this.spawnAtLocation(copy);
             flag = true;
         }
-        if (held.getItem() instanceof RecordItem) {
+
+        if (held.has(DataComponents.JUKEBOX_PLAYABLE)) {
             addDiscToOwner(held);
             if (!player.isCreative()) {
                 held.shrink(1);
@@ -180,13 +166,15 @@ public class FollowingJukeboxEntity extends Entity {
 
     public void handleEntityEvent(byte id) {
         if (id == 66 || id == 67) {
-            if (this.getRecordSound() != null && random.nextFloat() < 0.1F) {
-                float f = random.nextFloat();
-                float f1 = random.nextFloat();
-                float f2 = random.nextFloat();
+            if (this.hasRecordSound() && this.random.nextFloat() < 0.1F) {
+                float f = this.random.nextFloat();
+                float f1 = this.random.nextFloat();
+                float f2 = this.random.nextFloat();
                 this.level().addParticle(ParticleTypes.NOTE, this.getX(), this.getY(1), this.getZ(), f, f1, f2);
             }
-            DomesticationMod.PROXY.updateEntityStatus(this, id);
+            if (this.level().isClientSide) {
+                ClientJukeboxHandler.updateEntityStatus(this, id);
+            }
         } else {
             super.handleEntityEvent(id);
         }
@@ -194,9 +182,18 @@ public class FollowingJukeboxEntity extends Entity {
 
     @Nullable
     public SoundEvent getRecordSound() {
-        if (getRecordItem().getItem() instanceof RecordItem record) {
-            return record.getSound();
+        var playable = this.getRecordItem().get(DataComponents.JUKEBOX_PLAYABLE);
+        if (playable != null) {
+            var songHolder = playable.song().unwrap(this.level().registryAccess());
+
+            if (songHolder.isPresent() && songHolder.get().isBound()) {
+                return songHolder.get().value().soundEvent().value();
+            }
         }
         return null;
+    }
+
+    public boolean hasRecordSound() {
+        return this.getRecordItem().has(DataComponents.JUKEBOX_PLAYABLE);
     }
 }

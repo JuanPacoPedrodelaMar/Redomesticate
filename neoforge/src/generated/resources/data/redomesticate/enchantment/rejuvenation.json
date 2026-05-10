@@ -5,8 +5,7 @@
   },
   "exclusive_set": [
     "redomesticate:healing_aura",
-    "redomesticate:health_siphon",
-    "redomesticate:xp_transfer"
+    "redomesticate:health_siphon"
   ],
   "max_cost": {
     "base": 25,

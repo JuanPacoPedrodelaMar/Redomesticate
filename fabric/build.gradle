@@ -46,6 +46,12 @@ loom {
     }
 }
 
+sourceSets.main.resources {
+    srcDir project(':neoforge').file('src/generated/resources')
+
+    exclude '.cache'
+}
+
 publishMods {
     file = tasks.named("remapJar").flatMap { it.archiveFile }
 }

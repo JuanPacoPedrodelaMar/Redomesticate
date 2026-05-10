@@ -13,4 +13,7 @@ public class ModActivities {
     public static final RegistryObject<Activity> AXOLOTL_STAY = DEF_REG.register("axolotl_stay", () -> new Activity("axolotl_stay"));
     public static final RegistryObject<Activity> FROG_FOLLOW = DEF_REG.register("frog_follow", () -> new Activity("frog_follow"));
     public static final RegistryObject<Activity> FROG_STAY = DEF_REG.register("frog_stay", () -> new Activity("frog_stay"));
+
+    public static void init() {
+    }
 }

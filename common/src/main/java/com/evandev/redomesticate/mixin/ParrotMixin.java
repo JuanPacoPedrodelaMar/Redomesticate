@@ -32,26 +32,26 @@ public abstract class ParrotMixin extends TamableAnimal implements ICommandableM
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/Parrot;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void di_registerData(CallbackInfo ci) {
-        this.entityData.define(redomesticate$COMMAND, 0);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(redomesticate$COMMAND, 0);
     }
 
     @Inject(
             at = {@At("TAIL")},
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
-    private void di_writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+    private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
     }
 
     @Inject(
             at = {@At("TAIL")},
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
-    private void di_readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+    private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
     }
 
     @Inject(
@@ -62,7 +62,7 @@ public abstract class ParrotMixin extends TamableAnimal implements ICommandableM
             ),
             cancellable = true
     )
-    private void di_onInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void onInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         if (ModConfig.get().trinaryCommandSystem) {
             this.jumping = false;
             this.navigation.stop();

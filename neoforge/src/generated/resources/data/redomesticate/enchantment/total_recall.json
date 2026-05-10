@@ -3,6 +3,7 @@
   "description": {
     "translate": "enchantment.redomesticate.total_recall"
   },
+  "exclusive_set": "redomesticate:undead_curse",
   "max_cost": {
     "base": 25,
     "per_level_above_first": 7

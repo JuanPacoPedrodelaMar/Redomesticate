@@ -2,12 +2,13 @@ package com.evandev.redomesticate.mixin;
 
 
 import com.evandev.redomesticate.api.ICommandableMob;
-import net.minecraft.core.BlockPos;
+import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.registry.ModEnchantments;
+import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.FollowOwnerGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.LevelReader;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,62 +25,41 @@ public abstract class FollowOwnerGoalMixin extends Goal {
     private TamableAnimal tamable;
 
     @Shadow
-    @Final
-    private LevelReader level;
-
-    @Shadow
     private LivingEntity owner;
 
     @Shadow
     @Final
-    private float stopDistance;
-
-    @Shadow @Final private double speedModifier;
+    private double speedModifier;
 
     @Inject(
             at = {@At("HEAD")},
-            remap = true,
-            method = {"Lnet/minecraft/world/entity/ai/goal/FollowOwnerGoal;canUse()Z"},
+            method = {"canUse()Z"},
             cancellable = true
     )
-    private void di_canUse(CallbackInfoReturnable<Boolean> cir){
-        if(tamable instanceof ICommandableMob commandableMob && commandableMob.getCommand() != 2 && DomesticationMod.CONFIG.trinaryCommandSystem.get()){
+    private void canUse(CallbackInfoReturnable<Boolean> cir) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(
             at = {@At("HEAD")},
-            remap = true,
-            method = {"Lnet/minecraft/world/entity/ai/goal/FollowOwnerGoal;canContinueToUse()Z"},
+            method = {"canContinueToUse()Z"},
             cancellable = true
     )
-    private void di_canContinueToUse(CallbackInfoReturnable<Boolean> cir){
-        if(tamable instanceof IComandableMob commandableMob && commandableMob.getCommand() != 2 && DomesticationMod.CONFIG.trinaryCommandSystem.get()){
+    private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(
             at = {@At("HEAD")},
-            remap = true,
-            method = {"Lnet/minecraft/world/entity/ai/goal/FollowOwnerGoal;canTeleportTo(Lnet/minecraft/core/BlockPos;)Z"},
+            method = {"tick()V"},
             cancellable = true
     )
-    private void di_canTeleportTo(BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if(TameableUtils.hasEnchant(tamable, DIEnchantmentRegistry.AMPHIBIOUS) && level.isWaterAt(pos)){
-            cir.setReturnValue(true);
-        }
-    }
-
-    @Inject(
-            at = {@At("HEAD")},
-            remap = true,
-            method = {"Lnet/minecraft/world/entity/ai/goal/FollowOwnerGoal;tick()V"},
-            cancellable = true
-    )
-    private void di_tick(CallbackInfo ci) {
-        if(TameableUtils.hasEnchant(tamable, DIEnchantmentRegistry.AMPHIBIOUS) && tamable.isInWaterOrBubble() && this.tamable.distanceToSqr(this.owner) < 144.0D){
+    private void tick(CallbackInfo ci) {
+        if (TameableUtils.hasEnchant(tamable, ModEnchantments.AMPHIBIOUS) && tamable.isInWaterOrBubble() && this.tamable.distanceToSqr(this.owner) < 144.0D) {
             tamable.getNavigation().moveTo(owner, speedModifier);
             ci.cancel();
         }

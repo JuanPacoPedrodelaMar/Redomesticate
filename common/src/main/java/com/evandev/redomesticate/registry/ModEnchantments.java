@@ -20,6 +20,10 @@ public class ModEnchantments {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "bubbling"));
     public static final ResourceKey<Enchantment> CHAIN_LIGHTNING = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "chain_lightning"));
+    public static final ResourceKey<Enchantment> CHARISMA = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "charisma"));
+    public static final ResourceKey<Enchantment> DISK_JOCKEY = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "disk_jockey"));
     public static final ResourceKey<Enchantment> HEALTH_BOOST = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "health_boost"));
     public static final ResourceKey<Enchantment> IMMUNITY_FRAME = ResourceKey.create(Registries.ENCHANTMENT,
@@ -28,12 +32,8 @@ public class ModEnchantments {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "fireproof"));
     public static final ResourceKey<Enchantment> DEFLECTION = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "deflection"));
-    public static final ResourceKey<Enchantment> SonicBoom = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sonic_boom"));
     public static final ResourceKey<Enchantment> SPEEDSTER = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speedster"));
-    public static final ResourceKey<Enchantment> XP_Transfer = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "xp_transfer"));
     public static final ResourceKey<Enchantment> HEALING_AURA = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "healing_aura"));
     public static final ResourceKey<Enchantment> HEALTH_SIPHON = ResourceKey.create(Registries.ENCHANTMENT,
@@ -58,6 +58,8 @@ public class ModEnchantments {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "intimidation"));
     public static final ResourceKey<Enchantment> ORE_SCENTING = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "ore_scenting"));
+    public static final ResourceKey<Enchantment> MUFFLED = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "muffled"));
     public static final ResourceKey<Enchantment> POISON_RESISTANCE = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "poison_resistance"));
     public static final ResourceKey<Enchantment> FROST_FANG = ResourceKey.create(Registries.ENCHANTMENT,
@@ -78,21 +80,8 @@ public class ModEnchantments {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "defusal"));
     public static final ResourceKey<Enchantment> VOID_CLOUD = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "void_cloud"));
-    public static final ResourceKey<Enchantment> INSIGHT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "insight"));
-    public static final ResourceKey<Enchantment> CHAOS = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "chaos"));
-    public static final ResourceKey<Enchantment> SHARE = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "share"));
-    public static final ResourceKey<Enchantment> NIGHT_VISION = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "night_vision"));
-    public static final ResourceKey<Enchantment> PARALYSIS = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "paralysis"));
-    public static final ResourceKey<Enchantment> TOUGH = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "tough"));
-    public static final ResourceKey<Enchantment> VIOLENT = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "violent"));
-
+    public static final ResourceKey<Enchantment> UNDEAD_CURSE = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "undead_curse"));
 
     public static void bootstrap(BootstrapContext<Enchantment> context) {
         var enchantments = context.lookup(Registries.ENCHANTMENT);
@@ -112,7 +101,7 @@ public class ModEnchantments {
                 1,
                 Enchantment.dynamicCost(8, 7),
                 Enchantment.dynamicCost(25, 7),
-                2))
+                2)).exclusiveWith(checkCompatible(enchantments, UNDEAD_CURSE))
         );
         register(context, REJUVENATION, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
@@ -120,7 +109,7 @@ public class ModEnchantments {
                 1,
                 Enchantment.dynamicCost(8, 7),
                 Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, HEALING_AURA, HEALTH_SIPHON, XP_Transfer))
+                2)).exclusiveWith(checkCompatible(enchantments, HEALING_AURA, HEALTH_SIPHON))
         );
         register(context, DEFUSAL, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
@@ -146,6 +135,14 @@ public class ModEnchantments {
                 Enchantment.dynamicCost(5, 7),
                 Enchantment.dynamicCost(25, 7),
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.DEFLECTION), enchantments.getOrThrow(ModEnchantments.BLAZING_PROTECTION)))
+        );
+        register(context, UNDEAD_CURSE, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                5,
+                1,
+                Enchantment.dynamicCost(4, 7),
+                Enchantment.dynamicCost(25, 7),
+                2)).exclusiveWith(checkCompatible(enchantments, TOTAL_RECALL))
         );
         register(context, HEALTH_BOOST, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
@@ -186,14 +183,6 @@ public class ModEnchantments {
                 Enchantment.dynamicCost(5, 7),
                 Enchantment.dynamicCost(25, 7),
                 2))
-        );
-        register(context, XP_Transfer, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                1,
-                Enchantment.dynamicCost(3, 7),
-                Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, REJUVENATION))
         );
         register(context, HEALING_AURA, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
@@ -323,14 +312,6 @@ public class ModEnchantments {
                 Enchantment.dynamicCost(25, 7),
                 2))
         );
-        register(context, SonicBoom, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                1,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, MAGNETIC, WARPING_BITE))
-        );
         register(context, IMMATURITY_CURSE, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
                 5,
@@ -365,66 +346,6 @@ public class ModEnchantments {
                 2))
 
         );
-        register(context, INSIGHT, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                3,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2))
-
-        );
-        register(context, CHAOS, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                1,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, PARALYSIS))
-
-        );
-        register(context, SHARE, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                3,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2))
-
-        );
-        register(context, NIGHT_VISION, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                1,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2))
-        );
-        register(context, PARALYSIS, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                3,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, CHAOS))
-        );
-        register(context, TOUGH, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                4,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2))
-        );
-        register(context, VIOLENT, Enchantment.enchantment(Enchantment.definition(
-                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
-                5,
-                1,
-                Enchantment.dynamicCost(4, 7),
-                Enchantment.dynamicCost(25, 7),
-                2))
-        );
-
     }
 
     private static void register(BootstrapContext<Enchantment> registry, ResourceKey<Enchantment> key,

@@ -1,7 +1,6 @@
 package com.evandev.redomesticate.server;
 
 import com.evandev.redomesticate.Constants;
-import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.client.CommonClientData;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.platform.Services;
@@ -19,7 +18,6 @@ import com.evandev.redomesticate.server.misc.trades.EnchantItemTrade;
 import com.evandev.redomesticate.server.misc.trades.SellingItemTrade;
 import com.evandev.redomesticate.server.misc.trades.SellingRandomEnchantedBook;
 import com.evandev.redomesticate.util.FriendlyFireCommon;
-import com.evandev.redomesticate.util.LivingUtils;
 import com.evandev.redomesticate.util.TameableUtils;
 import com.evandev.redomesticate.worldgen.VillageHouseManager;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -49,19 +47,15 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.SkeletonHorse;
 import net.minecraft.world.entity.animal.horse.ZombieHorse;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
@@ -82,17 +76,19 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class ServerProxy {
     private static final String[] KEY_TYPES = {"desc", "description", "info"};
     public static List<TeleportData> teleportingPets = new ArrayList<>();
+    public static MinecraftServer currentServer;
 
     public static boolean onLivingDrops(LivingEntity entity) {
         return TameableUtils.isTamed(entity) && TameableUtils.getPetBedPos(entity) != null;
     }
 
     public static void serverStart(MinecraftServer server) {
+        currentServer = server;
+
         RegistryAccess registryAccess = server.registryAccess();
         VillageHouseManager.addAllHouses(registryAccess);
     }
@@ -350,64 +346,8 @@ public class ServerProxy {
         return isCanceled;
     }
 
-    public static float onEntityHurtPre(LivingEntity monster, DamageSource source, float originalDamage) {
-        var maid = source.getEntity();
-        var level = monster.level();
-        var chance = level.random.nextFloat();
-        float newDamage = originalDamage;
-
-        if (maid instanceof LivingEntity maidLiving && TameableUtils.hasEnchant(maidLiving, ModEnchantments.VIOLENT)) {
-            if (chance < 0.01) {
-                monster.die(monster.damageSources().mobAttack(maidLiving));
-            } else if (chance < 0.11) {
-                monster.addEffect(new MobEffectInstance(MobEffects.POISON, 20 * 5));
-            } else if (chance < 0.21) {
-                var paralysicLevel = 1;
-                monster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, paralysicLevel * 20, 100, false, false));
-                monster.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, paralysicLevel * 20, 100, false, false));
-                monster.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, paralysicLevel * 20, 100, false, false));
-            } else if (chance < 0.41) {
-                newDamage = originalDamage + 3;
-            } else if (chance < 0.60) {
-                monster.igniteForTicks(20 * 5);
-            } else if (chance < 0.7) {
-                if (monster.getHealth() > 30) {
-                    newDamage = monster.getHealth() / 3;
-                } else {
-                    newDamage = originalDamage + 5;
-                }
-            } else if (chance < 0.8) {
-                Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
-                monster.addEffect(new MobEffectInstance(drunkHolder, 20 * 5));
-            } else {
-                monster.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 50, false, false));
-                monster.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 20, 50, false, false));
-            }
-        }
-        return newDamage;
-    }
-
     public static void onEntityHurt(LivingEntity hurtEntity, DamageSource source, float originalDamage, float newDamage) {
         var attacker = source.getEntity();
-        if (TameableUtils.hasEnchant(hurtEntity, ModEnchantments.CHAOS) && attacker instanceof LivingEntity) {
-            Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
-            ((LivingEntity) attacker).addEffect(new MobEffectInstance(drunkHolder, 120, 1));
-        }
-        var shareEnchantLevel = TameableUtils.getEnchantLevel(hurtEntity, ModEnchantments.SHARE);
-        if (shareEnchantLevel > 0 && attacker instanceof LivingEntity) {
-            var monsterEntities = TameableUtils.getNearbyMobs(hurtEntity, 20).stream().filter(i -> i instanceof Enemy).collect(Collectors.toSet());
-            if (monsterEntities.size() > 1) {
-                monsterEntities.forEach(i -> {
-                    i.hurt(source, (float) (originalDamage * 0.3));
-                });
-            }
-        }
-        var paralysicLevel = TameableUtils.getEnchantLevel(hurtEntity, ModEnchantments.PARALYSIS);
-        if (paralysicLevel > 0 && attacker instanceof LivingEntity attackerLiving) {
-            attackerLiving.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, paralysicLevel * 20, 100, false, false));
-            attackerLiving.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, paralysicLevel * 20, 100, false, false));
-            attackerLiving.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, paralysicLevel * 20, 100, false, false));
-        }
 
         if (FriendlyFireCommon.preventAttack(hurtEntity, source, newDamage)) {
             hurtEntity.setLastHurtByMob(null);
@@ -516,44 +456,9 @@ public class ServerProxy {
         }
     }
 
-    public static void mobTick(LivingEntity attacker) {
-        if (attacker.level().isClientSide()) {
-            return;
-        }
-        List<Monster> genericMobs = attacker.level().getEntitiesOfClass(Monster.class, LivingUtils.getBoundingBoxAroundEntity(attacker, 10.0F));
-        Random random = new Random();
-        Holder<MobEffect> drunkHolder = BuiltInRegistries.MOB_EFFECT.wrapAsHolder(ModEffects.DRUNK.get());
-
-        if (attacker.hasEffect(drunkHolder) && attacker instanceof Monster monster) {
-            double x = attacker.getX();
-            double y = attacker.getY() + attacker.getBbHeight() + 0.4;
-            double z = attacker.getZ();
-            if (attacker.level().getGameTime() % 10 == 0) {
-                ((ServerLevel) (attacker.level())).sendParticles(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), x, y, z, 1, 0, 0, 0, 0.0D);
-            }
-
-            if (genericMobs.isEmpty()) {
-                return;
-            }
-
-            Monster others = genericMobs.get(random.nextInt(genericMobs.size()));
-            if (genericMobs.size() > 2) {
-                while (others == monster) {
-                    others = genericMobs.get(random.nextInt(genericMobs.size()));
-                }
-            }
-
-            if (others == null) {
-                monster.setTarget(null);
-            } else {
-                LivingUtils.setAttackTarget(monster, others);
-            }
-        }
-    }
 
     public static void onLivingUpdate(LivingEntity entity) {
         if (entity instanceof Mob pet) {
-            mobTick(pet);
             if (TameableUtils.hasEnchant(pet, ModEnchantments.BLAZING_PROTECTION) && !entity.level().isClientSide()) {
                 int bars = TameableUtils.getBlazingProtectionBars(pet);
                 if (bars < 2 * TameableUtils.getEnchantLevel(pet, ModEnchantments.BLAZING_PROTECTION)) {
@@ -568,17 +473,6 @@ public class ServerProxy {
                 }
             }
 
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.NIGHT_VISION) && TameableUtils.isTamed(pet)) {
-                var owner = TameableUtils.getOwnerOf(pet);
-                if (owner != null && owner.distanceToSqr(pet) < 10 && owner instanceof Player petOwner) {
-                    if (!petOwner.hasEffect(MobEffects.NIGHT_VISION) && pet.tickCount % 40 == 0) {
-                        petOwner.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 20 * 60 * 5));
-                    }
-                }
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.XP_Transfer)) {
-                TameableUtils.xpTransfer(pet);
-            }
             if (TameableUtils.hasEnchant(pet, ModEnchantments.VOID_CLOUD) && !pet.isInWaterOrBubble() && pet.fallDistance > 3.0F && !pet.onGround()) {
                 Entity owner = TameableUtils.getOwnerOf(pet);
                 boolean shouldMoveToOwnerXZ = owner != null && Math.abs(owner.getY() - pet.getY()) < 1;
@@ -600,6 +494,7 @@ public class ServerProxy {
                     ((ServerLevel) pet.level()).sendParticles(ParticleTypes.REVERSE_PORTAL, pet.getRandomX(1.5F), pet.getY() - pet.getRandom().nextFloat(), pet.getRandomZ(1.5F), 0, 0, -0.2F, 0, 1.0D);
                 }
             }
+
             if (TameableUtils.hasEnchant(pet, ModEnchantments.IMMUNITY_FRAME) && !entity.level().isClientSide()) {
                 int i = TameableUtils.getImmuneTime(pet);
                 if (i > 0) {
@@ -624,26 +519,7 @@ public class ServerProxy {
             if (TameableUtils.hasEnchant(pet, ModEnchantments.INTIMIDATION)) {
                 TameableUtils.scareRandomMonsters(pet, TameableUtils.getEnchantLevel(pet, ModEnchantments.INTIMIDATION));
             }
-            var insightLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.INSIGHT);
-            if (insightLevel > 0) {
-                if (entity.level() instanceof ServerLevel serverLevel) {
-                    var brightness = serverLevel.getMaxLocalRawBrightness(pet.getOnPos().above()) < 9;
-                    if (brightness) {
-                        TameableUtils.applyGlowingEffect(pet, insightLevel);
-                    }
-                }
 
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.SonicBoom)) {
-                var beingAttacked = pet.getTarget();
-                if (beingAttacked != null) {
-                    if (pet.closerThan(beingAttacked, 10.0, 20.0) || TameableUtils.getNearbyMobs(pet, 10).size() > 3) {
-                        if (pet.tickCount % 200 == 0) {
-                            TameableUtils.performSonicBook(pet, beingAttacked, (ServerLevel) pet.level());
-                        }
-                    }
-                }
-            }
             int shadowHandsLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.SHADOW_HANDS);
             if (shadowHandsLevel > 0 && entity instanceof Mob mob) {
                 CommonClientData.updateVisualDataForMob(entity, TameableUtils.getShadowPunchTimes(mob));

@@ -35,8 +35,8 @@ public class RecallBallModel extends AdvancedEntityModel<RecallBallEntity> {
         this.bottom.setShouldScaleChildren(true);
         this.resetToDefaultPose();
         float open = entity.getOpenProgress(partialTick);
-        this.top.rotateAngleX -= open * Math.PI * 0.75F;
-        this.bottom.rotateAngleX += open * Math.PI * 0.25F;
+        this.top.rotateAngleX -= (float) (open * Math.PI * 0.75F);
+        this.bottom.rotateAngleX += (float) (open * Math.PI * 0.25F);
         if (entity.isFinished()) {
             this.bottom.setScale(open, open * open, open);
         } else {

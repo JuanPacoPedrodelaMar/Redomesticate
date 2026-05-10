@@ -35,6 +35,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
@@ -279,13 +280,9 @@ public class TameableUtils {
     private static void onUpdateEnchants(@Nullable Map<ResourceLocation, Integer> prevEnchants, LivingEntity enchanted) {
         int healthExtra = getEnchantLevel(enchanted, ModEnchantments.HEALTH_BOOST);
         int speedExtra = getEnchantLevel(enchanted, ModEnchantments.SPEEDSTER);
-        int toughExtra = getEnchantLevel(enchanted, ModEnchantments.TOUGH);
         boolean amphib = hasEnchant(enchanted, ModEnchantments.AMPHIBIOUS) && !enchanted.isInWaterOrBubble() && isWaterCreature(enchanted);
         AttributeInstance health = enchanted.getAttribute(Attributes.MAX_HEALTH);
         AttributeInstance speed = enchanted.getAttribute(Attributes.MOVEMENT_SPEED);
-        var armor = enchanted.getAttribute(Attributes.ARMOR);
-        var resistance = enchanted.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
-        var enchantReg = enchanted.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
         if (hasEnchant(enchanted, ModEnchantments.IMMATURITY_CURSE) || prevEnchants != null && prevEnchants.containsKey(ModEnchantments.IMMATURITY_CURSE.registry())) {
             //change pose to update client
             enchanted.setPose(Pose.FALL_FLYING);
@@ -294,27 +291,7 @@ public class TameableUtils {
             enchanted.refreshDimensions();
 
         }
-        if (armor != null && resistance != null) {
-            AttributeModifier armorBoost = new AttributeModifier(ARMOR_BOOST_UUID, toughExtra * 3, AttributeModifier.Operation.ADD_VALUE);
-            AttributeModifier resBoost = new AttributeModifier(RESISTANCE_BOOST_UUID, toughExtra * 3, AttributeModifier.Operation.ADD_VALUE);
-            if (toughExtra > 0) {
-                if (armor.hasModifier(armorBoost.id())) {
-                    armor.removeModifier(armorBoost);
-                    armor.addPermanentModifier(armorBoost);
-                } else {
-                    armor.addPermanentModifier(armorBoost);
-                }
-                if (resistance.hasModifier(resBoost.id())) {
-                    resistance.removeModifier(resBoost);
-                    resistance.addPermanentModifier(resBoost);
-                } else {
-                    resistance.addPermanentModifier(resBoost);
-                }
-            } else {
-                armor.removeModifier(ARMOR_BOOST_UUID);
-                resistance.removeModifier(RESISTANCE_BOOST_UUID);
-            }
-        }
+
         if (health != null) {
             AttributeModifier healthBoostPetUpgrade = new AttributeModifier(HEALTH_BOOST_UUID, healthExtra * 10, AttributeModifier.Operation.ADD_VALUE);
 
@@ -798,6 +775,45 @@ public class TameableUtils {
     public static int[] getShadowPunchStriking(LivingEntity enchanted) {
         CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
         return tag.getIntArray(SHADOW_PUNCH_STRIKING);
+    }
+
+    public static int getCharismaBonusForOwner(Player player) {
+        Predicate<Entity> pet = (animal) -> isTamed(animal) && isPetOf(player, animal);
+        List<LivingEntity> list = player.level().getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(25, 8, 25), EntitySelector.NO_SPECTATORS.and(pet));
+        int charismas = 0;
+        for (LivingEntity entity : list) {
+            charismas += 10 * getEnchantLevel(entity, ModEnchantments.CHARISMA);
+        }
+        return Math.min(charismas, 50);
+    }
+
+    public static void setPetJukeboxUUID(LivingEntity enchanted, UUID id) {
+        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
+        tag.putUUID(JUKEBOX_FOLLOWER_UUID, id);
+        sync(enchanted, tag);
+    }
+
+    public static UUID getPetJukeboxUUID(LivingEntity enchanted) {
+        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
+        return tag.contains(JUKEBOX_FOLLOWER_UUID) ? tag.getUUID(JUKEBOX_FOLLOWER_UUID) : null;
+    }
+
+    public static void setPetJukeboxDisc(LivingEntity enchanted, ItemStack stack) {
+        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
+        if (stack.isEmpty()) {
+            tag.remove(JUKEBOX_FOLLOWER_DISC);
+        } else {
+            tag.put(JUKEBOX_FOLLOWER_DISC, stack.saveOptional(enchanted.registryAccess()));
+        }
+        sync(enchanted, tag);
+    }
+
+    public static ItemStack getPetJukeboxDisc(LivingEntity enchanted) {
+        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
+        if (tag.contains(JUKEBOX_FOLLOWER_DISC)) {
+            return ItemStack.parseOptional(enchanted.registryAccess(), tag.getCompound(JUKEBOX_FOLLOWER_DISC));
+        }
+        return ItemStack.EMPTY;
     }
 
     public static boolean isValidTeleporter(LivingEntity owner, Mob animal) {

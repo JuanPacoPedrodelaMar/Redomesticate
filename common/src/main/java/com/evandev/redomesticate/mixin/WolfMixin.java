@@ -10,7 +10,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Wolf;
@@ -34,10 +33,10 @@ public abstract class WolfMixin extends TamableAnimal implements ICommandableMob
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(redomesticate$COMMAND, 0);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(redomesticate$COMMAND, 0);
     }
 
     @Inject(
@@ -45,7 +44,7 @@ public abstract class WolfMixin extends TamableAnimal implements ICommandableMob
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
     }
 
     @Inject(
@@ -53,7 +52,7 @@ public abstract class WolfMixin extends TamableAnimal implements ICommandableMob
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
     }
 
     @Inject(
@@ -68,7 +67,7 @@ public abstract class WolfMixin extends TamableAnimal implements ICommandableMob
         if (ModConfig.get().trinaryCommandSystem) {
             this.jumping = false;
             this.navigation.stop();
-            this.setTarget((LivingEntity) null);
+            this.setTarget(null);
             player.swing(hand, true);
             cir.setReturnValue(this.playerSetCommand(player, this));
         }

@@ -23,7 +23,7 @@ public class FollowParentGoalMixin {
             method = {"canUse()Z"},
             cancellable = true
     )
-    private void di_canUse(CallbackInfoReturnable<Boolean> cir){
+    private void canUse(CallbackInfoReturnable<Boolean> cir){
         if(animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem){
             cir.setReturnValue(false);
         }
@@ -34,7 +34,7 @@ public class FollowParentGoalMixin {
             method = {"canContinueToUse()Z"},
             cancellable = true
     )
-    private void di_canContinueToUse(CallbackInfoReturnable<Boolean> cir){
+    private void canContinueToUse(CallbackInfoReturnable<Boolean> cir){
         if(animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem){
             cir.setReturnValue(false);
         }

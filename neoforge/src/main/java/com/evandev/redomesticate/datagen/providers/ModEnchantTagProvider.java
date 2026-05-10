@@ -24,9 +24,6 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .addOptional(ModEnchantments.VAMPIRE.location())
                 .addOptional(ModEnchantments.BLAZING_PROTECTION.location())
                 .addOptional(ModEnchantments.ORE_SCENTING.location())
-                .addOptional(ModEnchantments.SonicBoom.location())
-                .addOptional(ModEnchantments.SHARE.location())
-                .addOptional(ModEnchantments.PARALYSIS.location())
                 .replace(false)
         ;
 
@@ -40,7 +37,6 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .addOptional(ModEnchantments.AMPHIBIOUS.location())
                 .addOptional(ModEnchantments.HEALING_AURA.location())
                 .addOptional(ModEnchantments.CHAIN_LIGHTNING.location())
-                .addOptional(ModEnchantments.XP_Transfer.location())
                 .addOptional(ModEnchantments.LINKED_INVENTORY.location())
                 .addOptional(ModEnchantments.HEALTH_BOOST.location())
                 .addOptional(ModEnchantments.IMMUNITY_FRAME.location())
@@ -64,12 +60,7 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .addOptional(ModEnchantments.TETHERED_TELEPORT.location())
                 .addOptional(ModEnchantments.REJUVENATION.location())
                 .addOptional(ModEnchantments.BLIGHT_CURSE.location())
-                .addOptional(ModEnchantments.SonicBoom.location())
                 .addOptional(ModEnchantments.VOID_CLOUD.location())
-                .addOptional(ModEnchantments.INSIGHT.location())
-                .addOptional(ModEnchantments.CHAOS.location())
-                .addOptional(ModEnchantments.NIGHT_VISION.location())
-                .addOptional(ModEnchantments.VIOLENT.location())
         ;
 
         this.tag(EnchantmentTags.IN_ENCHANTING_TABLE)
@@ -93,15 +84,11 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
                 .addOptional(ModEnchantments.POISON_RESISTANCE.location())
                 .addOptional(ModEnchantments.WARPING_BITE.location())
                 .addOptional(ModEnchantments.TETHERED_TELEPORT.location())
-                .addOptional(ModEnchantments.XP_Transfer.location())
                 .addOptional(ModEnchantments.BLIGHT_CURSE.location())
                 .addOptional(ModEnchantments.DEFUSAL.location())
                 .addOptional(ModEnchantments.TOTAL_RECALL.location())
                 .addOptional(ModEnchantments.REJUVENATION.location())
                 .addOptional(ModEnchantments.VOID_CLOUD.location())
-
-                .addOptional(ModEnchantments.INSIGHT.location())
-
                 .replace(false)
         ;
 

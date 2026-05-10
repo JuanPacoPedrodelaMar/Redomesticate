@@ -39,15 +39,6 @@ public class LootTableGen {
 
         @Override
         public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer) {
-            consumer.accept(ModLootTables.PET_PROTECTION_TABLE, LootTable.lootTable().withPool(LootPool.lootPool()
-                    .name("enchant")
-                    .setRolls(ConstantValue.exactly(1))
-                    .when(LootItemRandomChanceCondition.randomChance(0.05F))
-
-                    .add(enchantItem(Items.BOOK, ModEnchantments.TOUGH, 1, 4))
-
-            ));
-
             consumer.accept(ModLootTables.PET_LOOT_TABLE, LootTable.lootTable()
                     .withPool(LootPool.lootPool()
                             .name("rotten_apple")

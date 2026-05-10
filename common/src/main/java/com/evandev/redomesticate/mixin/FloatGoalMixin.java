@@ -30,5 +30,4 @@ public abstract class FloatGoalMixin extends Goal {
             cir.setReturnValue(false);
         }
     }
-
 }

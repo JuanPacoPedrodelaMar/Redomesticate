@@ -13,10 +13,6 @@
       "required": false
     },
     {
-      "id": "redomesticate:xp_transfer",
-      "required": false
-    },
-    {
       "id": "redomesticate:linked_inventory",
       "required": false
     },
@@ -109,27 +105,7 @@
       "required": false
     },
     {
-      "id": "redomesticate:sonic_boom",
-      "required": false
-    },
-    {
       "id": "redomesticate:void_cloud",
-      "required": false
-    },
-    {
-      "id": "redomesticate:insight",
-      "required": false
-    },
-    {
-      "id": "redomesticate:chaos",
-      "required": false
-    },
-    {
-      "id": "redomesticate:night_vision",
-      "required": false
-    },
-    {
-      "id": "redomesticate:violent",
       "required": false
     }
   ]

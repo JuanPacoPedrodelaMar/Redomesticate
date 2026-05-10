@@ -21,3 +21,5 @@ mutable field net/minecraft/world/level/levelgen/structure/pools/StructurePoolEl
 
 accessible field net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorList list Ljava/util/List;
 mutable field net/minecraft/world/level/levelgen/structure/templatesystem/StructureProcessorList list Ljava/util/List;
+
+accessible method net/minecraft/world/entity/schedule/Activity <init> (Ljava/lang/String;)V

@@ -69,8 +69,7 @@ public class Redomesticate {
     @SubscribeEvent
     public void onLivingHurt(LivingDamageEvent.Pre event) {
         ServerProxy.onTameHurt(event.getEntity(), event.getSource());
-        float newDamage = ServerProxy.onEntityHurtPre(event.getEntity(), event.getSource(), event.getOriginalDamage());
-        event.setNewDamage(newDamage);
+        event.setNewDamage(event.getOriginalDamage());
     }
 
     @SubscribeEvent

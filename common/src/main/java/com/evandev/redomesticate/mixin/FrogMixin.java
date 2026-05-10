@@ -30,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -37,7 +38,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -61,18 +62,17 @@ public abstract class FrogMixin extends Animal implements ITameableEntity, IComm
     }
 
     @Shadow
-    public abstract Brain<Frog> getBrain();
+    public abstract @NotNull Brain<Frog> getBrain();
 
     @Inject(
             at = {@At("TAIL")},
-            method = {"Lnet/minecraft/world/entity/animal/frog/Frog;defineSynchedData()V"}
+            method = {"defineSynchedData(Lnet/minecraft/network/syncher/SynchedEntityData$Builder;)V"}
     )
-    private void registerData(CallbackInfo ci) {
-        this.entityData.define(OWNER_UUID, Optional.empty());
-        this.entityData.define(redomesticate$COMMAND, 0);
-        this.entityData.define(redomesticate$TAMED, false);
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+        builder.define(OWNER_UUID, Optional.empty());
+        builder.define(redomesticate$COMMAND, 0);
+        builder.define(redomesticate$TAMED, false);
     }
-
 
     @Inject(
             method = {"tick()V"},
@@ -90,7 +90,7 @@ public abstract class FrogMixin extends Animal implements ITameableEntity, IComm
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        compoundNBT.putInt("DICommand", this.redomesticate$getCommand());
+        compoundNBT.putInt("RedomesticateCommand", this.redomesticate$getCommand());
         compoundNBT.putBoolean("Tamed", this.redomesticate$isTame());
         if (this.redomesticate$getTameOwnerUUID() != null) {
             compoundNBT.putUUID("Owner", this.redomesticate$getTameOwnerUUID());
@@ -102,7 +102,7 @@ public abstract class FrogMixin extends Animal implements ITameableEntity, IComm
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        this.redomesticate$setCommand(compoundNBT.getInt("DICommand"));
+        this.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
         this.redomesticate$setTame(compoundNBT.getBoolean("Tamed"));
         UUID uuid;
         if (compoundNBT.hasUUID("Owner")) {

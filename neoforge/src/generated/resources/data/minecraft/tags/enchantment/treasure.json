@@ -15,18 +15,6 @@
     {
       "id": "redomesticate:ore_scenting",
       "required": false
-    },
-    {
-      "id": "redomesticate:sonic_boom",
-      "required": false
-    },
-    {
-      "id": "redomesticate:share",
-      "required": false
-    },
-    {
-      "id": "redomesticate:paralysis",
-      "required": false
     }
   ]
 }

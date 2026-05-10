@@ -57,34 +57,14 @@ public class ModLootModifier extends LootModifier {
                     generatedLoot.add(enchantedBook(ModEnchantments.VAMPIRE, context.getRandom(), context));
                 }
             }
-            case 3 -> {
-                if (context.getRandom().nextFloat() < ModConfig.get().shareLootChance) {
-                    generatedLoot.add(enchantedBook(ModEnchantments.SHARE, context.getRandom(), context));
-                }
-            }
             case 4 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().oreScentingLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.ORE_SCENTING, context.getRandom(), context));
                 }
             }
-            case 5 -> {
-                if (context.getRandom().nextFloat() < ModConfig.get().sonicBoomLootChance) {
-                    generatedLoot.add(enchantedBook(ModEnchantments.SonicBoom, context.getRandom(), context));
-                }
-            }
             case 6 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().blazingProtectionLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.BLAZING_PROTECTION, context.getRandom(), context));
-                }
-            }
-            case 7 -> {
-                if (context.getRandom().nextFloat() < ModConfig.get().paralysisLootChance) {
-                    generatedLoot.add(enchantedBook(ModEnchantments.PARALYSIS, context.getRandom(), context));
-                }
-            }
-            case 8 -> {
-                if (context.getRandom().nextFloat() < ModConfig.get().toughLootChance) {
-                    generatedLoot.add(enchantedBook(ModEnchantments.TOUGH, context.getRandom(), context));
                 }
             }
 

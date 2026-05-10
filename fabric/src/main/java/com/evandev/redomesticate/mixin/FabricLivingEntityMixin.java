@@ -4,6 +4,7 @@ import com.evandev.redomesticate.server.ServerProxy;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,17 +29,26 @@ public abstract class FabricLivingEntityMixin {
         }
     }
 
+    @Inject(method = "randomTeleport(DDDZ)Z", at = @At("HEAD"))
+    private void redomesticate$onRandomTeleport(double x, double y, double z, boolean broadcastTeleport, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        ServerProxy.onEntityTeleport(entity, entity.position(), new Vec3(x, y, z));
+    }
+
+    @Inject(method = "die", at = @At("HEAD"))
+    private void redomesticate$onDie(DamageSource damageSource, CallbackInfo ci) {
+        ServerProxy.onLivingDie((LivingEntity) (Object) this, damageSource);
+    }
+
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onLivingDamagePre(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
         ServerProxy.onTameHurt(entity, source);
 
-        float newDamage = ServerProxy.onEntityHurtPre(entity, source, amount);
-
-        if (ServerProxy.onLivingDamage(entity, source, newDamage)) {
+        if (ServerProxy.onLivingDamage(entity, source, amount)) {
             cir.setReturnValue(false);
         } else {
-            ServerProxy.onEntityHurt(entity, source, amount, newDamage);
+            ServerProxy.onEntityHurt(entity, source, amount, amount);
         }
     }
 }

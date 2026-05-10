@@ -38,6 +38,7 @@ public class NeoForgeClientEvents {
             event.registerEntityRenderer(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
             event.registerEntityRenderer(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
             event.registerEntityRenderer(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
+            event.registerEntityRenderer(ModEntities.RECALL_BALL.get(), RecallBallRender::new);
             event.registerEntityRenderer(ModEntities.FEATHER.get(), RenderFeather::new);
         }
 

@@ -1,14 +1,14 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.redomesticate.paralysis"
+    "translate": "enchantment.redomesticate.undead_curse"
   },
-  "exclusive_set": "redomesticate:chaos",
+  "exclusive_set": "redomesticate:total_recall",
   "max_cost": {
     "base": 25,
     "per_level_above_first": 7
   },
-  "max_level": 3,
+  "max_level": 1,
   "min_cost": {
     "base": 4,
     "per_level_above_first": 7

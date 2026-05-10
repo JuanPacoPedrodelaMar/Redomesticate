@@ -16,7 +16,7 @@ public class VillagerMixin {
             method = {"getPlayerReputation(Lnet/minecraft/world/entity/player/Player;)I"},
             cancellable = true
     )
-    private void di_getPlayerReputation(Player player, CallbackInfoReturnable<Integer> cir) {
+    private void getPlayerReputation(Player player, CallbackInfoReturnable<Integer> cir) {
         cir.setReturnValue(cir.getReturnValue() + TameableUtils.getCharismaBonusForOwner(player));
     }
 }

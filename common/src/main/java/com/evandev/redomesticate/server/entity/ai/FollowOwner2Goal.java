@@ -44,7 +44,7 @@ public class FollowOwner2Goal extends Goal {
 
     public boolean canUse() {
         LivingEntity livingentity = ((ITameableEntity) this.tamable).redomesticate$getTameOwner();
-        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem.get()) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
             return false;
         } else if (livingentity == null) {
             return false;
@@ -61,7 +61,7 @@ public class FollowOwner2Goal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem.get()) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
             return false;
         } else if (this.navigation.isDone()) {
             return false;
@@ -130,11 +130,11 @@ public class FollowOwner2Goal extends Goal {
     }
 
     private boolean canTeleportTo(BlockPos pos) {
-        PathType PathType = WalkNodeEvaluator.getPathTypeStatic(this.level, pos.mutable());
+        PathType pathType = WalkNodeEvaluator.getPathTypeStatic(this.tamable, pos.mutable());
         if (TameableUtils.hasEnchant(tamable, ModEnchantments.AMPHIBIOUS) && level.isWaterAt(pos)) {
             return true;
         }
-        if (PathType != net.minecraft.world.level.pathfinder.PathType.WALKABLE) {
+        if (pathType != PathType.WALKABLE) {
             return false;
         } else {
             BlockState blockstate = this.level.getBlockState(pos.below());
