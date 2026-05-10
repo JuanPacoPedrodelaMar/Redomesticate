@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.datagen.providers;
 
+import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.LangDefinition;
-import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.util.LangUtil;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -25,7 +25,7 @@ public class ModLangProvider extends LanguageProvider {
         add("item.redomesticate.deflection_shield", "Deflection Shield Model");
         add("item.redomesticate.magnet", "Magnet Model");
         add("item.redomesticate.feather_on_a_stick", "Feather on a Stick");
-        add("item.redomesticate.deed_of_ownership", "release pet");
+        add("item.redomesticate.deed_of_ownership", "Deed of Ownership");
         add("item.redomesticate.deed_of_ownership.desc", "right click your pet, you can release it");
         add("block.redomesticate.pet_bed_white", "White Pet Bed");
         add("block.redomesticate.pet_bed_orange", "Orange Pet Bed");
@@ -192,7 +192,7 @@ public class ModLangProvider extends LanguageProvider {
         add("redomesticate.configuration.can_hurt_all.tooltip", "Items that bypass all mod protections to damage creatures without needing to press Shift");
         add("redomesticate.configuration.can_hurt_all", "All-protection bypass items");
 
-        add(LangUtil.effect("drunk"), "Chaos");
+        add("effect.redomesticate.drunk", "Chaos");
         add("enchantment.redomesticate.share", "Share");
         add("enchantment.redomesticate.share.desc", "When the pet is attacked, it shares damage with nearby hostile mobs");
         add("enchantment.redomesticate.night_vision", "Night Vision");
@@ -216,13 +216,6 @@ public class ModLangProvider extends LanguageProvider {
         add("enchantment.redomesticate.violent.desc", "monster will have some debuff when attacked by pet");
         add(LangDefinition.has_pet_bed_at_pos, "has petbed at ( %s )");
         add(LangDefinition.health_text, "Health");
-        add(LangDefinition.no_net_entity_text, "No creature available to release");
-        add(LangDefinition.net_launcher_tip, "[Hold Shift + Right Click to toggle between Capture and Release modes]");
-        add(LangDefinition.net_launcher_default_only_tamable, "By default, only tamable mobs can be captured (configurable in settings file).");
-        add(LangUtil.conf("mobcatcherOnlyTamableAnimal"), "Only tamable mobs can be captured");
-        add(LangUtil.conf("mobcatcherOnlyTamableAnimal.tooltip"), "Disable to allow capturing any mob");
-        add(LangUtil.conf("mobcatcherBlacklist"), "Mob Catcher prohibited list");
-        add(LangUtil.conf("mobcatcherBlacklist.tooltip"), "Mobs that are blocked from being captured");
 
         add("redomesticate.configuration.tough_loot_chance.tooltip", "Probability of Tough enchantment book appearing in Abandoned Mineshaft chests");
         add("redomesticate.configuration.tough_loot_chance", "Tough Enchantment Chance");

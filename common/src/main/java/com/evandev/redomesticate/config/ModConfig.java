@@ -19,14 +19,12 @@ import java.util.stream.Collectors;
 
 public class ModConfig {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final File CONFIG_FILE = Services.PLATFORM.getConfigDirectory().resolve("redomesticate.json").toFile();
+    private static final File CONFIG_FILE = Services.PLATFORM.getConfigDirectory().resolve(Constants.MOD_ID + ".json").toFile();
     private static ModConfig INSTANCE;
 
     // General
     public boolean rottenApple = true;
-    public boolean mobcatcherOnlyTamableAnimal = true;
     public int petstoreVillageWeight = 17;
-    public List<String> mobcatcherBlacklist = List.of("minecraft:painting");
 
     // Loot Chances
     public double blazingProtectionLootChance = 0.2D;
@@ -82,10 +80,6 @@ public class ModConfig {
         } catch (IOException e) {
             Constants.LOG.error("Failed to save redomesticate.json", e);
         }
-    }
-
-    public Set<EntityType<?>> getMobcatcherBlacklist() {
-        return parseEntities(mobcatcherBlacklist);
     }
 
     public Set<EntityType<?>> getNoProtectionEntity() {

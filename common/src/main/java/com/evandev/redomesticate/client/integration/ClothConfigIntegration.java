@@ -26,9 +26,7 @@ public class ClothConfigIntegration {
 
         // General Category
         general.addEntry(entryBuilder.startBooleanToggle(Component.literal("Rotten Apple"), config.rottenApple).setDefaultValue(true).setSaveConsumer(val -> config.rottenApple = val).build());
-        general.addEntry(entryBuilder.startBooleanToggle(Component.literal("Mobcatcher Only Tameables"), config.mobcatcherOnlyTamableAnimal).setDefaultValue(true).setSaveConsumer(val -> config.mobcatcherOnlyTamableAnimal = val).build());
-        general.addEntry(entryBuilder.startIntField(Component.literal("Petstore Village Weight"), config.petstoreVillageWeight).setDefaultValue(17).setSaveConsumer(val -> config.petstoreVillageWeight = val).build());
-        general.addEntry(entryBuilder.startStrList(Component.literal("Mobcatcher Blacklist"), config.mobcatcherBlacklist).setDefaultValue(java.util.List.of("minecraft:painting")).setSaveConsumer(val -> config.mobcatcherBlacklist = val).build());
+        general.addEntry(entryBuilder.startIntField(Component.literal("Pet Store Village Weight"), config.petstoreVillageWeight).setDefaultValue(17).setSaveConsumer(val -> config.petstoreVillageWeight = val).build());
 
         // Loot Category
         loot.addEntry(entryBuilder.startDoubleField(Component.literal("Blazing Protection Loot Chance"), config.blazingProtectionLootChance).setDefaultValue(0.2D).setSaveConsumer(val -> config.blazingProtectionLootChance = val).build());
