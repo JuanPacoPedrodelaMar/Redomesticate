@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.client.sound;
 
-import com.evandev.redomesticate.server.entity.FollowingJukeboxEntity;
+import com.evandev.redomesticate.content.entity.FollowingJukeboxEntity;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;

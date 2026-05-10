@@ -3,17 +3,17 @@ package com.evandev.redomesticate.util;
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.mixin.accessor.ExperienceOrbAccessor;
 import com.evandev.redomesticate.network.PropertiesMessage;
 import com.evandev.redomesticate.platform.Services;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
-import com.evandev.redomesticate.server.entity.HighlightedBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
@@ -32,6 +32,10 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Fox;
+import net.minecraft.world.entity.animal.Rabbit;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -134,18 +138,18 @@ public class TameableUtils {
 
     public static boolean isTamed(Entity entity) {
         //sometimes these are not bound on runtime
-//        if (entity instanceof Axolotl) {
-//            return ((ITameableEntity) entity).redomesticate$redomesticate$isTame() && PetHomeConfig.tameableAxolotl;
-//        }
-//        if (entity instanceof Fox) {
-//            return ((ITameableEntity) entity).redomesticate$redomesticate$isTame() && PetHomeConfig.tameableFox;
-//        }
-//        if (entity instanceof Rabbit) {
-//            return ((ITameableEntity) entity).redomesticate$redomesticate$isTame() && PetHomeConfig.tameableRabbit;
-//        }
-//        if (entity instanceof Frog) {
-//            return ((ITameableEntity) entity).redomesticate$redomesticate$isTame() && PetHomeConfig.tameableFrog;
-//        }
+        if (entity instanceof Axolotl) {
+            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableAxolotl;
+        }
+        if (entity instanceof Fox) {
+            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableFox;
+        }
+        if (entity instanceof Rabbit) {
+            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableRabbit;
+        }
+        if (entity instanceof Frog) {
+            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableFrog;
+        }
         return entity instanceof ITameableEntity && ((ITameableEntity) entity).redomesticate$isTame() || entity instanceof TamableAnimal && ((TamableAnimal) entity).isTame();
     }
 
@@ -154,32 +158,15 @@ public class TameableUtils {
     }
 
     private static boolean hasSameOwnerAsOneWay(Entity tameable, Entity target) {
-        if (tameable instanceof TamableAnimal tamed && tamed.getOwner() != null) {
-            if (target instanceof ITameableEntity axolotl && axolotl.redomesticate$getTameOwner() != null) {
-                if (tamed.getOwner().equals(axolotl.redomesticate$getTameOwner())) {
-                    return true;
-                }
-            }
-            if (target instanceof TamableAnimal otherPet && otherPet.getOwner() != null) {
-                if (tamed.getOwner().equals(otherPet.getOwner())) {
-                    return true;
-                }
-            }
-            return tamed.getOwner().equals(target);
-        } else if (tameable instanceof ITameableEntity axolotl && axolotl.redomesticate$getTameOwner() != null) {
-            if (tameable instanceof TamableAnimal tamed && tamed.getOwner() != null) {
-                if (tamed.getOwner().equals(axolotl.redomesticate$getTameOwner())) {
-                    return true;
-                }
-            }
-            if (target instanceof ITameableEntity otherPet && otherPet.redomesticate$getTameOwner() != null) {
-                if (axolotl.redomesticate$getTameOwner().equals(otherPet.redomesticate$getTameOwner())) {
-                    return true;
-                }
-            }
-            return axolotl.redomesticate$getTameOwner().equals(target);
+        Entity owner1 = getOwnerOf(tameable);
+        if (owner1 == null) return false;
+
+        Entity owner2 = getOwnerOf(target);
+        if (owner1.equals(owner2)) {
+            return true;
         }
-        return false;
+
+        return owner1.equals(target);
     }
 
     @Nullable
@@ -515,8 +502,9 @@ public class TameableUtils {
     }
 
     public static List<LivingEntity> getAuraHealables(LivingEntity pet) {
-        Predicate<Entity> hurtAndOnTeam = (animal) -> hasSameOwnerAs((LivingEntity) animal, pet) && animal.distanceTo(pet) < 4 && ((LivingEntity) animal).getHealth() < ((LivingEntity) animal).getMaxHealth();
-        return pet.level().getEntitiesOfClass(LivingEntity.class, pet.getBoundingBox().inflate(4, 4, 4), EntitySelector.NO_SPECTATORS.and(hurtAndOnTeam));
+        return pet.level().getEntitiesOfClass(LivingEntity.class, pet.getBoundingBox().inflate(4, 4, 4),
+                e -> !e.isSpectator() && hasSameOwnerAs(e, pet) && e.distanceTo(pet) < 4 && e.getHealth() < e.getMaxHealth()
+        );
     }
 
     public static int getPsychicWallCooldown(LivingEntity enchanted) {

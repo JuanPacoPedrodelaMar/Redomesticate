@@ -11,12 +11,12 @@ public class ModEntityData {
     }
 
     public static CompoundTag getEntityTag(LivingEntity entity) {
-        return entity instanceof IPetbedDataEntity ? ((IPetbedDataEntity) entity).redomesticate$getCitadelEntityData() : new CompoundTag();
+        return entity instanceof IPetbedDataEntity ? ((IPetbedDataEntity) entity).redomesticate$getEntityData() : new CompoundTag();
     }
 
     public static void setEntityTag(LivingEntity entity, CompoundTag tag) {
         if (entity instanceof IPetbedDataEntity) {
-            ((IPetbedDataEntity) entity).redomesticate$setCitadelEntityData(tag);
+            ((IPetbedDataEntity) entity).redomesticate$setEntityData(tag);
         }
     }
 }

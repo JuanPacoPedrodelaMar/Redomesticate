@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.registry.ModItems;
-import com.evandev.redomesticate.server.entity.FeatherEntity;
+import com.evandev.redomesticate.content.entity.FeatherEntity;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.BlockPos;

@@ -2,7 +2,7 @@ package com.evandev.redomesticate.platform;
 
 import com.evandev.redomesticate.platform.registry.RegistrationProvider;
 import com.evandev.redomesticate.platform.services.IPlatformHelper;
-import com.evandev.redomesticate.server.ServerProxy;
+import com.evandev.redomesticate.content.ServerProxy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;

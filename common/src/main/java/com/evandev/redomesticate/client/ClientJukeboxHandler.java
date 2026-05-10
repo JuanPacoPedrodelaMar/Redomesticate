@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.client;
 
 import com.evandev.redomesticate.client.sound.DiscJockeySound;
-import com.evandev.redomesticate.server.entity.FollowingJukeboxEntity;
+import com.evandev.redomesticate.content.entity.FollowingJukeboxEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
 

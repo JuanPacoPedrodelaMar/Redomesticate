@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.registry.ModEnchantments;
-import com.evandev.redomesticate.server.entity.PsychicWallEntity;
+import com.evandev.redomesticate.content.entity.PsychicWallEntity;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;

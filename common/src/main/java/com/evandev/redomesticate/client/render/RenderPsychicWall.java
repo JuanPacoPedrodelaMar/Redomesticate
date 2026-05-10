@@ -2,7 +2,7 @@ package com.evandev.redomesticate.client.render;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.registry.ModRenderTypes;
-import com.evandev.redomesticate.server.entity.PsychicWallEntity;
+import com.evandev.redomesticate.content.entity.PsychicWallEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.client.render;
 
-import com.evandev.redomesticate.server.entity.FeatherEntity;
+import com.evandev.redomesticate.content.entity.FeatherEntity;
 import com.evandev.redomesticate.registry.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

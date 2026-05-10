@@ -5,7 +5,7 @@ import com.evandev.redomesticate.client.particle.*;
 import com.evandev.redomesticate.client.render.*;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
-import com.evandev.redomesticate.server.entity.HighlightedBlockEntity;
+import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
 import com.google.common.collect.ImmutableList;

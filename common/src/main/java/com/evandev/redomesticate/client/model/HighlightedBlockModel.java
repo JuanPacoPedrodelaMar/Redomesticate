@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.client.model;
 
-import com.evandev.redomesticate.server.entity.RecallBallEntity;
+import com.evandev.redomesticate.content.entity.RecallBallEntity;
 import com.google.common.collect.ImmutableList;
 
 public class HighlightedBlockModel extends AdvancedEntityModel<RecallBallEntity> {

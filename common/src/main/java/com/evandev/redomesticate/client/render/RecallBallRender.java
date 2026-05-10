@@ -2,7 +2,7 @@ package com.evandev.redomesticate.client.render;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.client.model.RecallBallModel;
-import com.evandev.redomesticate.server.entity.RecallBallEntity;
+import com.evandev.redomesticate.content.entity.RecallBallEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

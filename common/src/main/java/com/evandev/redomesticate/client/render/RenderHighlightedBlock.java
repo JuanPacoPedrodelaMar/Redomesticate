@@ -2,7 +2,7 @@ package com.evandev.redomesticate.client.render;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.client.model.HighlightedBlockModel;
-import com.evandev.redomesticate.server.entity.HighlightedBlockEntity;
+import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

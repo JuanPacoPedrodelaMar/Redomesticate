@@ -3,7 +3,7 @@ package com.evandev.redomesticate;
 import com.evandev.redomesticate.client.ClientConfigSetup;
 import com.evandev.redomesticate.platform.NeoForgeRegistrationProvider;
 import com.evandev.redomesticate.registry.NeoForgeModLootModifiers;
-import com.evandev.redomesticate.server.ServerProxy;
+import com.evandev.redomesticate.content.ServerProxy;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;

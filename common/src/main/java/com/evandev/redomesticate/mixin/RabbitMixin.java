@@ -4,7 +4,7 @@ import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.config.ModConfig;
-import com.evandev.redomesticate.server.entity.ai.*;
+import com.evandev.redomesticate.content.entity.ai.*;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;

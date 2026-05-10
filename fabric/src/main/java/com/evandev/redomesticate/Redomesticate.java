@@ -3,7 +3,7 @@ package com.evandev.redomesticate;
 import com.evandev.redomesticate.network.FabricNetworking;
 import com.evandev.redomesticate.registry.FabricModLoot;
 import com.evandev.redomesticate.registry.ModVillagers;
-import com.evandev.redomesticate.server.ServerProxy;
+import com.evandev.redomesticate.content.ServerProxy;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.api.ModInitializer;

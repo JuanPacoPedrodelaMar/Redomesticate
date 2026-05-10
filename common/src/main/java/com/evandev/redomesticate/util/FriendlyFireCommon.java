@@ -11,9 +11,6 @@ import java.util.UUID;
 
 public class FriendlyFireCommon {
 
-    public static void init() {
-    }
-
     public static boolean preventAttack(Entity target, DamageSource source, float amount) {
         return isProtected(target, source.getEntity());
     }
@@ -29,11 +26,7 @@ public class FriendlyFireCommon {
 
         final UUID ownerId = getOwner(victim);
 
-        if (ownerId != null && ownerId.equals(attacker.getUUID())) {
-            return true;
-        }
-
-        return false;
+        return ownerId != null && ownerId.equals(attacker.getUUID());
     }
 
     @Nullable

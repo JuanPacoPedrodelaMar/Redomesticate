@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public interface IPetbedDataEntity {
 
-    CompoundTag redomesticate$getCitadelEntityData();
+    CompoundTag redomesticate$getEntityData();
 
-    void redomesticate$setCitadelEntityData(CompoundTag nbt);
+    void redomesticate$setEntityData(CompoundTag nbt);
 }

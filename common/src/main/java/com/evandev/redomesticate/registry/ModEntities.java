@@ -1,9 +1,9 @@
 package com.evandev.redomesticate.registry;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.content.entity.*;
 import com.evandev.redomesticate.platform.registry.RegistrationProvider;
 import com.evandev.redomesticate.platform.registry.RegistryObject;
-import com.evandev.redomesticate.server.entity.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.client.render;
 
-import com.evandev.redomesticate.server.entity.FollowingJukeboxEntity;
+import com.evandev.redomesticate.content.entity.FollowingJukeboxEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
