@@ -5,7 +5,8 @@ plugins {
 
 neoForge {
     version = neoforge_version
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    def at = rootProject.file('common/src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
@@ -26,6 +27,13 @@ neoForge {
         server {
             server()
         }
+        data {
+            data()
+            gameDirectory = project.file('run/data')
+
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll '--existing', rootProject.file("common/src/main/resources/").getAbsolutePath()
+        }
     }
 
     mods {
@@ -43,6 +51,9 @@ dependencies {
 
     // Cloth Config
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+
+    // Jade
+    implementation "maven.modrinth:jade:${jade_version}+neoforge"
 }
 
 publishMods {

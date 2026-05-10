@@ -1,0 +1,112 @@
+{
+  "values": [
+    {
+      "id": "redomesticate:amphibious",
+      "required": false
+    },
+    {
+      "id": "redomesticate:chain_lightning",
+      "required": false
+    },
+    {
+      "id": "redomesticate:deflection",
+      "required": false
+    },
+    {
+      "id": "redomesticate:fireproof",
+      "required": false
+    },
+    {
+      "id": "redomesticate:frost_fang",
+      "required": false
+    },
+    {
+      "id": "redomesticate:gluttonous",
+      "required": false
+    },
+    {
+      "id": "redomesticate:health_siphon",
+      "required": false
+    },
+    {
+      "id": "redomesticate:health_boost",
+      "required": false
+    },
+    {
+      "id": "redomesticate:healing_aura",
+      "required": false
+    },
+    {
+      "id": "redomesticate:infamy_curse",
+      "required": false
+    },
+    {
+      "id": "redomesticate:intimidation",
+      "required": false
+    },
+    {
+      "id": "redomesticate:immunity_frame",
+      "required": false
+    },
+    {
+      "id": "redomesticate:linked_inventory",
+      "required": false
+    },
+    {
+      "id": "redomesticate:magnetic",
+      "required": false
+    },
+    {
+      "id": "redomesticate:psychic_wall",
+      "required": false
+    },
+    {
+      "id": "redomesticate:herding",
+      "required": false
+    },
+    {
+      "id": "redomesticate:speedster",
+      "required": false
+    },
+    {
+      "id": "redomesticate:poison_resistance",
+      "required": false
+    },
+    {
+      "id": "redomesticate:warping_bite",
+      "required": false
+    },
+    {
+      "id": "redomesticate:tethered_teleport",
+      "required": false
+    },
+    {
+      "id": "redomesticate:xp_transfer",
+      "required": false
+    },
+    {
+      "id": "redomesticate:blight_curse",
+      "required": false
+    },
+    {
+      "id": "redomesticate:defusal",
+      "required": false
+    },
+    {
+      "id": "redomesticate:total_recall",
+      "required": false
+    },
+    {
+      "id": "redomesticate:rejuvenation",
+      "required": false
+    },
+    {
+      "id": "redomesticate:void_cloud",
+      "required": false
+    },
+    {
+      "id": "redomesticate:insight",
+      "required": false
+    }
+  ]
+}

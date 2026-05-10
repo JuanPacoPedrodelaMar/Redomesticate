@@ -1,0 +1,24 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.herding"
+  },
+  "exclusive_set": [
+    "redomesticate:magnetic",
+    "redomesticate:ore_scenting",
+    "redomesticate:psychic_wall",
+    "redomesticate:blight_curse"
+  ],
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 2,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}

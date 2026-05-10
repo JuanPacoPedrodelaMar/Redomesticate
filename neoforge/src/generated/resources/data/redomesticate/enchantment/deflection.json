@@ -1,0 +1,24 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.deflection"
+  },
+  "exclusive_set": [
+    "redomesticate:immunity_frame",
+    "redomesticate:defusal",
+    "redomesticate:psychic_wall",
+    "redomesticate:blazing_protection"
+  ],
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 5,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}

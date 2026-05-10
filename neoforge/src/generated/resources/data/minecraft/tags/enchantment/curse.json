@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "redomesticate:blight_curse",
+      "required": false
+    },
+    {
+      "id": "redomesticate:infamy_curse",
+      "required": false
+    },
+    {
+      "id": "redomesticate:immaturity_curse",
+      "required": false
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.blazing_protection"
+  },
+  "exclusive_set": [
+    "redomesticate:immunity_frame",
+    "redomesticate:deflection",
+    "redomesticate:amphibious",
+    "redomesticate:frost_fang",
+    "redomesticate:shadow_hands"
+  ],
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 4,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}

@@ -1,0 +1,32 @@
+{
+  "values": [
+    {
+      "id": "redomesticate:bubbling",
+      "required": false
+    },
+    {
+      "id": "redomesticate:vampire",
+      "required": false
+    },
+    {
+      "id": "redomesticate:blazing_protection",
+      "required": false
+    },
+    {
+      "id": "redomesticate:ore_scenting",
+      "required": false
+    },
+    {
+      "id": "redomesticate:sonic_boom",
+      "required": false
+    },
+    {
+      "id": "redomesticate:share",
+      "required": false
+    },
+    {
+      "id": "redomesticate:paralysis",
+      "required": false
+    }
+  ]
+}

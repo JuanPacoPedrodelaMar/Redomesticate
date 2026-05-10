@@ -4,9 +4,17 @@
   "package": "com.evandev.redomesticate.mixin",
   "compatibilityLevel": "JAVA_18",
   "mixins": [
+    "AgeableMobMixin",
+    "EntityMixin",
+    "FishingHookMixin",
+    "FloatGoalMixin",
+    "LivingEntityMixin",
+    "MobMixin",
+    "accessor.ExperienceOrbAccessor",
+    "client.EntityOutlineMixin"
   ],
   "client": [
-    "ExampleMixin"
+    "accessor.SpriteContentsAccessor"
   ],
   "server": [],
   "injectors": {

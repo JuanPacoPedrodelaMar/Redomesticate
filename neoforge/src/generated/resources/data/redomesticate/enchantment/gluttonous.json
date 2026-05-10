@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.gluttonous"
+  },
+  "exclusive_set": [
+    "redomesticate:vampire",
+    "redomesticate:health_siphon"
+  ],
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 4,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}

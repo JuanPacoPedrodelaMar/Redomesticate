@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "side": "redomesticate:block/drum_side",
+        "bottom": "redomesticate:block/drum_bottom",
+        "top": "redomesticate:block/drum_follow"
+    }
+}

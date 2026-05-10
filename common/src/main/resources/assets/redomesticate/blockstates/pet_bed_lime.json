@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "redomesticate:block/pet_bed_lime",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "redomesticate:block/pet_bed_lime"
+    },
+    "facing=south": {
+      "model": "redomesticate:block/pet_bed_lime",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "redomesticate:block/pet_bed_lime",
+      "y": 270
+    }
+  }
+}

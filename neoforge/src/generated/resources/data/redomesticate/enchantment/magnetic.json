@@ -1,0 +1,26 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.magnetic"
+  },
+  "exclusive_set": [
+    "redomesticate:chain_lightning",
+    "redomesticate:herding",
+    "redomesticate:vampire",
+    "redomesticate:shadow_hands",
+    "redomesticate:psychic_wall",
+    "redomesticate:intimidation"
+  ],
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 11,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}
