@@ -2,7 +2,7 @@ package com.evandev.redomesticate.server.block;
 
 import com.evandev.redomesticate.registry.ModSounds;
 import com.evandev.redomesticate.server.block.entity.DrumBlockEntity;
-import com.evandev.redomesticate.util.IComandableMob;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.util.TameableUtils;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -106,7 +106,7 @@ public class DrumBlock extends BaseEntityBlock {
             );
 
             for (Animal animal : level.getEntitiesOfClass(Animal.class, area, EntitySelector.NO_SPECTATORS.and(tames))) {
-                if (animal instanceof IComandableMob commandable) {
+                if (animal instanceof ICommandableMob commandable) {
                     commandable.setCommand(command);
                     count++;
                 }
@@ -114,7 +114,7 @@ public class DrumBlock extends BaseEntityBlock {
                     if (command != 0) {
                         tamable.setOrderedToSit(command == 1);
                         tamable.setInSittingPose(command == 1);
-                        if (!(animal instanceof IComandableMob)) {
+                        if (!(animal instanceof ICommandableMob)) {
                             count++;
                         }
                     }

@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.util;
 
+import com.evandev.redomesticate.api.IPetbedDataEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 

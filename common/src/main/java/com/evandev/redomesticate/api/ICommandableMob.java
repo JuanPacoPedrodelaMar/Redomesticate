@@ -1,4 +1,4 @@
-package com.evandev.redomesticate.util;
+package com.evandev.redomesticate.api;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
@@ -6,7 +6,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 
-public interface IComandableMob {
+public interface ICommandableMob {
 
     int getCommand();
 

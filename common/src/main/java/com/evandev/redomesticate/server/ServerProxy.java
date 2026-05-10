@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.server;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.client.CommonClientData;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.platform.Services;
@@ -10,7 +11,9 @@ import com.evandev.redomesticate.server.block.entity.PetBedBlockEntity;
 import com.evandev.redomesticate.server.entity.ChainLightningEntity;
 import com.evandev.redomesticate.server.entity.GiantBubbleEntity;
 import com.evandev.redomesticate.server.entity.PsychicWallEntity;
-import com.evandev.redomesticate.server.misc.*;
+import com.evandev.redomesticate.server.misc.LanternRequest;
+import com.evandev.redomesticate.server.misc.ModWorldData;
+import com.evandev.redomesticate.server.misc.RespawnRequest;
 import com.evandev.redomesticate.server.misc.trades.BuyingItemTrade;
 import com.evandev.redomesticate.server.misc.trades.EnchantItemTrade;
 import com.evandev.redomesticate.server.misc.trades.SellingItemTrade;
@@ -50,6 +53,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -631,13 +635,11 @@ public class ServerProxy {
 
             }
             if (TameableUtils.hasEnchant(pet, ModEnchantments.SonicBoom)) {
-                var attacker = pet;
                 var beingAttacked = pet.getTarget();
                 if (beingAttacked != null) {
                     if (pet.closerThan(beingAttacked, 10.0, 20.0) || TameableUtils.getNearbyMobs(pet, 10).size() > 3) {
                         if (pet.tickCount % 200 == 0) {
-                            System.out.println("冲击波!");
-                            TameableUtils.performSonicBook(attacker, beingAttacked, (ServerLevel) attacker.level());
+                            TameableUtils.performSonicBook(pet, beingAttacked, (ServerLevel) pet.level());
                         }
                     }
                 }

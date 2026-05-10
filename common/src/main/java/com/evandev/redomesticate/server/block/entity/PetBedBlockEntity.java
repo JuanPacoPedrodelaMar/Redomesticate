@@ -5,7 +5,7 @@ import com.evandev.redomesticate.registry.ModBlockEntities;
 import com.evandev.redomesticate.server.block.PetBedBlock;
 import com.evandev.redomesticate.server.misc.ModWorldData;
 import com.evandev.redomesticate.server.misc.RespawnRequest;
-import com.evandev.redomesticate.util.IComandableMob;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -81,8 +81,8 @@ public class PetBedBlockEntity extends BlockEntity {
                         living.setYRot(90);
                         break;
                 }
-                if (living instanceof IComandableMob) {
-                    ((IComandableMob) living).setCommand(1);
+                if (living instanceof ICommandableMob) {
+                    ((ICommandableMob) living).setCommand(1);
                 }
                 if (living instanceof TamableAnimal) {
                     ((TamableAnimal) living).setOrderedToSit(true);

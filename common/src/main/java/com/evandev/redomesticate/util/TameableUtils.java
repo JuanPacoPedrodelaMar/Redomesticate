@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.util;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.mixin.accessor.ExperienceOrbAccessor;
 import com.evandev.redomesticate.network.PropertiesMessage;
 import com.evandev.redomesticate.platform.Services;
@@ -98,7 +99,7 @@ public class TameableUtils {
     }
 
     public static boolean shouldUnloadToLantern(LivingEntity tameable) {
-        if (tameable instanceof IComandableMob commandableMob) {
+        if (tameable instanceof ICommandableMob commandableMob) {
             return commandableMob.getCommand() == 2;
         } else {
             CompoundTag tag = new CompoundTag();
@@ -801,7 +802,7 @@ public class TameableUtils {
 
     public static boolean isValidTeleporter(LivingEntity owner, Mob animal) {
         if (hasEnchant(animal, ModEnchantments.TETHERED_TELEPORT)) {
-            if (animal instanceof IComandableMob commandableMob) {
+            if (animal instanceof ICommandableMob commandableMob) {
                 return commandableMob.getCommand() == 2;
             } else if (animal instanceof TamableAnimal tame) {
                 return !tame.isOrderedToSit() && animal.distanceTo(owner) < 10;

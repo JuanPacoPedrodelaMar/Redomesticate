@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.server.entity;
 
 import com.evandev.redomesticate.registry.ModEntities;
-import com.evandev.redomesticate.util.IComandableMob;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -132,6 +132,6 @@ public class FeatherEntity extends FishingHook {
         if (entity instanceof TamableAnimal && (((TamableAnimal) entity).isOrderedToSit() || ((TamableAnimal) entity).isInSittingPose())) {
             return false;
         }
-        return !(entity instanceof IComandableMob) || ((IComandableMob) entity).getCommand() != 1;
+        return !(entity instanceof ICommandableMob) || ((ICommandableMob) entity).getCommand() != 1;
     }
 }

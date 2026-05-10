@@ -1,4 +1,4 @@
-package com.evandev.redomesticate.util;
+package com.evandev.redomesticate.api;
 
 import net.minecraft.nbt.CompoundTag;
 

@@ -64,7 +64,7 @@ public class ModConfig {
             try (FileReader reader = new FileReader(CONFIG_FILE)) {
                 INSTANCE = GSON.fromJson(reader, ModConfig.class);
             } catch (Exception e) {
-                Constants.LOG.error("Failed to load redomesticate.json", e);
+                Constants.LOG.error("Failed to load " + Constants.MOD_ID + ".json", e);
                 INSTANCE = new ModConfig();
                 save();
             }
@@ -78,7 +78,7 @@ public class ModConfig {
         try (FileWriter writer = new FileWriter(CONFIG_FILE)) {
             GSON.toJson(INSTANCE, writer);
         } catch (IOException e) {
-            Constants.LOG.error("Failed to save redomesticate.json", e);
+            Constants.LOG.error("Failed to save " + Constants.MOD_ID + ".json", e);
         }
     }
 

@@ -2,7 +2,7 @@ package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.registry.ModEnchantments;
-import com.evandev.redomesticate.util.IPetbedDataEntity;
+import com.evandev.redomesticate.api.IPetbedDataEntity;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
