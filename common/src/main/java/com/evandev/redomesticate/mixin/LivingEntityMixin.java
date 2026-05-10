@@ -1,8 +1,8 @@
 package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.Constants;
-import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.api.IPetbedDataEntity;
+import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -32,7 +32,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             at = {@At("TAIL")},
             method = {"defineSynchedData"}
     )
-    private void citadel_registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
+    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
         builder.define(REDOMESTICATE_SAVED_DATA, new CompoundTag());
     }
 
@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             at = @At(value = "TAIL"),
             cancellable = true
     )
-    private void di_getWaterSlowdown(CallbackInfoReturnable<Float> cir) {
+    private void getWaterSlowdown(CallbackInfoReturnable<Float> cir) {
         if (TameableUtils.isTamed(this) && redomesticate$isLandAndSea()) {
             cir.setReturnValue(0.98F);
         }
@@ -51,7 +51,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             at = {@At("TAIL")},
             method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
-    private void citadel_writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
+    private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         CompoundTag citadelDat = this.redomesticate$getCitadelEntityData();
         if (citadelDat != null) {
             compoundNBT.put(Constants.ENTITY_SYNC_DATA, citadelDat);
@@ -63,7 +63,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             at = {@At("TAIL")},
             method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
     )
-    private void citadel_readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
+    private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         if (compoundNBT.contains(Constants.ENTITY_SYNC_DATA)) {
             this.redomesticate$setCitadelEntityData(compoundNBT.getCompound(Constants.ENTITY_SYNC_DATA));
         }

@@ -25,7 +25,7 @@ public class AgeableMobMixin extends PathfinderMob {
             method = {"isBaby()Z"},
             cancellable = true
     )
-    private void di_isBaby(CallbackInfoReturnable<Boolean> cir) {
+    private void isBaby(CallbackInfoReturnable<Boolean> cir) {
         if (TameableUtils.isTamed(this) && TameableUtils.hasEnchant(this, ModEnchantments.IMMATURITY_CURSE)) {
             cir.setReturnValue(true);
         }

@@ -24,11 +24,10 @@ public abstract class MobMixin extends LivingEntity {
 
     @Inject(
             method = {"pickUpItem(Lnet/minecraft/world/entity/item/ItemEntity;)V"},
-
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    private void di_pickUpItem(ItemEntity item, CallbackInfo ci) {
+    private void pickUpItem(ItemEntity item, CallbackInfo ci) {
         if (TameableUtils.isTamed(this) && TameableUtils.hasEnchant(this, ModEnchantments.LINKED_INVENTORY)) {
             Entity owner = TameableUtils.getOwnerOf(this);
             if (owner instanceof Player player) {
@@ -42,6 +41,4 @@ public abstract class MobMixin extends LivingEntity {
 
         }
     }
-
-
 }

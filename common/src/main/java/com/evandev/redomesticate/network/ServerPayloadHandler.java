@@ -2,7 +2,7 @@ package com.evandev.redomesticate.network;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.LangDefinition;
-import com.evandev.redomesticate.util.CitadelEntityData;
+import com.evandev.redomesticate.util.ModEntityData;
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +23,7 @@ public class ServerPayloadHandler {
                     var level = context.getPlayer().level();
                     Entity e = level.getEntity(data.entityID());
                     if (e instanceof LivingEntity && (data.propertyID().equals(Constants.ENTITY_DATA_TAG_UPDATE))) {
-                        CitadelEntityData.setCitadelTag((LivingEntity) e, data.compound());
+                        ModEntityData.setEntityTag((LivingEntity) e, data.compound());
                     }
                 })
                 .exceptionally(e -> {

@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.server.entity.FeatherEntity;
 import com.evandev.redomesticate.registry.ModItems;
+import com.evandev.redomesticate.server.entity.FeatherEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -24,27 +24,26 @@ public abstract class FishingHookMixin extends Projectile {
         super(type, level);
     }
 
+    // TODO: WrapOperation instead
     @Redirect(
-            method = {"Lnet/minecraft/world/entity/projectile/FishingHook;tick()V"},
-            remap = true,
+            method = {"tick()V"},
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/Level;getFluidState(Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/level/material/FluidState;"
             )
     )
-    private FluidState di_getFluidState(Level level, BlockPos pos) {
+    private FluidState getFluidState(Level level, BlockPos pos) {
         return (Projectile) this instanceof FeatherEntity ? Fluids.EMPTY.defaultFluidState() : level.getFluidState(pos);
     }
 
     @Inject(
-            method = {"Lnet/minecraft/world/entity/projectile/FishingHook;shouldStopFishing(Lnet/minecraft/world/entity/player/Player;)Z"},
-            remap = true,
+            method = {"shouldStopFishing(Lnet/minecraft/world/entity/player/Player;)Z"},
             at = @At(
                     value = "HEAD"
             ),
             cancellable = true
     )
-    private void di_shouldStopFishing(Player player, CallbackInfoReturnable<Boolean> cir) {
+    private void shouldStopFishing(Player player, CallbackInfoReturnable<Boolean> cir) {
         if ((Projectile) this instanceof FeatherEntity) {
             ItemStack itemstack = player.getMainHandItem();
             ItemStack itemstack1 = player.getOffhandItem();

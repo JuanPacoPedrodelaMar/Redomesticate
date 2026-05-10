@@ -20,15 +20,13 @@ public abstract class FloatGoalMixin extends Goal {
     @Final
     private Mob mob;
 
-
     @Inject(
             at = {@At("HEAD")},
-            remap = true,
             method = {"canUse()Z"},
             cancellable = true
     )
-    private void di_canUse(CallbackInfoReturnable<Boolean> cir){
-        if(TameableUtils.isTamed(mob) && TameableUtils.hasEnchant(mob, ModEnchantments.AMPHIBIOUS)){
+    private void canUse(CallbackInfoReturnable<Boolean> cir) {
+        if (TameableUtils.isTamed(mob) && TameableUtils.hasEnchant(mob, ModEnchantments.AMPHIBIOUS)) {
             cir.setReturnValue(false);
         }
     }

@@ -10,9 +10,7 @@ import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
@@ -39,6 +37,7 @@ public class NeoForgeClientEvents {
             event.registerEntityRenderer(ModEntities.GIANT_BUBBLE.get(), RenderGiantBubble::new);
             event.registerEntityRenderer(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
             event.registerEntityRenderer(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
+            event.registerEntityRenderer(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
             event.registerEntityRenderer(ModEntities.FEATHER.get(), RenderFeather::new);
         }
 
@@ -75,12 +74,6 @@ public class NeoForgeClientEvents {
                             .collect(Collectors.toList()));
 
             entityTypes.forEach((entityType -> {
-                ResourceLocation key = BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
-                String modId = key.getNamespace();
-                if (!modId.equals("minecraft")) {
-                    System.out.println("EntityType: " + key + " | Mod: " + modId);
-                }
-
                 EntityRenderer<?> renderer = event.getRenderer(entityType);
                 if (renderer != null) {
                     LayerManager.addLayerIfApplicable(entityType, renderer);

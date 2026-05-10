@@ -82,7 +82,7 @@ public class PetBedBlockEntity extends BlockEntity {
                         break;
                 }
                 if (living instanceof ICommandableMob) {
-                    ((ICommandableMob) living).setCommand(1);
+                    ((ICommandableMob) living).redomesticate$setCommand(1);
                 }
                 if (living instanceof TamableAnimal) {
                     ((TamableAnimal) living).setOrderedToSit(true);

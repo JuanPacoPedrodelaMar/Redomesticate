@@ -15,7 +15,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 
@@ -27,6 +26,7 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.GIANT_BUBBLE.get(), RenderGiantBubble::new);
         EntityRendererRegistry.register(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
         EntityRendererRegistry.register(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
+        EntityRendererRegistry.register(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
         EntityRendererRegistry.register(ModEntities.FEATHER.get(), RenderFeather::new);
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.DEFLECTION_SHIELD.get(), new ParticleDeflectionShield.Factory());

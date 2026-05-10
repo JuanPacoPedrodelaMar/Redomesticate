@@ -1,7 +1,7 @@
 package com.evandev.redomesticate.network;
 
 import com.evandev.redomesticate.Constants;
-import com.evandev.redomesticate.util.CitadelEntityData;
+import com.evandev.redomesticate.util.ModEntityData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -23,7 +23,7 @@ public class ClientPayloadHandler {
                     if (compound != null && Minecraft.getInstance().level != null) {
                         Entity entity = Minecraft.getInstance().level.getEntity(entityID);
                         if ((propertyID.equals(Constants.ENTITY_DATA_TAG_UPDATE)) && entity instanceof LivingEntity) {
-                            CitadelEntityData.setCitadelTag((LivingEntity) entity, compound);
+                            ModEntityData.setEntityTag((LivingEntity) entity, compound);
                         }
 
                     }

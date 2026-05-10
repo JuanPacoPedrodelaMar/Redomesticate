@@ -58,7 +58,7 @@ public class ClientMobTooltip implements ClientTooltipComponent {
         if (livingEntity != null) {
             livingEntity.setOnGround(true);
             livingEntity.load(this.entityTag);
-            InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, (int) (25 * 1), new Vector3f(), pose, null, livingEntity);
+            InventoryScreen.renderEntityInInventory(guiGraphics, posX, posY, 25, new Vector3f(), pose, null, livingEntity);
             guiGraphics.disableScissor();
         }
     }

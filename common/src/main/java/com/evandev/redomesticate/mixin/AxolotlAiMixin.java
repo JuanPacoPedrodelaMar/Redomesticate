@@ -1,0 +1,108 @@
+package com.evandev.redomesticate.mixin;
+
+import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.registry.ModActivities;
+import com.evandev.redomesticate.registry.ModEnchantments;
+import com.evandev.redomesticate.server.entity.ai.AmphibianFollowOwnerBehavior;
+import com.evandev.redomesticate.server.entity.ai.AmphibianStayBehavior;
+import com.evandev.redomesticate.util.TameableUtils;
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.animal.axolotl.AxolotlAi;
+import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(AxolotlAi.class)
+public class AxolotlAiMixin {
+
+    @Inject(
+            method = {"makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;"},
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/animal/axolotl/AxolotlAi;initPlayDeadActivity(Lnet/minecraft/world/entity/ai/Brain;)V"
+            )
+    )
+    private static void makeBrain(Brain<Axolotl> brain, CallbackInfoReturnable<Brain<?>> cir) {
+        brain.addActivity(ModActivities.AXOLOTL_FOLLOW.get(), ImmutableList.of(Pair.of(0, new AmphibianFollowOwnerBehavior(0.3F, 0.6F))));
+        brain.addActivity(ModActivities.AXOLOTL_STAY.get(), ImmutableList.of(Pair.of(0, new AmphibianStayBehavior())));
+    }
+
+    @Inject(
+            method = {"updateActivity(Lnet/minecraft/world/entity/animal/axolotl/Axolotl;)V"},
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    private static void updateActivity(Axolotl axolotl, CallbackInfo ci) {
+        Brain<Axolotl> brain = axolotl.getBrain();
+        Activity activity = brain.getActiveNonCoreActivity().orElse(null);
+        if (activity != Activity.PLAY_DEAD && !axolotl.isPlayingDead() && axolotl instanceof ITameableEntity tameableEntity) {
+            if (tameableEntity.redomesticate$isStayingStill()) {
+                brain.setActiveActivityIfPossible(ModActivities.AXOLOTL_STAY.get());
+                ci.cancel();
+            } else if (tameableEntity.redomesticate$isFollowingOwner()) {
+                brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.PLAY_DEAD, Activity.FIGHT, ModActivities.AXOLOTL_FOLLOW.get()));
+                ci.cancel();
+            }
+        }
+    }
+
+
+    @Inject(
+            method = {"Lnet/minecraft/world/entity/animal/axolotl/AxolotlAi;getTemptations()Lnet/minecraft/world/item/crafting/Ingredient;"},
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private static void getTemptationItems(CallbackInfoReturnable<Ingredient> cir) {
+        cir.setReturnValue(Ingredient.merge(ImmutableList.of(cir.getReturnValue(), Ingredient.of(Items.TROPICAL_FISH))));
+    }
+
+    @Inject(
+            method = {"getSpeedModifierChasing(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            remap = true,
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private static void getSpeedModifierChasing(LivingEntity axolotl, CallbackInfoReturnable<Float> cir) {
+        int speedsterLevel = TameableUtils.getEnchantLevel(axolotl, ModEnchantments.SPEEDSTER);
+        cir.setReturnValue(axolotl.isInWaterOrBubble() ? 0.6F + speedsterLevel * 0.05F : 0.15F + speedsterLevel * 0.1F);
+    }
+
+    @Inject(
+            method = {"getSpeedModifierFollowingAdult(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private static void getSpeedModifierFollowingAdult(LivingEntity axolotl, CallbackInfoReturnable<Float> cir) {
+        int speedsterLevel = TameableUtils.getEnchantLevel(axolotl, ModEnchantments.SPEEDSTER);
+        cir.setReturnValue(axolotl.isInWaterOrBubble() ? 0.6F + speedsterLevel * 0.05F : 0.15F + speedsterLevel * 0.1F);
+    }
+
+    @Inject(
+            method = {"getSpeedModifier(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private static void getSpeedModifier(LivingEntity axolotl, CallbackInfoReturnable<Float> cir) {
+        int speedsterLevel = TameableUtils.getEnchantLevel(axolotl, ModEnchantments.SPEEDSTER);
+        cir.setReturnValue(axolotl.isInWaterOrBubble() ? 0.5F + speedsterLevel * 0.05F : 0.15F + speedsterLevel * 0.15F);
+    }
+}

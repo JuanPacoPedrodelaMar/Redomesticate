@@ -107,7 +107,7 @@ public class DrumBlock extends BaseEntityBlock {
 
             for (Animal animal : level.getEntitiesOfClass(Animal.class, area, EntitySelector.NO_SPECTATORS.and(tames))) {
                 if (animal instanceof ICommandableMob commandable) {
-                    commandable.setCommand(command);
+                    commandable.redomesticate$setCommand(command);
                     count++;
                 }
                 if (animal instanceof TamableAnimal tamable) {

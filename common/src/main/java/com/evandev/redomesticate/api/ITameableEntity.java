@@ -7,27 +7,27 @@ import org.jetbrains.annotations.Nullable;
 import java.util.UUID;
 
 public interface ITameableEntity extends OwnableEntity {
-    boolean isTame();
+    boolean redomesticate$isTame();
 
-    void setTame(boolean value);
-
-    @Nullable
-    UUID getTameOwnerUUID();
-
-    void setTameOwnerUUID(@Nullable UUID uuid);
+    void redomesticate$setTame(boolean value);
 
     @Nullable
-    LivingEntity getTameOwner();
+    UUID redomesticate$getTameOwnerUUID();
 
-    boolean isStayingStill();
+    void redomesticate$setTameOwnerUUID(@Nullable UUID uuid);
 
-    boolean isFollowingOwner();
+    @Nullable
+    LivingEntity redomesticate$getTameOwner();
 
-    boolean isValidAttackTarget(LivingEntity target);
+    boolean redomesticate$isStayingStill();
+
+    boolean redomesticate$isFollowingOwner();
+
+    boolean redomesticate$isValidAttackTarget(LivingEntity target);
 
     @Nullable
     default UUID getOwnerUUID() {
-        return getTameOwnerUUID();
+        return redomesticate$getTameOwnerUUID();
     }
 
 }

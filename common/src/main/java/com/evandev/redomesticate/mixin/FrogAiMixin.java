@@ -1,0 +1,82 @@
+package com.evandev.redomesticate.mixin;
+
+import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.registry.ModActivities;
+import com.evandev.redomesticate.registry.ModTags;
+import com.evandev.redomesticate.server.entity.ai.AmphibianFollowOwnerBehavior;
+import com.evandev.redomesticate.server.entity.ai.AmphibianStayBehavior;
+import com.google.common.collect.ImmutableList;
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.animal.frog.Frog;
+import net.minecraft.world.entity.animal.frog.FrogAi;
+import net.minecraft.world.entity.animal.frog.ShootTongue;
+import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.item.crafting.Ingredient;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin(FrogAi.class)
+public class FrogAiMixin {
+
+    @Inject(
+            method = {"makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;"},
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/animal/frog/FrogAi;initJumpActivity(Lnet/minecraft/world/entity/ai/Brain;)V"
+            )
+    )
+    private static void makeBrain(Brain<Frog> brain, CallbackInfoReturnable<Brain<?>> cir) {
+        brain.addActivity(ModActivities.FROG_FOLLOW.get(), ImmutableList.of(Pair.of(0, new AmphibianFollowOwnerBehavior(1.25F, 1.0F)), Pair.of(2, new ShootTongue(SoundEvents.FROG_TONGUE, SoundEvents.FROG_EAT))));
+        brain.addActivity(ModActivities.FROG_STAY.get(), ImmutableList.of(Pair.of(0, new AmphibianStayBehavior())));
+    }
+
+    @Unique
+    private static boolean redomesticate$canAttack(Frog frog) {
+        return !frog.isInLove();
+    }
+
+    @Inject(
+            method = {"updateActivity(Lnet/minecraft/world/entity/animal/frog/Frog;)V"},
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    private static void updateActivity(Frog frog, CallbackInfo ci) {
+        Brain<Frog> brain = frog.getBrain();
+        Activity activity = brain.getActiveNonCoreActivity().orElse(null);
+        if (frog instanceof ITameableEntity tameableEntity) {
+            if (tameableEntity.redomesticate$isStayingStill()) {
+                brain.setActiveActivityIfPossible(ModActivities.FROG_STAY.get());
+                ci.cancel();
+            } else if (tameableEntity.redomesticate$isFollowingOwner()) {
+                if (frog.getTarget() != null && frog.getTarget().isAlive()) {
+                    brain.setMemory(MemoryModuleType.ATTACK_TARGET, frog.getTarget());
+                    brain.setMemory(MemoryModuleType.NEAREST_ATTACKABLE, frog.getTarget());
+                    brain.setActiveActivityIfPossible(Activity.TONGUE);
+                } else {
+                    frog.getBrain().setActiveActivityToFirstValid(ImmutableList.of(ModActivities.FROG_FOLLOW.get(), Activity.TONGUE, Activity.LAY_SPAWN, Activity.LONG_JUMP, Activity.SWIM, Activity.IDLE));
+                }
+                ci.cancel();
+            }
+        }
+    }
+
+    @Inject(
+            method = {"Lnet/minecraft/world/entity/animal/frog/FrogAi;getTemptations()Lnet/minecraft/world/item/crafting/Ingredient;"},
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private static void getTemptationItems(CallbackInfoReturnable<Ingredient> cir) {
+        cir.setReturnValue(Ingredient.merge(ImmutableList.of(cir.getReturnValue(), Ingredient.of(ModTags.TAME_FROGS_WITH))));
+    }
+}

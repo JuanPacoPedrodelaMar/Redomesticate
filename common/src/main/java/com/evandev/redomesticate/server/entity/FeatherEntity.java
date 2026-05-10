@@ -132,6 +132,6 @@ public class FeatherEntity extends FishingHook {
         if (entity instanceof TamableAnimal && (((TamableAnimal) entity).isOrderedToSit() || ((TamableAnimal) entity).isInSittingPose())) {
             return false;
         }
-        return !(entity instanceof ICommandableMob) || ((ICommandableMob) entity).getCommand() != 1;
+        return !(entity instanceof ICommandableMob) || ((ICommandableMob) entity).redomesticate$getCommand() != 1;
     }
 }

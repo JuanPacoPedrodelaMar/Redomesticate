@@ -21,11 +21,9 @@ public class LivingUtils {
                 monster.setLastHurtMob(otherMonster);
             }
         }
-
     }
 
     public static AABB getBoundingBoxAroundEntity(Entity entity, double radius) {
         return new AABB(entity.getX() - radius, entity.getY() - radius, entity.getZ() - radius, entity.getX() + radius, entity.getY() + radius, entity.getZ() + radius);
     }
-
 }
