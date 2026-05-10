@@ -32,7 +32,7 @@ public class RottenAppleItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_rotten_apple.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_rotten_apple.desc").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

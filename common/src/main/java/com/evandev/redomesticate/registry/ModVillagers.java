@@ -18,7 +18,6 @@ public class ModVillagers {
             RegistrationProvider.get(Registries.VILLAGER_PROFESSION, Constants.MOD_ID);
 
     public static final RegistryObject<VillagerProfession> ANIMAL_TAMER = DEF_REG.register("animal_tamer", ModVillagers::buildVillagerProfession);
-    public static boolean registeredHouses = false;
 
     private static VillagerProfession buildVillagerProfession() {
         ResourceKey<PoiType> petBedKey = ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "pet_bed"));

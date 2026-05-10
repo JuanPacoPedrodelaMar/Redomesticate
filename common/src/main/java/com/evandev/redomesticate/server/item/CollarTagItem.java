@@ -26,6 +26,6 @@ public class CollarTagItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_collar.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_collar.desc").withStyle(ChatFormatting.GRAY));
     }
 }

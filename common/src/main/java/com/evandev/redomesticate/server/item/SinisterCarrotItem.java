@@ -35,7 +35,7 @@ public class SinisterCarrotItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_sinister_carrot.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_sinister_carrot.desc").withStyle(ChatFormatting.GRAY));
 
     }
 

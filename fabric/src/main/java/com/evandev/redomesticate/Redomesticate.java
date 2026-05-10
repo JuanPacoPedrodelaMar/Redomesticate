@@ -7,7 +7,6 @@ import com.evandev.redomesticate.server.ServerProxy;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -54,7 +53,5 @@ public class Redomesticate implements ModInitializer {
                 });
             }
         }
-
-        ItemTooltipCallback.EVENT.register(ServerProxy::onItemTooltip);
     }
 }

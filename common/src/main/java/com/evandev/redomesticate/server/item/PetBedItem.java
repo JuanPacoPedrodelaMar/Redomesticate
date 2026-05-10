@@ -31,6 +31,6 @@ public class PetBedItem extends BlockItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_pet_bed.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_pet_bed.desc").withStyle(ChatFormatting.GRAY));
     }
 }

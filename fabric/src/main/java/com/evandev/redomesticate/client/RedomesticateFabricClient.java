@@ -6,10 +6,12 @@ import com.evandev.redomesticate.client.render.*;
 import com.evandev.redomesticate.network.FabricNetworking;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
+import com.evandev.redomesticate.server.ServerProxy;
 import com.evandev.redomesticate.server.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
@@ -42,6 +44,8 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.BLIGHT.get(), ParticleBlight.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), ParticleQuestionMark.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.LANTERN_BUGS.get(), ParticleLanternBugs.Factory::new);
+
+        ItemTooltipCallback.EVENT.register(ServerProxy::onItemTooltip);
 
         TooltipComponentCallback.EVENT.register(data -> {
             if (data instanceof ItemMobTooltip tooltipData) {

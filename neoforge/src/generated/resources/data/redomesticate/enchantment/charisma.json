@@ -1,0 +1,18 @@
+{
+  "anvil_cost": 2,
+  "description": {
+    "translate": "enchantment.redomesticate.charisma"
+  },
+  "max_cost": {
+    "base": 25,
+    "per_level_above_first": 7
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 7,
+    "per_level_above_first": 7
+  },
+  "slots": [],
+  "supported_items": "#redomesticate:collar_tag_key",
+  "weight": 5
+}

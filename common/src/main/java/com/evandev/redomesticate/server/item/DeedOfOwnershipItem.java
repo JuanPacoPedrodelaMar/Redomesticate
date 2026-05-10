@@ -17,6 +17,6 @@ public class DeedOfOwnershipItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("item.redomesticate.deed_of_ownership.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("item.redomesticate.deed_of_ownership.desc").withStyle(ChatFormatting.GRAY));
     }
 }

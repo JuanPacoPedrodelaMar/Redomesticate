@@ -27,7 +27,7 @@ public class FeatherOnAStickItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_feather.desc").withStyle(ChatFormatting.GREEN));
+        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_feather.desc").withStyle(ChatFormatting.GRAY));
     }
 
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {

@@ -288,6 +288,30 @@ public class ModEnchantments {
                 Enchantment.dynamicCost(25, 7),
                 2)).exclusiveWith(HolderSet.direct(enchantments.getOrThrow(ModEnchantments.FIREPROOF)))
         );
+        register(context, MUFFLED, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                5,
+                1,
+                Enchantment.dynamicCost(5, 7),
+                Enchantment.dynamicCost(25, 7),
+                2)).exclusiveWith(checkCompatible(enchantments, DISK_JOCKEY))
+        );
+        register(context, DISK_JOCKEY, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                5,
+                1,
+                Enchantment.dynamicCost(6, 7),
+                Enchantment.dynamicCost(25, 7),
+                2)).exclusiveWith(checkCompatible(enchantments, SHADOW_HANDS, MUFFLED, BLAZING_PROTECTION))
+        );
+        register(context, CHARISMA, Enchantment.enchantment(Enchantment.definition(
+                items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
+                5,
+                3,
+                Enchantment.dynamicCost(7, 7),
+                Enchantment.dynamicCost(25, 7),
+                2))
+        );
         register(context, SHADOW_HANDS, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_tagkey),
                 5,

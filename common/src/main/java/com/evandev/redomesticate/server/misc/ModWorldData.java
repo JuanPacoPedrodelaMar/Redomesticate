@@ -35,7 +35,6 @@ public class ModWorldData extends SavedData {
             if (overworld != null) {
                 DimensionDataStorage storage = overworld.getDataStorage();
                 ModWorldData data = storage.computeIfAbsent(new Factory<>(ModWorldData::create, ModWorldData::load, DataFixTypes.SAVED_DATA_COMMAND_STORAGE), IDENTIFIER);
-                data.setDirty();
                 return data;
             }
         }
@@ -64,7 +63,6 @@ public class ModWorldData extends SavedData {
 
     @Override
     public @NotNull CompoundTag save(@NotNull CompoundTag compound, HolderLookup.@NotNull Provider provider) {
-
         if (!this.respawnRequestList.isEmpty()) {
             ListTag listTag = new ListTag();
             for (RespawnRequest request : respawnRequestList) {
@@ -102,10 +100,12 @@ public class ModWorldData extends SavedData {
 
     public void addRespawnRequest(RespawnRequest request) {
         this.respawnRequestList.add(request);
+        this.setDirty();
     }
 
     public void removeRespawnRequest(RespawnRequest request) {
         this.respawnRequestList.remove(request);
+        this.setDirty();
     }
 
     public List<RespawnRequest> getRespawnRequestsFor(Level level, BlockPos pos) {
@@ -121,14 +121,19 @@ public class ModWorldData extends SavedData {
 
     public void addLanternRequest(LanternRequest request) {
         this.lanternRequestList.add(request);
+        this.setDirty();
     }
 
     public void removeLanternRequest(LanternRequest request) {
         this.lanternRequestList.remove(request);
+        this.setDirty();
     }
 
     public void removeMatchingLanternRequests(UUID reloaded) {
-        this.lanternRequestList.removeIf(request -> request.getPetUUID().equals(reloaded));
+        boolean removed = this.lanternRequestList.removeIf(request -> request.getPetUUID().equals(reloaded));
+        if (removed) {
+            this.setDirty();
+        }
     }
 
     public List<LanternRequest> getLanternRequestsFor(UUID uuid) {

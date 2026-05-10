@@ -285,6 +285,6 @@ public abstract class AxolotlMixin extends Animal implements ITameableEntity, IC
 
     @Override
     public void redomesticate$sendCommandMessage(Player owner, int command, Component name) {
-        owner.displayClientMessage(Component.translatable("message.domesticationinnovation.command_" + command, name), true);
+        owner.displayClientMessage(Component.translatable("message.redomesticate.command_" + command, name), true);
     }
 }
