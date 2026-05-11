@@ -1,8 +1,8 @@
 package com.evandev.redomesticate.content.block;
 
-import com.evandev.redomesticate.registry.ModSounds;
-import com.evandev.redomesticate.content.block.entity.DrumBlockEntity;
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.content.block.entity.DrumBlockEntity;
+import com.evandev.redomesticate.registry.ModSounds;
 import com.evandev.redomesticate.util.TameableUtils;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
@@ -11,11 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySelector;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -96,7 +92,7 @@ public class DrumBlock extends BaseEntityBlock {
     public int issueCommand(Level level, BlockPos pos, int command, @Nullable UUID issuer) {
         int count = 0;
         if (issuer != null) {
-            Predicate<Entity> tames = (animal) -> TameableUtils.isTamed((LivingEntity) animal)
+            Predicate<Entity> tames = (animal) -> TameableUtils.isTamed(animal)
                     && TameableUtils.getOwnerUUIDOf(animal) != null
                     && TameableUtils.getOwnerUUIDOf(animal).equals(issuer);
 
@@ -105,21 +101,19 @@ public class DrumBlock extends BaseEntityBlock {
                     pos.getX() + 32, pos.getY() + 32, pos.getZ() + 32
             );
 
-            for (Animal animal : level.getEntitiesOfClass(Animal.class, area, EntitySelector.NO_SPECTATORS.and(tames))) {
-                if (animal instanceof ICommandableMob commandable) {
+            for (Mob mob : level.getEntitiesOfClass(Mob.class, area, EntitySelector.NO_SPECTATORS.and(tames))) {
+                if (mob instanceof ICommandableMob commandable) {
                     commandable.redomesticate$setCommand(command);
                     count++;
                 }
-                if (animal instanceof TamableAnimal tamable) {
-                    if (command != 0) {
-                        tamable.setOrderedToSit(command == 1);
-                        tamable.setInSittingPose(command == 1);
-                        if (!(animal instanceof ICommandableMob)) {
-                            count++;
-                        }
+                if (mob instanceof TamableAnimal tamable) {
+                    tamable.setOrderedToSit(command == 1);
+                    tamable.setInSittingPose(command == 1);
+                    if (!(mob instanceof ICommandableMob)) {
+                        count++;
                     }
                 }
-                animal.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0));
+                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0));
             }
         }
         return count;
