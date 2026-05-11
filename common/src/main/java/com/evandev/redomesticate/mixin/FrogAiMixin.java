@@ -39,12 +39,6 @@ public class FrogAiMixin {
         brain.addActivity(ModActivities.FROG_STAY.get(), ImmutableList.of(Pair.of(0, new AmphibianStayBehavior())));
     }
 
-    // TODO: why is this unused
-    @Unique
-    private static boolean redomesticate$canAttack(Frog frog) {
-        return !frog.isInLove();
-    }
-
     @Inject(
             method = {"updateActivity(Lnet/minecraft/world/entity/animal/frog/Frog;)V"},
             at = @At(
@@ -54,7 +48,6 @@ public class FrogAiMixin {
     )
     private static void updateActivity(Frog frog, CallbackInfo ci) {
         Brain<Frog> brain = frog.getBrain();
-        Activity activity = brain.getActiveNonCoreActivity().orElse(null);
         if (frog instanceof ITameableEntity tameableEntity) {
             if (tameableEntity.redomesticate$isStayingStill()) {
                 brain.setActiveActivityIfPossible(ModActivities.FROG_STAY.get());

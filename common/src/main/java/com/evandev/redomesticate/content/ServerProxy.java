@@ -3,6 +3,7 @@ package com.evandev.redomesticate.content;
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.client.CommonClientData;
 import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.content.misc.CollarTickTracker;
 import com.evandev.redomesticate.platform.Services;
 import com.evandev.redomesticate.registry.*;
 import com.evandev.redomesticate.content.block.PetBedBlock;
@@ -81,9 +82,26 @@ public class ServerProxy {
     private static final String[] KEY_TYPES = {"desc", "description", "info"};
     public static List<TeleportData> teleportingPets = new ArrayList<>();
     public static MinecraftServer currentServer;
+    private static final Map<Level, CollarTickTracker> COLLAR_TICK_TRACKER_MAP = new HashMap<>();
 
     public static boolean onLivingDrops(LivingEntity entity) {
         return TameableUtils.isTamed(entity) && TameableUtils.getPetBedPos(entity) != null;
+    }
+
+    public static boolean canTickCollar(Entity entity) {
+        if (entity.level().isClientSide()) {
+            return true;
+        } else {
+            CollarTickTracker tracker = COLLAR_TICK_TRACKER_MAP.get(entity.level());
+            return tracker == null || !tracker.isEntityBlocked(entity);
+        }
+    }
+
+    public static void blockCollarTick(Entity entity) {
+        if (!entity.level().isClientSide()) {
+            CollarTickTracker tracker = COLLAR_TICK_TRACKER_MAP.computeIfAbsent(entity.level(), k -> new CollarTickTracker());
+            tracker.addBlockedEntityTick(entity.getUUID(), 5);
+        }
     }
 
     public static void serverStart(MinecraftServer server) {
@@ -107,6 +125,11 @@ public class ServerProxy {
     }
 
     public static void onServerTick(ServerLevel level) {
+        CollarTickTracker tracker = COLLAR_TICK_TRACKER_MAP.get(level);
+        if (tracker != null) {
+            tracker.tick();
+        }
+
         for (final var data : teleportingPets) {
             Entity entity = data.entity();
             ServerLevel endpointWorld = data.level();
@@ -459,6 +482,10 @@ public class ServerProxy {
 
     public static void onLivingUpdate(LivingEntity entity) {
         if (entity instanceof Mob pet) {
+            if (TameableUtils.couldBeTamed(pet) && !canTickCollar(pet)) {
+                return;
+            }
+
             if (TameableUtils.hasEnchant(pet, ModEnchantments.BLAZING_PROTECTION) && !entity.level().isClientSide()) {
                 int bars = TameableUtils.getBlazingProtectionBars(pet);
                 if (bars < 2 * TameableUtils.getEnchantLevel(pet, ModEnchantments.BLAZING_PROTECTION)) {
@@ -738,6 +765,7 @@ public class ServerProxy {
                     if (!player.isCreative()) {
                         itemstack.shrink(1);
                     }
+                    ServerProxy.blockCollarTick(living);
                     if (TameableUtils.hasCollar(living)) {
                         ItemStack collarFrom = new ItemStack(ModItems.COLLAR_TAG.get());
                         if (entityEnchantments != null) {
