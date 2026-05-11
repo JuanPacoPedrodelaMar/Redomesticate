@@ -12,16 +12,24 @@ public interface ICommandableMob {
 
     void redomesticate$setCommand(int command);
 
+    default PetCommand redomesticate$getPetCommand() {
+        return PetCommand.fromId(redomesticate$getCommand());
+    }
+
+    default void redomesticate$setPetCommand(PetCommand command) {
+        redomesticate$setCommand(command.getId());
+    }
+
     default InteractionResult playerSetCommand(Player owner, Mob ourselves) {
         if (!owner.level().isClientSide()) {
-            int command = (redomesticate$getCommand() + 1) % 3;
-            this.redomesticate$setCommand(command);
+            PetCommand nextCommand = redomesticate$getPetCommand().next();
+            this.redomesticate$setPetCommand(nextCommand);
 
-            this.redomesticate$sendCommandMessage(owner, command, ourselves.getName());
+            this.redomesticate$sendCommandMessage(owner, nextCommand.getId(), ourselves.getName());
 
             if (ourselves instanceof TamableAnimal tamable) {
-                tamable.setOrderedToSit(command == 1);
-                tamable.setInSittingPose(command == 1);
+                tamable.setOrderedToSit(nextCommand == PetCommand.SIT);
+                tamable.setInSittingPose(nextCommand == PetCommand.SIT);
             }
         }
         return InteractionResult.SUCCESS;

@@ -3,6 +3,7 @@ package com.evandev.redomesticate.util;
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.mixin.accessor.ExperienceOrbAccessor;
 import com.evandev.redomesticate.network.PropertiesMessage;
@@ -100,7 +101,7 @@ public class TameableUtils {
 
     public static boolean shouldUnloadToLantern(LivingEntity tameable) {
         if (tameable instanceof ICommandableMob commandableMob) {
-            return commandableMob.redomesticate$getCommand() == 2;
+            return commandableMob.redomesticate$getPetCommand() == PetCommand.FOLLOW;
         } else {
             CompoundTag tag = new CompoundTag();
             tameable.addAdditionalSaveData(tag);
@@ -134,6 +135,9 @@ public class TameableUtils {
     public static boolean isTamed(Entity entity) {
         if (entity instanceof ITameableEntity tameable) {
             return tameable.redomesticate$isTame();
+        }
+        if (entity instanceof TamableAnimal tamable) {
+            return tamable.isTame();
         }
         return false;
     }
@@ -792,7 +796,7 @@ public class TameableUtils {
     public static boolean isValidTeleporter(LivingEntity owner, Mob animal) {
         if (hasEnchant(animal, ModEnchantments.TETHERED_TELEPORT)) {
             if (animal instanceof ICommandableMob commandableMob) {
-                return commandableMob.redomesticate$getCommand() == 2;
+                return commandableMob.redomesticate$getPetCommand() == PetCommand.FOLLOW;
             } else if (animal instanceof TamableAnimal tame) {
                 return !tame.isOrderedToSit() && animal.distanceTo(owner) < 10;
             }

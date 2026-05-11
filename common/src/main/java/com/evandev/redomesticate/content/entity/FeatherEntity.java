@@ -1,7 +1,8 @@
 package com.evandev.redomesticate.content.entity;
 
-import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.api.PetCommand;
+import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -21,6 +22,7 @@ public class FeatherEntity extends FishingHook {
     private static final EntityDataAccessor<Integer> OWNER_ID = SynchedEntityData.defineId(FeatherEntity.class, EntityDataSerializers.INT);
     public LivingEntity closestPet = null;
     private boolean prevOnGround = false;
+
     public FeatherEntity(EntityType featherType, Level level) {
         super(featherType, level);
     }
@@ -129,9 +131,14 @@ public class FeatherEntity extends FishingHook {
     }
 
     public boolean isPetAmbulatory(LivingEntity entity) {
-        if (entity instanceof TamableAnimal && (((TamableAnimal) entity).isOrderedToSit() || ((TamableAnimal) entity).isInSittingPose())) {
+        if (entity instanceof TamableAnimal tamable && (tamable.isOrderedToSit() || tamable.isInSittingPose())) {
             return false;
         }
-        return !(entity instanceof ICommandableMob) || ((ICommandableMob) entity).redomesticate$getCommand() != 1;
+
+        if (entity instanceof ICommandableMob commandable) {
+            return commandable.redomesticate$getPetCommand() != PetCommand.SIT;
+        }
+
+        return true;
     }
 }

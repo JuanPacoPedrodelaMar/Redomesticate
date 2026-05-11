@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.content.block;
 
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.content.block.entity.DrumBlockEntity;
 import com.evandev.redomesticate.registry.ModSounds;
 import com.evandev.redomesticate.util.TameableUtils;
@@ -104,11 +105,14 @@ public class DrumBlock extends BaseEntityBlock {
             for (Mob mob : level.getEntitiesOfClass(Mob.class, area, EntitySelector.NO_SPECTATORS.and(tames))) {
                 if (mob instanceof ICommandableMob commandable) {
                     commandable.redomesticate$setCommand(command);
+                    mob.getNavigation().stop();
+                    mob.setTarget(null);
                     count++;
                 }
                 if (mob instanceof TamableAnimal tamable) {
-                    tamable.setOrderedToSit(command == 1);
-                    tamable.setInSittingPose(command == 1);
+                    boolean shouldSit = (command == PetCommand.SIT.getId());
+                    tamable.setOrderedToSit(shouldSit);
+                    tamable.setInSittingPose(shouldSit);
                     if (!(mob instanceof ICommandableMob)) {
                         count++;
                     }

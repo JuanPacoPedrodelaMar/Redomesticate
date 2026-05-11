@@ -2,6 +2,7 @@ package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
@@ -157,12 +158,12 @@ public abstract class MobMixin extends LivingEntity implements ICommandableMob, 
 
     @Override
     public boolean redomesticate$isStayingStill() {
-        return redomesticate$getCommand() == 1;
+        return this.redomesticate$getPetCommand() == PetCommand.SIT;
     }
 
     @Override
     public boolean redomesticate$isFollowingOwner() {
-        return redomesticate$getCommand() == 0;
+        return this.redomesticate$getPetCommand() == PetCommand.FOLLOW;
     }
 
     @Override

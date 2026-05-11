@@ -35,7 +35,7 @@ public class UniversalAIManager {
                 goalSelector.addGoal(1, new Sit2Goal(mob));
 
                 if (!mob.getType().is(ModTags.USES_BRAIN_AI)) {
-                    goalSelector.addGoal(2, new FollowOwner2Goal(mob, 1.2D, 10.0F, 2.0F, false));
+                    goalSelector.addGoal(2, new FollowOwner2Goal(mob, 1.2D, 3.0F, 2.0F, false));
                 }
 
                 targetSelector.addGoal(1, new OwnerHurtByTarget2Goal(mob));

@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -23,8 +24,8 @@ public class FollowParentGoalMixin {
             method = "canUse()Z",
             cancellable = true
     )
-    private void canUse(CallbackInfoReturnable<Boolean> cir){
-        if(animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem){
+    private void canUse(CallbackInfoReturnable<Boolean> cir) {
+        if (animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getPetCommand() != PetCommand.WANDER && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
@@ -34,8 +35,8 @@ public class FollowParentGoalMixin {
             method = "canContinueToUse()Z",
             cancellable = true
     )
-    private void canContinueToUse(CallbackInfoReturnable<Boolean> cir){
-        if(animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem){
+    private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
+        if (animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getPetCommand() != PetCommand.WANDER && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
