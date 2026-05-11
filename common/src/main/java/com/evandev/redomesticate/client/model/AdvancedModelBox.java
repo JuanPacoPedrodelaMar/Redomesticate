@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.client.model;
 
+import com.evandev.redomesticate.client.util.TabulaModelRenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

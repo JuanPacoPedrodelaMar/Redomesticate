@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.client;
 
-import com.evandev.redomesticate.client.integration.ClothConfigIntegration;
+import com.evandev.redomesticate.compat.clothconfig.ClothConfigIntegration;
 import com.evandev.redomesticate.platform.Services;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;

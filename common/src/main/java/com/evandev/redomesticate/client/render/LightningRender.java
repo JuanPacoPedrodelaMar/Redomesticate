@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.client.render;
 
+import com.evandev.redomesticate.client.data.LightningBoltData;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;

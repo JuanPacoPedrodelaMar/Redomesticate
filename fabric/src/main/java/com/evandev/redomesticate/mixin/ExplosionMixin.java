@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Final;
@@ -19,7 +19,7 @@ public abstract class ExplosionMixin {
 
     @Inject(method = "explode", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onExplosion(CallbackInfo ci) {
-        if (ServerProxy.onExplosion(this.level, (Explosion) (Object) this)) {
+        if (EventProxy.onExplosion(this.level, (Explosion) (Object) this)) {
             ci.cancel();
         }
     }

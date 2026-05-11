@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.content.entity;
 
-import com.evandev.redomesticate.client.ClientJukeboxHandler;
+import com.evandev.redomesticate.client.event.ClientJukeboxHandler;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.component.DataComponents;

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.phys.HitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +13,7 @@ public abstract class ProjectileMixin {
 
     @Inject(method = "onHit", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onProjectileHit(HitResult result, CallbackInfo ci) {
-        if (ServerProxy.onProjectileImpactEvent((Projectile) (Object) this, result)) {
+        if (EventProxy.onProjectileImpactEvent((Projectile) (Object) this, result)) {
             ci.cancel();
         }
     }

@@ -3,7 +3,7 @@ package com.evandev.redomesticate.registry;
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.platform.registry.RegistrationProvider;
 import com.evandev.redomesticate.platform.registry.RegistryObject;
-import com.evandev.redomesticate.content.item.CustomTabBehavior;
+import com.evandev.redomesticate.data.CustomTabBehavior;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;

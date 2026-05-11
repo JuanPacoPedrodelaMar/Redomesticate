@@ -18,8 +18,8 @@ public class PanicGoalMixin {
     protected PathfinderMob mob;
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canUse()Z"},
+            at = @At("HEAD"),
+            method = "canUse()Z",
             cancellable = true
     )
     private void di_canUse(CallbackInfoReturnable<Boolean> cir) {
@@ -29,8 +29,8 @@ public class PanicGoalMixin {
     }
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canContinueToUse()Z"},
+            at = @At("HEAD"),
+            method = "canContinueToUse()Z",
             cancellable = true
     )
     private void di_canContinueToUse(CallbackInfoReturnable<Boolean> cir) {

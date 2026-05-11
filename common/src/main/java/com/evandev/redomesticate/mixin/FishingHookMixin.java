@@ -40,7 +40,7 @@ public abstract class FishingHookMixin extends Projectile {
     }
 
     @Inject(
-            method = {"shouldStopFishing(Lnet/minecraft/world/entity/player/Player;)Z"},
+            method = "shouldStopFishing(Lnet/minecraft/world/entity/player/Player;)Z",
             at = @At(
                     value = "HEAD"
             ),

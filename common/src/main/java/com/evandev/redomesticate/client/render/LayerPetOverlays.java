@@ -1,7 +1,8 @@
 package com.evandev.redomesticate.client.render;
 
 import com.evandev.redomesticate.Constants;
-import com.evandev.redomesticate.client.CommonClientData;
+import com.evandev.redomesticate.client.data.LightningBoltData;
+import com.evandev.redomesticate.client.data.RenderData;
 import com.evandev.redomesticate.client.model.BlazingBarModel;
 import com.evandev.redomesticate.client.model.ShadowHandModel;
 import com.evandev.redomesticate.platform.Services;
@@ -295,8 +296,8 @@ public class LayerPetOverlays extends RenderLayer {
     private float getPunchFor(LivingEntity living, int i, float partialTicks) {
         int[] arr = TameableUtils.getShadowPunchTimes(living);
         if (arr.length > i) {
-            if (CommonClientData.shadowPunchRenderData.containsKey(living) && CommonClientData.shadowPunchRenderData.get(living).length > i) {
-                int[] prevArr = CommonClientData.shadowPunchRenderData.get(living);
+            if (RenderData.shadowPunchRenderData.containsKey(living) && RenderData.shadowPunchRenderData.get(living).length > i) {
+                int[] prevArr = RenderData.shadowPunchRenderData.get(living);
                 return prevArr[i] + (arr[i] - prevArr[i]) * partialTicks;
             }
             return arr[i];

@@ -3,7 +3,6 @@ package com.evandev.redomesticate.util;
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
-import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.mixin.accessor.ExperienceOrbAccessor;
 import com.evandev.redomesticate.network.PropertiesMessage;
@@ -32,10 +31,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.Fox;
-import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.animal.axolotl.Axolotl;
-import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -137,20 +132,10 @@ public class TameableUtils {
     }
 
     public static boolean isTamed(Entity entity) {
-        //sometimes these are not bound on runtime
-        if (entity instanceof Axolotl) {
-            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableAxolotl;
+        if (entity instanceof ITameableEntity tameable) {
+            return tameable.redomesticate$isTame();
         }
-        if (entity instanceof Fox) {
-            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableFox;
-        }
-        if (entity instanceof Rabbit) {
-            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableRabbit;
-        }
-        if (entity instanceof Frog) {
-            return ((ITameableEntity) entity).redomesticate$isTame() && ModConfig.get().tameableFrog;
-        }
-        return entity instanceof ITameableEntity && ((ITameableEntity) entity).redomesticate$isTame() || entity instanceof TamableAnimal && ((TamableAnimal) entity).isTame();
+        return false;
     }
 
     public static boolean isPetOf(Player player, Entity entity) {

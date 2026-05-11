@@ -2,6 +2,7 @@ package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.IPetbedDataEntity;
+import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
@@ -29,15 +30,15 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     }
 
     @Inject(
-            at = {@At("TAIL")},
-            method = {"defineSynchedData"}
+            at = @At("TAIL"),
+            method = "defineSynchedData"
     )
     private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
         builder.define(REDOMESTICATE_SAVED_DATA, new CompoundTag());
     }
 
     @Inject(
-            method = {"getWaterSlowDown()F"},
+            method = "getWaterSlowDown()F",
             at = @At(value = "TAIL"),
             cancellable = true
     )
@@ -48,8 +49,8 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     }
 
     @Inject(
-            at = {@At("TAIL")},
-            method = {"addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
+            at = @At("TAIL"),
+            method = "addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         CompoundTag citadelDat = this.redomesticate$getEntityData();
@@ -60,8 +61,8 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     }
 
     @Inject(
-            at = {@At("TAIL")},
-            method = {"readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"}
+            at = @At("TAIL"),
+            method = "readAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         if (compoundNBT.contains(Constants.ENTITY_SYNC_DATA)) {

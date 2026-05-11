@@ -21,8 +21,8 @@ public abstract class FloatGoalMixin extends Goal {
     private Mob mob;
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canUse()Z"},
+            at = @At("HEAD"),
+            method = "canUse()Z",
             cancellable = true
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir) {

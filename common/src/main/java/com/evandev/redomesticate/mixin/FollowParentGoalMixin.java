@@ -19,8 +19,8 @@ public class FollowParentGoalMixin {
     private Animal animal;
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canUse()Z"},
+            at = @At("HEAD"),
+            method = "canUse()Z",
             cancellable = true
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir){
@@ -30,8 +30,8 @@ public class FollowParentGoalMixin {
     }
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canContinueToUse()Z"},
+            at = @At("HEAD"),
+            method = "canContinueToUse()Z",
             cancellable = true
     )
     private void canContinueToUse(CallbackInfoReturnable<Boolean> cir){

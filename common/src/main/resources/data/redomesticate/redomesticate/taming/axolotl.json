@@ -1,0 +1,7 @@
+{
+  "entities": "minecraft:axolotl",
+  "items": {
+    "tag": "minecraft:axolotl_tempt_items"
+  },
+  "chance": 0.33
+}

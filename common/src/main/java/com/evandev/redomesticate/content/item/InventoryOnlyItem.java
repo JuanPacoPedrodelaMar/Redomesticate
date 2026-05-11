@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.content.item;
 
+import com.evandev.redomesticate.data.CustomTabBehavior;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 

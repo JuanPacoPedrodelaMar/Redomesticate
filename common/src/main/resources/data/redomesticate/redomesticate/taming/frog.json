@@ -1,0 +1,7 @@
+{
+  "entities": "minecraft:frog",
+  "items": {
+    "tag": "redomesticate:tame_frogs_with"
+  },
+  "chance": 0.33
+}

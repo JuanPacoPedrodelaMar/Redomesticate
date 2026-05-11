@@ -1,7 +1,9 @@
 package com.evandev.redomesticate.client;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.client.event.OutlineColorCallback;
 import com.evandev.redomesticate.client.particle.*;
+import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
@@ -34,12 +36,12 @@ public class NeoForgeClientEvents {
         @SubscribeEvent
         public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
             event.registerEntityRenderer(ModEntities.CHAIN_LIGHTNING.get(), ChainLightningRender::new);
-            event.registerEntityRenderer(ModEntities.GIANT_BUBBLE.get(), RenderGiantBubble::new);
-            event.registerEntityRenderer(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
-            event.registerEntityRenderer(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
-            event.registerEntityRenderer(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
+            event.registerEntityRenderer(ModEntities.GIANT_BUBBLE.get(), GiantBubbleRender::new);
+            event.registerEntityRenderer(ModEntities.PSYCHIC_WALL.get(), PsychicWallRender::new);
+            event.registerEntityRenderer(ModEntities.HIGHLIGHTED_BLOCK.get(), HighlightedBlockRender::new);
+            event.registerEntityRenderer(ModEntities.FOLLOWING_JUKEBOX.get(), JukeboxFollowerRender::new);
             event.registerEntityRenderer(ModEntities.RECALL_BALL.get(), RecallBallRender::new);
-            event.registerEntityRenderer(ModEntities.FEATHER.get(), RenderFeather::new);
+            event.registerEntityRenderer(ModEntities.FEATHER.get(), FeatherRender::new);
         }
 
         @SubscribeEvent

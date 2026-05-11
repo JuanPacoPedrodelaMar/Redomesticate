@@ -1,0 +1,13 @@
+{
+  "#comment": "For the mobs that use the more complex Brain system",
+  "replace": false,
+  "values": [
+    "minecraft:frog",
+    "minecraft:axolotl",
+    "minecraft:villager",
+    "minecraft:allay",
+    "minecraft:piglin",
+    "minecraft:armadillo",
+    "minecraft:happy_ghast"
+  ]
+}

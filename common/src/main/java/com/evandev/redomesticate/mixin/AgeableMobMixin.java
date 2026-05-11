@@ -20,9 +20,8 @@ public class AgeableMobMixin extends PathfinderMob {
     }
 
     @Inject(
-            at = {@At("HEAD")},
-            remap = true,
-            method = {"isBaby()Z"},
+            at = @At("HEAD"),
+            method = "isBaby()Z",
             cancellable = true
     )
     private void isBaby(CallbackInfoReturnable<Boolean> cir) {

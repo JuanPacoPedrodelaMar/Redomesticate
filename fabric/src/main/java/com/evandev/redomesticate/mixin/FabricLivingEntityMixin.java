@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,13 +18,13 @@ public abstract class FabricLivingEntityMixin {
     private void redomesticate$onLivingTick(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
         if (!entity.level().isClientSide) {
-            ServerProxy.onLivingUpdate(entity);
+            EventProxy.onLivingUpdate(entity);
         }
     }
 
     @Inject(method = "dropAllDeathLoot", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onLivingDrops(ServerLevel level, DamageSource damageSource, CallbackInfo ci) {
-        if (ServerProxy.onLivingDrops((LivingEntity) (Object) this)) {
+        if (EventProxy.onLivingDrops((LivingEntity) (Object) this)) {
             ci.cancel();
         }
     }
@@ -32,23 +32,23 @@ public abstract class FabricLivingEntityMixin {
     @Inject(method = "randomTeleport(DDDZ)Z", at = @At("HEAD"))
     private void redomesticate$onRandomTeleport(double x, double y, double z, boolean broadcastTeleport, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        ServerProxy.onEntityTeleport(entity, entity.position(), new Vec3(x, y, z));
+        EventProxy.onEntityTeleport(entity, entity.position(), new Vec3(x, y, z));
     }
 
     @Inject(method = "die", at = @At("HEAD"))
     private void redomesticate$onDie(DamageSource damageSource, CallbackInfo ci) {
-        ServerProxy.onLivingDie((LivingEntity) (Object) this, damageSource);
+        EventProxy.onLivingDie((LivingEntity) (Object) this, damageSource);
     }
 
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onLivingDamagePre(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        ServerProxy.onTameHurt(entity, source);
+        EventProxy.onTameHurt(entity, source);
 
-        if (ServerProxy.onLivingDamage(entity, source, amount)) {
+        if (EventProxy.onLivingDamage(entity, source, amount)) {
             cir.setReturnValue(false);
         } else {
-            ServerProxy.onEntityHurt(entity, source, amount, amount);
+            EventProxy.onEntityHurt(entity, source, amount, amount);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.client.model;
 
+import com.evandev.redomesticate.client.data.TextureOffset;
 import com.google.common.collect.Maps;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

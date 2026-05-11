@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.phys.Vec3;
@@ -17,6 +17,6 @@ public abstract class ServerPlayerMixin {
     @Inject(method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDLjava/util/Set;FF)Z", at = @At("HEAD"))
     private void redomesticate$onPlayerTeleport(ServerLevel level, double x, double y, double z, Set<?> relativeMovements, float yRot, float xRot, CallbackInfoReturnable<Boolean> cir) {
         ServerPlayer player = (ServerPlayer) (Object) this;
-        ServerProxy.onEntityTeleport(player, player.position(), new Vec3(x, y, z));
+        EventProxy.onEntityTeleport(player, player.position(), new Vec3(x, y, z));
     }
 }

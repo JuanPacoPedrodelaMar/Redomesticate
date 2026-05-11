@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.client.render;
 
+import com.evandev.redomesticate.client.data.LightningBoltData;
 import com.evandev.redomesticate.content.entity.ChainLightningEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;

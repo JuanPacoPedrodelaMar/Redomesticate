@@ -57,8 +57,8 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
     public abstract void setOwnerUUID(@org.jetbrains.annotations.Nullable UUID p_30587_);
 
     @Inject(
-            method = {"tickRidden(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;)V"},
-            at = {@At("HEAD")},
+            method = "tickRidden(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;)V",
+            at = @At("HEAD"),
             cancellable = true
     )
     private void tickRidden(Player rider, Vec3 vec3, CallbackInfo ci) {

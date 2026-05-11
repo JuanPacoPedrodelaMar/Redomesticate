@@ -2,8 +2,8 @@ package com.evandev.redomesticate.content.block.entity;
 
 
 import com.evandev.redomesticate.registry.ModBlockEntities;
-import com.evandev.redomesticate.content.misc.LanternRequest;
-import com.evandev.redomesticate.content.misc.ModWorldData;
+import com.evandev.redomesticate.data.request.LanternRequest;
+import com.evandev.redomesticate.data.ModWorldData;
 import com.evandev.redomesticate.util.ChunkLoader;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;

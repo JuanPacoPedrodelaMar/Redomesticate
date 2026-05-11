@@ -27,7 +27,7 @@ import java.util.function.Predicate;
 public class AxolotlAiMixin {
 
     @Inject(
-            method = {"makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;"},
+            method = "makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/animal/axolotl/AxolotlAi;initPlayDeadActivity(Lnet/minecraft/world/entity/ai/Brain;)V"
@@ -39,7 +39,7 @@ public class AxolotlAiMixin {
     }
 
     @Inject(
-            method = {"updateActivity(Lnet/minecraft/world/entity/animal/axolotl/Axolotl;)V"},
+            method = "updateActivity(Lnet/minecraft/world/entity/animal/axolotl/Axolotl;)V",
             at = @At(
                     value = "HEAD"
             ),
@@ -61,7 +61,7 @@ public class AxolotlAiMixin {
 
 
     @Inject(
-            method = {"getTemptations()Ljava/util/function/Predicate;"},
+            method = "getTemptations()Ljava/util/function/Predicate;",
             at = @At("TAIL"),
             cancellable = true
     )
@@ -71,7 +71,7 @@ public class AxolotlAiMixin {
     }
 
     @Inject(
-            method = {"getSpeedModifierChasing(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            method = "getSpeedModifierChasing(Lnet/minecraft/world/entity/LivingEntity;)F",
             remap = true,
             at = @At(
                     value = "TAIL"
@@ -84,7 +84,7 @@ public class AxolotlAiMixin {
     }
 
     @Inject(
-            method = {"getSpeedModifierFollowingAdult(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            method = "getSpeedModifierFollowingAdult(Lnet/minecraft/world/entity/LivingEntity;)F",
             at = @At(
                     value = "TAIL"
             ),
@@ -96,7 +96,7 @@ public class AxolotlAiMixin {
     }
 
     @Inject(
-            method = {"getSpeedModifier(Lnet/minecraft/world/entity/LivingEntity;)F"},
+            method = "getSpeedModifier(Lnet/minecraft/world/entity/LivingEntity;)F",
             at = @At(
                     value = "TAIL"
             ),

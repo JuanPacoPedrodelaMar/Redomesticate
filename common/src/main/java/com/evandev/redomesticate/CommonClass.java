@@ -1,7 +1,7 @@
 package com.evandev.redomesticate;
 
-import com.evandev.redomesticate.client.OutlineColorCallback;
-import com.evandev.redomesticate.client.render.OreColorRegistry;
+import com.evandev.redomesticate.client.event.OutlineColorCallback;
+import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.*;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;

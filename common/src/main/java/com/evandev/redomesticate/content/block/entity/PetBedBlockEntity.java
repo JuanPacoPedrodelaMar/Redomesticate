@@ -3,8 +3,8 @@ package com.evandev.redomesticate.content.block.entity;
 
 import com.evandev.redomesticate.registry.ModBlockEntities;
 import com.evandev.redomesticate.content.block.PetBedBlock;
-import com.evandev.redomesticate.content.misc.ModWorldData;
-import com.evandev.redomesticate.content.misc.RespawnRequest;
+import com.evandev.redomesticate.data.ModWorldData;
+import com.evandev.redomesticate.data.request.RespawnRequest;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;

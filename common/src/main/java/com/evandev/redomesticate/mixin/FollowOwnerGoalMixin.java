@@ -32,30 +32,30 @@ public abstract class FollowOwnerGoalMixin extends Goal {
     private double speedModifier;
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canUse()Z"},
+            at = @At("HEAD"),
+            method = "canUse()Z",
             cancellable = true
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir) {
-        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"canContinueToUse()Z"},
+            at = @At("HEAD"),
+            method = "canContinueToUse()Z",
             cancellable = true
     )
     private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
-        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 2 && ModConfig.get().trinaryCommandSystem) {
+        if (tamable instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getCommand() != 0 && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
 
     @Inject(
-            at = {@At("HEAD")},
-            method = {"tick()V"},
+            at = @At("HEAD"),
+            method = "tick()V",
             cancellable = true
     )
     private void tick(CallbackInfo ci) {

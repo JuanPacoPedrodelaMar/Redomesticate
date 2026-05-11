@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class VillagerMixin {
 
     @Inject(
-            at = {@At("TAIL")},
-            method = {"getPlayerReputation(Lnet/minecraft/world/entity/player/Player;)I"},
+            at = @At("TAIL"),
+            method = "getPlayerReputation(Lnet/minecraft/world/entity/player/Player;)I",
             cancellable = true
     )
     private void getPlayerReputation(Player player, CallbackInfoReturnable<Integer> cir) {

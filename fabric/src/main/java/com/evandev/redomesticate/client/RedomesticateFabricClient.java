@@ -1,12 +1,14 @@
 package com.evandev.redomesticate.client;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.client.event.OutlineColorCallback;
 import com.evandev.redomesticate.client.particle.*;
+import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
 import com.evandev.redomesticate.network.FabricNetworking;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
@@ -25,12 +27,12 @@ public class RedomesticateFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         EntityRendererRegistry.register(ModEntities.CHAIN_LIGHTNING.get(), ChainLightningRender::new);
-        EntityRendererRegistry.register(ModEntities.GIANT_BUBBLE.get(), RenderGiantBubble::new);
-        EntityRendererRegistry.register(ModEntities.PSYCHIC_WALL.get(), RenderPsychicWall::new);
-        EntityRendererRegistry.register(ModEntities.HIGHLIGHTED_BLOCK.get(), RenderHighlightedBlock::new);
-        EntityRendererRegistry.register(ModEntities.FOLLOWING_JUKEBOX.get(), RenderJukeboxFollower::new);
+        EntityRendererRegistry.register(ModEntities.GIANT_BUBBLE.get(), GiantBubbleRender::new);
+        EntityRendererRegistry.register(ModEntities.PSYCHIC_WALL.get(), PsychicWallRender::new);
+        EntityRendererRegistry.register(ModEntities.HIGHLIGHTED_BLOCK.get(), HighlightedBlockRender::new);
+        EntityRendererRegistry.register(ModEntities.FOLLOWING_JUKEBOX.get(), JukeboxFollowerRender::new);
         EntityRendererRegistry.register(ModEntities.RECALL_BALL.get(), RecallBallRender::new);
-        EntityRendererRegistry.register(ModEntities.FEATHER.get(), RenderFeather::new);
+        EntityRendererRegistry.register(ModEntities.FEATHER.get(), FeatherRender::new);
 
         ParticleFactoryRegistry.getInstance().register(ModParticles.DEFLECTION_SHIELD.get(), new ParticleDeflectionShield.Factory());
         ParticleFactoryRegistry.getInstance().register(ModParticles.MAGNET.get(), ParticleMagnet.Factory::new);
@@ -44,7 +46,7 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.BLIGHT.get(), ParticleBlight.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), ParticleQuestionMark.Factory::new);
 
-        ItemTooltipCallback.EVENT.register(ServerProxy::onItemTooltip);
+        ItemTooltipCallback.EVENT.register(EventProxy::onItemTooltip);
 
         TooltipComponentCallback.EVENT.register(data -> {
             if (data instanceof ItemMobTooltip tooltipData) {

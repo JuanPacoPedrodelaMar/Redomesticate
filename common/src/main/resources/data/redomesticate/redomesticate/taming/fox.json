@@ -1,0 +1,7 @@
+{
+  "entities": "minecraft:fox",
+  "items": {
+    "item": "minecraft:sweet_berries"
+  },
+  "chance": 0.33
+}

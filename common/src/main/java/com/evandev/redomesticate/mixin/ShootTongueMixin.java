@@ -18,7 +18,7 @@ import java.util.Optional;
 public class ShootTongueMixin {
 
     @Inject(
-            method = {"checkExtraStartConditions(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/frog/Frog;)Z"},
+            method = "checkExtraStartConditions(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/frog/Frog;)Z",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/animal/frog/Frog;canEat(Lnet/minecraft/world/entity/LivingEntity;)Z"
@@ -32,7 +32,7 @@ public class ShootTongueMixin {
     }
 
     @Inject(
-            method = {"eatEntity(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/frog/Frog;)V"},
+            method = "eatEntity(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/frog/Frog;)V",
             at = @At("HEAD"),
             cancellable = true
     )

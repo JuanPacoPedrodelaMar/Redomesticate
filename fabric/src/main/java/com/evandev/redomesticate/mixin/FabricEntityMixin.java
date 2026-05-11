@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +13,7 @@ public abstract class FabricEntityMixin {
 
     @Inject(method = "startRiding(Lnet/minecraft/world/entity/Entity;Z)Z", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onStartRiding(Entity vehicle, boolean force, CallbackInfoReturnable<Boolean> cir) {
-        if (ServerProxy.onEntityMount(vehicle, (Entity) (Object) this, false)) {
+        if (EventProxy.onEntityMount(vehicle, (Entity) (Object) this, false)) {
             cir.setReturnValue(false);
         }
     }
@@ -23,7 +23,7 @@ public abstract class FabricEntityMixin {
         Entity entity = (Entity) (Object) this;
         Entity vehicle = entity.getVehicle();
         if (vehicle != null) {
-            if (ServerProxy.onEntityMount(vehicle, entity, true)) {
+            if (EventProxy.onEntityMount(vehicle, entity, true)) {
                 ci.cancel();
             }
         }

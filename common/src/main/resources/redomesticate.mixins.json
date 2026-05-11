@@ -6,11 +6,9 @@
   "mixins": [
     "AbstractHorseMixin",
     "AgeableMobMixin",
-    "AnimalMixin",
     "AxolotlAiMixin",
     "AxolotlAttackablesSensorMixin",
     "AxolotlMixin",
-    "CatMixin",
     "EntityMixin",
     "EntityOutlineMixin",
     "FishingHookMixin",
@@ -24,15 +22,14 @@
     "LivingEntityMixin",
     "MobMixin",
     "PanicGoalMixin",
-    "ParrotMixin",
     "PlayerMixin",
     "RabbitMixin",
     "SculkSensorBlockMixin",
     "ShootTongueMixin",
-    "TameableAnimalMixin",
     "VillagerMixin",
     "WolfMixin",
-    "accessor.ExperienceOrbAccessor"
+    "accessor.ExperienceOrbAccessor",
+    "accessor.MobAccessor"
   ],
   "client": [
     "accessor.SpriteContentsAccessor"

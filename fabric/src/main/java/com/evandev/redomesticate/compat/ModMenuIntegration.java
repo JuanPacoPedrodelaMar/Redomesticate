@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.compat;
 
-import com.evandev.redomesticate.client.integration.ClothConfigIntegration;
+import com.evandev.redomesticate.compat.clothconfig.ClothConfigIntegration;
 import com.evandev.redomesticate.platform.Services;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

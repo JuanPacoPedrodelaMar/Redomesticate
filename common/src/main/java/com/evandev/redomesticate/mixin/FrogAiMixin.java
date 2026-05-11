@@ -28,7 +28,7 @@ import java.util.function.Predicate;
 public class FrogAiMixin {
 
     @Inject(
-            method = {"makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;"},
+            method = "makeBrain(Lnet/minecraft/world/entity/ai/Brain;)Lnet/minecraft/world/entity/ai/Brain;",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/entity/animal/frog/FrogAi;initJumpActivity(Lnet/minecraft/world/entity/ai/Brain;)V"
@@ -40,7 +40,7 @@ public class FrogAiMixin {
     }
 
     @Inject(
-            method = {"updateActivity(Lnet/minecraft/world/entity/animal/frog/Frog;)V"},
+            method = "updateActivity(Lnet/minecraft/world/entity/animal/frog/Frog;)V",
             at = @At(
                     value = "HEAD"
             ),
@@ -66,7 +66,7 @@ public class FrogAiMixin {
     }
 
     @Inject(
-            method = {"getTemptations()Ljava/util/function/Predicate;"},
+            method = "getTemptations()Ljava/util/function/Predicate;",
             at = @At("TAIL"),
             cancellable = true
     )

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.content.ServerProxy;
+import com.evandev.redomesticate.event.EventProxy;
 import net.minecraft.world.entity.item.ItemEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -12,6 +12,6 @@ public abstract class ItemEntityMixin {
 
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/ItemEntity;discard()V"))
     private void redomesticate$onItemDespawn(CallbackInfo ci) {
-        ServerProxy.onItemDespawnEvent((ItemEntity) (Object) this);
+        EventProxy.onItemDespawnEvent((ItemEntity) (Object) this);
     }
 }
