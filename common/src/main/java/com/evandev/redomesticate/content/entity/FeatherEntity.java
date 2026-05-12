@@ -40,7 +40,7 @@ public class FeatherEntity extends FishingHook {
         double d1 = player.getEyeY();
         double d2 = player.getZ() - (double) f2 * 0.3D;
         this.moveTo(d0, d1, d2, f1, f);
-        Vec3 vec3 = new Vec3((double) (-f3), (double) Mth.clamp(-(f5 / f4), -5.0F, 5.0F), (double) (-f2));
+        Vec3 vec3 = new Vec3(-f3, Mth.clamp(-(f5 / f4), -5.0F, 5.0F), -f2);
         double d3 = vec3.length();
         vec3 = vec3.multiply(0.6D / d3 + 0.5D + this.random.nextGaussian() * 0.0045D, 0.6D / d3 + 0.5D + this.random.nextGaussian() * 0.0045D, 0.6D / d3 + 0.5D + this.random.nextGaussian() * 0.0045D);
         this.setDeltaMovement(vec3);
@@ -84,10 +84,10 @@ public class FeatherEntity extends FishingHook {
 
     private LivingEntity findClosestPetOf(Player owner) {
         LivingEntity closestValid = null;
-        for (Entity entity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(21.0D))) {
-            if (TameableUtils.isTamed(entity) && TameableUtils.isPetOf(owner, entity) && isPetAmbulatory((LivingEntity) entity) && ((LivingEntity) entity).hasLineOfSight(this)) {
+        for (LivingEntity entity : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(21.0D))) {
+            if (TameableUtils.isTamed(entity) && TameableUtils.isPetOf(owner, entity) && isPetAmbulatory(entity) && entity.hasLineOfSight(this)) {
                 if (closestValid == null || this.distanceTo(entity) < this.distanceTo(closestValid)) {
-                    closestValid = (LivingEntity) entity;
+                    closestValid = entity;
                 }
             }
         }

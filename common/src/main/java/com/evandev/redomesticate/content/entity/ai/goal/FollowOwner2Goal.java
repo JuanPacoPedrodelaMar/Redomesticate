@@ -1,8 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai.goal;
 
-import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
-import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;

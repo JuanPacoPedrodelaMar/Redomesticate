@@ -13,19 +13,14 @@ import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModParticles;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -40,13 +35,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class TameableUtils {
 
@@ -60,12 +53,10 @@ public class TameableUtils {
     private static final String PSYCHIC_WALL_COOLDOWN = "PetPsychicWallCooldown";
     private static final String INTIMIDATION_COOLDOWN = "PetIntimidationCooldown";
     private static final String SHADOW_PUNCH_STRIKING = "PetShadowPunchStriking";
-    private static final String JUKEBOX_FOLLOWER_UUID = "PetJukeboxFollowerUUID";
     private static final String JUKEBOX_FOLLOWER_DISC = "PetJukeboxFollowerDisc";
     private static final String BLAZING_PROTECTION_BARS = "PetBlazingProtectionBars";
     private static final String BLAZING_PROTECTION_COOLDOWN = "PetBlazingProtectionCooldown";
     private static final String HEALING_AURA_TIME = "PetHealingAuraTime";
-    private static final String Sonic_boom_TIME = "PetSonicBoomTime";
     private static final String HEALING_AURA_IMPULSE = "PetHealingAuraImpulse";
     private static final String HAS_PET_BED = "HasPetBed";
     private static final String PET_BED_X = "PetBedX";
@@ -73,23 +64,18 @@ public class TameableUtils {
     private static final String PET_BED_Z = "PetBedZ";
     private static final String PET_BED_DIMENSION = "PetBedDimension";
     private static final String FALL_DISTANCE_SYNC = "SyncedFallDistance";
-    private static final String ZOMBIE_PET = "ZombiePet";
     private static final String SAFE_PET_HEALTH = "SafePetHealth";
     private static final String COLLAR_SWAP_COOLDOWN = "CollarSwapCooldown";
     private static final ResourceLocation HEALTH_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "health_boost");// UUID.fromString("556E1665-8B10-40C8-8F9D-CF9B166EEEEE");
     private static final ResourceLocation SPEED_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31744");
-    private static final ResourceLocation ARMOR_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "armor_boost");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31744");
-    private static final ResourceLocation RESISTANCE_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "resistance_boost");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31744");
-
     private static final ResourceLocation SPEED_BOOST_AQUATIC_LAND_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost_aqua");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31745");
 
     public static UUID getOwnerUUIDOf(Entity entity) {
-        if (entity instanceof ITameableEntity) {
-            return ((ITameableEntity) entity).redomesticate$getTameOwnerUUID();
+        if (entity instanceof TamableAnimal tamable && tamable.getOwnerUUID() != null) {
+            return tamable.getOwnerUUID();
         }
-
-        if (entity instanceof TamableAnimal) {
-            return ((TamableAnimal) entity).getOwnerUUID();
+        if (entity instanceof ITameableEntity tameable) {
+            return tameable.redomesticate$getTameOwnerUUID();
         }
         return null;
     }
@@ -133,11 +119,11 @@ public class TameableUtils {
     }
 
     public static boolean isTamed(Entity entity) {
+        if (entity instanceof TamableAnimal tamable && tamable.isTame()) {
+            return true;
+        }
         if (entity instanceof ITameableEntity tameable) {
             return tameable.redomesticate$isTame();
-        }
-        if (entity instanceof TamableAnimal tamable) {
-            return tamable.isTame();
         }
         return false;
     }
@@ -194,11 +180,11 @@ public class TameableUtils {
     }
 
     public static Entity getOwnerOf(Entity entity) {
-        if (entity instanceof ITameableEntity) {
-            return ((ITameableEntity) entity).redomesticate$getTameOwner();
+        if (entity instanceof TamableAnimal tamable && tamable.getOwner() != null) {
+            return tamable.getOwner();
         }
-        if (entity instanceof TamableAnimal) {
-            return ((TamableAnimal) entity).getOwner();
+        if (entity instanceof ITameableEntity tameable) {
+            return tameable.redomesticate$getTameOwner();
         }
         return null;
     }
@@ -327,9 +313,6 @@ public class TameableUtils {
                 if (enchantment.location().equals(location)) {
                     return compoundtag.getInt("lvl");
                 }
-//                    if (res != null && res.equals(NeoForgeRegistries.ENCHANTMENTS.getKey(enchantment))) {
-//                        return EnchantmentHelper.getEnchantmentLevel(compoundtag);
-//                    }
             }
 
         }
@@ -400,33 +383,6 @@ public class TameableUtils {
         return hasSameOwnerAsOneWay(tameable, target) || hasSameOwnerAsOneWay(target, tameable);
     }
 
-    public static void xpTransfer(LivingEntity living) {
-        for (ExperienceOrb experienceorb : living.level().getEntitiesOfClass(ExperienceOrb.class, living.getBoundingBox().inflate(3D))) {
-
-            Vec3 vec3 = new Vec3(living.getX() - experienceorb.getX(), living.getY() + (double) living.getEyeHeight() / 2.0D - experienceorb.getY(), living.getZ() - experienceorb.getZ());
-            double d0 = vec3.lengthSqr();
-            if (d0 < 2.0D) {
-                Entity owner = TameableUtils.getOwnerOf(living);
-                if (owner instanceof Player player) {
-                    player.giveExperiencePoints(experienceorb.getValue());
-                }
-                experienceorb.discard();
-                float h = living.getHealth() + experienceorb.getValue();
-                living.setHealth(h);
-                if (h - living.getMaxHealth() > 0) {
-                    ((ExperienceOrbAccessor) experienceorb).redomesticate$setValue((int) Math.floor(h - living.getMaxHealth()));
-                    break;
-                } else {
-                    experienceorb.discard();
-                }
-            }
-            if (d0 < 64.0D) {
-                double d1 = 1.0D - Math.sqrt(d0) / 8.0D;
-                experienceorb.setDeltaMovement(experienceorb.getDeltaMovement().add(vec3.normalize().scale(d1 * d1 * 0.5D)));
-            }
-        }
-    }
-
     public static void absorbExpOrbs(LivingEntity living) {
         if (living.getHealth() < living.getMaxHealth() && !living.level().isClientSide()) {
             for (ExperienceOrb experienceorb : living.level().getEntitiesOfClass(ExperienceOrb.class, living.getBoundingBox().inflate(3D))) {
@@ -465,17 +421,6 @@ public class TameableUtils {
     public static void setHealingAuraTime(LivingEntity enchanted, int time) {
         CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
         tag.putInt(HEALING_AURA_TIME, time);
-        sync(enchanted, tag);
-    }
-
-    public static long getSonicboomAuraTime(LivingEntity enchanted) {
-        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
-        return tag.getLong(Sonic_boom_TIME);
-    }
-
-    public static void setSonicboomAuraTime(LivingEntity enchanted, long time) {
-        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
-        tag.putLong(Sonic_boom_TIME, time);
         sync(enchanted, tag);
     }
 
@@ -603,7 +548,6 @@ public class TameableUtils {
             BlockPos blockpos = living.blockPosition();
             int half = range / 2;
             RandomSource r = living.getRandom();
-            int maxPlants = 2 + r.nextInt(2);
             for (int i = 0; i <= half && i >= -half; i = (i <= 0 ? 1 : 0) - i) {
                 for (int j = 0; j <= range && j >= -range; j = (j <= 0 ? 1 : 0) - j) {
                     for (int k = 0; k <= range && k >= -range; k = (k <= 0 ? 1 : 0) - k) {
@@ -764,17 +708,6 @@ public class TameableUtils {
         return Math.min(charismas, 50);
     }
 
-    public static void setPetJukeboxUUID(LivingEntity enchanted, UUID id) {
-        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
-        tag.putUUID(JUKEBOX_FOLLOWER_UUID, id);
-        sync(enchanted, tag);
-    }
-
-    public static UUID getPetJukeboxUUID(LivingEntity enchanted) {
-        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
-        return tag.contains(JUKEBOX_FOLLOWER_UUID) ? tag.getUUID(JUKEBOX_FOLLOWER_UUID) : null;
-    }
-
     public static void setPetJukeboxDisc(LivingEntity enchanted, ItemStack stack) {
         CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
         if (stack.isEmpty()) {
@@ -802,53 +735,5 @@ public class TameableUtils {
             }
         }
         return false;
-    }
-
-    public static void applyGlowingEffect(LivingEntity livingEntity, int enchantLevel) {
-        var range = enchantLevel * 15;
-        livingEntity.level().getEntitiesOfClass(LivingEntity.class, new AABB(livingEntity.getX() - range, livingEntity.getY() - range, livingEntity.getZ() - range,
-                livingEntity.getX() + range, livingEntity.getY() + range, livingEntity.getZ() + range)).stream().filter(i -> i instanceof Enemy).forEach((entity) -> entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 20, 0)));
-    }
-
-    public static List<LivingEntity> getNearbyMobs(LivingEntity entity, double range) {
-        AABB area = new AABB(
-                entity.getX() - range, entity.getY() - range, entity.getZ() - range,
-                entity.getX() + range, entity.getY() + range, entity.getZ() + range
-        );
-
-        return entity.level().getEntitiesOfClass(LivingEntity.class, area, e ->
-                e != entity && !(e instanceof Player)
-        );
-    }
-
-    public static void performSonicBook(LivingEntity maid, LivingEntity monster, ServerLevel serverLevel) {
-        var livings = getNearbyMobs(maid, 5.0).stream().filter(i -> i instanceof Enemy).collect(Collectors.toSet());
-        if (livings.size() > 3) {
-            for (var enemy : livings) {
-                sonicBoomAttack(maid, enemy, serverLevel);
-            }
-        } else {
-            sonicBoomAttack(maid, monster, serverLevel);
-        }
-    }
-
-    public static void sonicBoomAttack(LivingEntity maid, LivingEntity monster, ServerLevel serverLevel) {
-
-        Vec3 vec3 = maid.position().add(maid.getAttachments().get(EntityAttachment.WARDEN_CHEST, 0, maid.getYRot()));
-        Vec3 vec32 = monster.getEyePosition().subtract(vec3);
-        Vec3 vec33 = vec32.normalize();
-        int i = Mth.floor(vec32.length()) + 7;
-
-        for (int j = 1; j < i; j++) {
-            Vec3 vec34 = vec3.add(vec33.scale(j));
-            serverLevel.sendParticles(ParticleTypes.SONIC_BOOM, vec34.x, vec34.y, vec34.z, 1, 0.0, 0.0, 0.0, 0.0);
-        }
-
-        maid.playSound(SoundEvents.WARDEN_SONIC_BOOM, 3.0F, 1.0F);
-        if (monster.hurt(serverLevel.damageSources().sonicBoom(maid), 10.0F)) {
-            double d = 0.5 * (1.0 - monster.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-            double e = 2.5 * (1.0 - monster.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
-            monster.push(vec33.x() * e, vec33.y() * d, vec33.z() * e);
-        }
     }
 }
