@@ -1,14 +1,12 @@
 package com.evandev.redomesticate.datagen.providers;
 
 import com.evandev.redomesticate.Constants;
-import com.evandev.redomesticate.platform.registry.RegistryObject;
 import com.evandev.redomesticate.registry.ModBlocks;
 import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -26,7 +24,12 @@ public class ModItemTagProvider extends ItemTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider pProvider) {
         this.tag(ModTags.COLLAR_TAG_KEY).add(ModItems.COLLAR_TAG.get());
-        this.tag(ModTags.PET_BED_KEY).add(ModBlocks.PetBedItems.values().stream().map(RegistryObject::get).toArray(Item[]::new));
+
+        Item[] petBedItems = ModBlocks.PET_BED_BLOCKS.values().stream()
+                .map(blockObj -> blockObj.get().asItem())
+                .toArray(Item[]::new);
+
+        this.tag(ModTags.PET_BED_KEY).add(petBedItems);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.registry.ModActivities;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.content.entity.ai.AmphibianFollowOwnerBehavior;
@@ -48,11 +48,11 @@ public class AxolotlAiMixin {
     private static void updateActivity(Axolotl axolotl, CallbackInfo ci) {
         Brain<Axolotl> brain = axolotl.getBrain();
         Activity activity = brain.getActiveNonCoreActivity().orElse(null);
-        if (activity != Activity.PLAY_DEAD && !axolotl.isPlayingDead() && axolotl instanceof ITameableEntity tameableEntity) {
-            if (tameableEntity.redomesticate$isStayingStill()) {
+        if (activity != Activity.PLAY_DEAD && !axolotl.isPlayingDead() && axolotl instanceof ICommandableMob commandableMob) {
+            if (commandableMob.redomesticate$isStayingStill()) {
                 brain.setActiveActivityIfPossible(ModActivities.AXOLOTL_STAY.get());
                 ci.cancel();
-            } else if (tameableEntity.redomesticate$isFollowingOwner()) {
+            } else if (commandableMob.redomesticate$isFollowingOwner()) {
                 brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.PLAY_DEAD, Activity.FIGHT, ModActivities.AXOLOTL_FOLLOW.get()));
                 ci.cancel();
             }

@@ -1,8 +1,6 @@
 package com.evandev.redomesticate.content.item;
 
 import com.evandev.redomesticate.content.entity.FeatherEntity;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -12,22 +10,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class FeatherOnAStickItem extends Item {
 
     public FeatherOnAStickItem() {
         super(new Properties().durability(160));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_feather.desc").withStyle(ChatFormatting.GRAY));
     }
 
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {

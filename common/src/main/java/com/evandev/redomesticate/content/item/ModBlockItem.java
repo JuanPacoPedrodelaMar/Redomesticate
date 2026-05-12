@@ -1,10 +1,8 @@
 package com.evandev.redomesticate.content.item;
 
 import com.evandev.redomesticate.platform.registry.RegistryObject;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import org.jetbrains.annotations.NotNull;
 
 public class ModBlockItem extends BlockItem {
@@ -19,15 +17,5 @@ public class ModBlockItem extends BlockItem {
     @Override
     public @NotNull Block getBlock() {
         return blockSupplier.get();
-    }
-
-    @Override
-    public boolean canFitInsideContainerItems() {
-        return !(blockSupplier.get() instanceof ShulkerBoxBlock);
-    }
-
-    @Override
-    public void onDestroyed(@NotNull ItemEntity p_150700_) {
-
     }
 }

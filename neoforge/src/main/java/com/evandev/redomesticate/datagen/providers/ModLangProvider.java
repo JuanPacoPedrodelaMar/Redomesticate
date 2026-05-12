@@ -12,12 +12,6 @@ public class ModLangProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        add("tooltips.redomesticate.substitute_feather.desc", "Pets will move to wherever the feather lands");
-        add("tooltips.redomesticate.substitute_rotten_apple.desc", "Feed to horses to turn them into zombie horses");
-        add("tooltips.redomesticate.substitute_sinister_carrot.desc", "Feed to horses to turn them into skeleton horses");
-        add("tooltips.redomesticate.substitute_collar.desc", "Right-click on pets to put a collar on them");
-        add("tooltips.redomesticate.substitute_pet_bed.desc", "When you place pets on pet beds, they will respawn there after they die");
-
         add("itemGroup.redomesticate", "Redomesticate");
 
         // Items
@@ -29,6 +23,7 @@ public class ModLangProvider extends LanguageProvider {
         add("item.redomesticate.feather_on_a_stick", "Feather on a Stick");
         add("item.redomesticate.deed_of_ownership", "Deed of Ownership");
         add("item.redomesticate.deed_of_ownership.desc", "Bound to %s");
+        add("item.redomesticate.deed_of_ownership.desc_unbound", "Unbound");
 
         // Blocks
         add("block.redomesticate.pet_bed_white", "White Pet Bed");
@@ -161,7 +156,7 @@ public class ModLangProvider extends LanguageProvider {
         add(LangUtil.conf("animal_tamer_villager"), "Animal Tamer");
         add(LangUtil.conf("rotten_apple"), "Apples become rotten apples when disappearing");
         add(LangUtil.conf("rotten_apple.tooltip"), "Apples become rotten apples when disappearing");
-        add(LangDefinition.has_pet_bed_at_pos, "has pet bed at ( %s )");
+        add(LangDefinition.has_pet_bed_at_pos, "Has Pet Bed at ( %s )");
         add(LangDefinition.health_text, "Health");
         add(LangDefinition.network_failed, "Network Failed");
 
@@ -171,42 +166,44 @@ public class ModLangProvider extends LanguageProvider {
         add("config.redomesticate.category.loot", "Loot");
 
         add("redomesticate.configuration.trinaryCommandSystem", "Trinary Command System");
-        add("redomesticate.configuration.trinaryCommandSystem.tooltip", "If true, Wolves, Cats, Parrots, Foxes, Axolotls, etc. can be set to wander, sit, or follow");
+        add("redomesticate.configuration.trinaryCommandSystem.tooltip", "Allows vanilla pets to be commanded to wander, sit, or follow.");
         add("redomesticate.configuration.tameableAxolotl", "Tameable Axolotls");
-        add("redomesticate.configuration.tameableAxolotl.tooltip", "If true, Axolotls are fully tameable (Axolotls must be tamed with Tropical Fish)");
+        add("redomesticate.configuration.tameableAxolotl.tooltip", "Makes Axolotls fully tameable using Tropical Fish.");
         add("redomesticate.configuration.tameableHorse", "Tameable Horses");
-        add("redomesticate.configuration.tameableHorse.tooltip", "If true, Horses, Donkeys, Llamas, etc. can be given enchants, beds, etc.");
+        add("redomesticate.configuration.tameableHorse.tooltip", "Allows Horses, Donkeys, and Llamas to use pet beds and enchantments.");
         add("redomesticate.configuration.tameableFox", "Tameable Foxes");
-        add("redomesticate.configuration.tameableFox.tooltip", "If true, Foxes are fully tameable (Foxes must be tamed via breeding)");
+        add("redomesticate.configuration.tameableFox.tooltip", "Makes Foxes fully tameable via breeding.");
         add("redomesticate.configuration.tameableRabbit", "Tameable Rabbits");
-        add("redomesticate.configuration.tameableRabbit.tooltip", "If true, Rabbits are fully tameable (Rabbits must be tamed with Carrots)");
+        add("redomesticate.configuration.tameableRabbit.tooltip", "Makes Rabbits fully tameable using Carrots.");
         add("redomesticate.configuration.tameableFrog", "Tameable Frogs");
-        add("redomesticate.configuration.tameableFrog.tooltip", "If true, Frogs are fully tameable (Frogs must be tamed with Spider Eyes)");
+        add("redomesticate.configuration.tameableFrog.tooltip", "Makes Frogs fully tameable using Spider Eyes.");
         add("redomesticate.configuration.swingThroughPets", "Swing Through Pets");
-        add("redomesticate.configuration.swingThroughPets.tooltip", "If true, attacks do not register on pets from their owners and go through them to attack a mob behind them");
+        add("redomesticate.configuration.swingThroughPets.tooltip", "Prevents owners from accidentally hitting their own pets during combat.");
         add("redomesticate.configuration.petBedRespawns", "Pet Bed Respawns");
-        add("redomesticate.configuration.petBedRespawns.tooltip", "If true, mobs can respawn in pet beds the next morning after they die");
+        add("redomesticate.configuration.petBedRespawns.tooltip", "Allows tamed pets to respawn at their assigned Pet Bed the morning after they die.");
         add("redomesticate.configuration.collarTag", "Collar Tag Features");
-        add("redomesticate.configuration.collarTag.tooltip", "If true, collar tag functionality are enabled. If this is disabled, there is no way to enchant mobs!");
+        add("redomesticate.configuration.collarTag.tooltip", "Enables Collar Tags, allowing pets to be enchanted.");
         add("redomesticate.configuration.rabbitsScareRavagers", "Rabbits Scare Ravagers");
-        add("redomesticate.configuration.rabbitsScareRavagers.tooltip", "If true, rabbits scare ravagers like they used to do");
-        add("redomesticate.configuration.petstore_village_weight", "Spawn weight of Animal Tamer");
-        add("redomesticate.configuration.petstore_village_weight.tooltip", "The spawn weight of the pet store in villages. Set to 0 to disable it entirely");
+        add("redomesticate.configuration.rabbitsScareRavagers.tooltip", "Restores the old mechanic where Rabbits scare away Ravagers.");
+        add("redomesticate.configuration.petstore_village_weight", "Animal Tamer Village Weight");
+        add("redomesticate.configuration.petstore_village_weight.tooltip", "Spawn weight of the Animal Tamer house in villages. Set to 0 to disable.");
         add("redomesticate.configuration.petCurseEnchantmentsLootOnly", "Pet Curse Enchantments Loot Only");
-        add("redomesticate.configuration.petCurseEnchantmentsLootOnly.tooltip", "If true, pet curse enchantments should only appear in loot, and not the enchanting table");
-        add("redomesticate.configuration.blazing_protection_loot_chance", "Probability of Blazing Protection");
-        add("redomesticate.configuration.blazing_protection_loot_chance.tooltip", "Percent chance of nether fortress loot table containing a Blazing Protection book");
-        add("redomesticate.configuration.sinister_carrot_loot_chance", "Probability of Sinister Carrot");
-        add("redomesticate.configuration.sinister_carrot_loot_chance.tooltip", "Percent chance of Woodland Mansion loot table containing a Sinister Carrot");
-        add("redomesticate.configuration.bubbling_loot_chance", "Probability of Bubbling");
-        add("redomesticate.configuration.bubbling_loot_chance.tooltip", "Percent chance of buried treasure loot table containing a Bubbling book");
-        add("redomesticate.configuration.vampirism_loot_chance", "Probability of Vampirism");
-        add("redomesticate.configuration.vampirism_loot_chance.tooltip", "Percent chance of woodland mansion loot table containing a Vampire book");
+        add("redomesticate.configuration.petCurseEnchantmentsLootOnly.tooltip", "Restricts pet curse enchantments to loot generation only.");
+
+        // Loot Chances
+        add("redomesticate.configuration.blazing_protection_loot_chance", "Blazing Protection Loot Chance");
+        add("redomesticate.configuration.blazing_protection_loot_chance.tooltip", "Percent chance of generating a Blazing Protection book in Nether Fortresses.");
+        add("redomesticate.configuration.sinister_carrot_loot_chance", "Sinister Carrot Loot Chance");
+        add("redomesticate.configuration.sinister_carrot_loot_chance.tooltip", "Percent chance of generating a Sinister Carrot in Woodland Mansions.");
+        add("redomesticate.configuration.bubbling_loot_chance", "Bubbling Loot Chance");
+        add("redomesticate.configuration.bubbling_loot_chance.tooltip", "Percent chance of generating a Bubbling book in Buried Treasure.");
+        add("redomesticate.configuration.vampirism_loot_chance", "Vampirism Loot Chance");
+        add("redomesticate.configuration.vampirism_loot_chance.tooltip", "Percent chance of generating a Vampire's Familiar book in Woodland Mansions.");
         add("redomesticate.configuration.voidCloudLootChance", "Void Cloud Loot Chance");
-        add("redomesticate.configuration.voidCloudLootChance.tooltip", "Percent chance of end city loot table containing a Void Cloud book");
+        add("redomesticate.configuration.voidCloudLootChance.tooltip", "Percent chance of generating a Void Cloud book in End Cities.");
         add("redomesticate.configuration.muffledLootChance", "Muffled Loot Chance");
-        add("redomesticate.configuration.muffledLootChance.tooltip", "Percent chance of ancient city loot table containing a Muffled book");
-        add("redomesticate.configuration.ore_scenting_loot_chance", "Probability of Ore Scenting");
-        add("redomesticate.configuration.ore_scenting_loot_chance.tooltip", "Percent chance of Mineshaft loot table containing an Ore Scenting book");
+        add("redomesticate.configuration.muffledLootChance.tooltip", "Percent chance of generating a Muffled book in Ancient Cities.");
+        add("redomesticate.configuration.ore_scenting_loot_chance", "Ore Scenting Loot Chance");
+        add("redomesticate.configuration.ore_scenting_loot_chance.tooltip", "Percent chance of generating an Ore Scenting book in Mineshafts.");
     }
 }

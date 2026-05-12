@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai.goal;
 
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -16,7 +17,7 @@ public class Sit2Goal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return ((ITameableEntity) this.mob).redomesticate$isTame() && ((ITameableEntity) this.mob).redomesticate$isStayingStill();
+        return ((ITameableEntity) this.mob).redomesticate$isTame() && ((ICommandableMob) this.mob).redomesticate$isStayingStill();
     }
 
     public boolean canUse() {
@@ -27,7 +28,7 @@ public class Sit2Goal extends Goal {
         } else if (!this.mob.onGround()) {
             return false;
         } else {
-            return ((ITameableEntity) this.mob).redomesticate$isStayingStill();
+            return ((ICommandableMob) this.mob).redomesticate$isStayingStill();
         }
     }
 

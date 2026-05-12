@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai;
 
-import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
@@ -16,13 +16,12 @@ public class AmphibianStayBehavior<T extends Animal> extends Behavior<T> {
     }
 
     protected boolean checkExtraStartConditions(@NotNull ServerLevel level, @NotNull T axolotl) {
-        return ((ITameableEntity) axolotl).redomesticate$isStayingStill();
+        return axolotl instanceof ICommandableMob cmd && cmd.redomesticate$isStayingStill();
     }
 
 
     protected boolean canStillUse(@NotNull ServerLevel level, @NotNull T axolotl, long gameTime) {
-        return ((ITameableEntity) axolotl).redomesticate$isStayingStill();
-
+        return axolotl instanceof ICommandableMob cmd && cmd.redomesticate$isStayingStill();
     }
 
     protected void stop(@NotNull ServerLevel p_23492_, @NotNull T axolotl, long gameTime) {

@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.core.component.DataComponents;
@@ -25,10 +25,10 @@ public abstract class FoxMixin extends Animal {
     }
 
     @Shadow
-    public abstract void setSitting(boolean p_28611_);
+    public abstract void setSitting(boolean sitting);
 
     @Shadow
-    abstract void setSleeping(boolean p_28627_);
+    abstract void setSleeping(boolean sleeping);
 
     @WrapOperation(method = "aiStep()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;finishUsingItem(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/world/item/ItemStack;"))
     private ItemStack wrapFinishUsingItem(ItemStack instance, Level level, LivingEntity livingEntity, Operation<ItemStack> original) {
@@ -40,8 +40,8 @@ public abstract class FoxMixin extends Animal {
     }
 
     @Inject(at = @At("TAIL"), method = "aiStep()V")
-    private void aiStep_2(CallbackInfo ci) {
-        if (((ITameableEntity) this).redomesticate$isFollowingOwner()) {
+    private void aiStep(CallbackInfo ci) {
+        if (((ICommandableMob) this).redomesticate$isFollowingOwner()) {
             this.setSleeping(false);
             this.setSitting(false);
         }

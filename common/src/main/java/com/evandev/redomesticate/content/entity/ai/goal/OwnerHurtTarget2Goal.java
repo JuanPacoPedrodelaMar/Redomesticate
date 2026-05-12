@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai.goal;
 
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -20,14 +21,14 @@ public class OwnerHurtTarget2Goal extends TargetGoal {
     }
 
     public boolean canUse() {
-        if (((ITameableEntity) this.tameAnimal).redomesticate$isTame() && !((ITameableEntity) this.tameAnimal).redomesticate$isStayingStill()) {
+        if (((ITameableEntity) this.tameAnimal).redomesticate$isTame() && !((ICommandableMob) this.tameAnimal).redomesticate$isStayingStill()) {
             LivingEntity livingentity = ((ITameableEntity) this.tameAnimal).redomesticate$getTameOwner();
             if (livingentity == null) {
                 return false;
             } else {
                 this.ownerLastHurt = livingentity.getLastHurtMob();
                 int i = livingentity.getLastHurtMobTimestamp();
-                return i != this.timestamp && this.canAttack(this.ownerLastHurt, TargetingConditions.DEFAULT) && ((ITameableEntity) this.tameAnimal).redomesticate$isValidAttackTarget(this.ownerLastHurt);
+                return i != this.timestamp && this.canAttack(this.ownerLastHurt, TargetingConditions.DEFAULT) && ((ICommandableMob) this.tameAnimal).redomesticate$isValidAttackTarget(this.ownerLastHurt);
             }
         } else {
             return false;

@@ -32,19 +32,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FEATHER_ON_A_STICK.get()).pattern("I ").pattern(" C").define('I', Items.FISHING_ROD).define('C', Tags.Items.FEATHERS)
                 .unlockedBy("has_craft", has(Items.CRAFTING_TABLE)).save(pWriter);
 
-        ModBlocks.PetBedItems.forEach((color, item) -> {
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, item.get(), 1)
+        ModBlocks.PET_BED_BLOCKS.forEach((color, blockObj) -> {
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, blockObj.get(), 1)
                     .unlockedBy("has_bone", has(Items.BONE))
                     .requires(ModTags.PET_BED_KEY)
-                    .requires(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color + "_dye")))
-                    .save(pWriter, Constants.MOD_ID + ":pet_bed_from_dye_" + color);
-            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, item.get(), 1)
+                    .requires(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color.getName() + "_dye")))
+                    .save(pWriter, Constants.MOD_ID + ":pet_bed_from_dye_" + color.getName());
+
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, blockObj.get(), 1)
                     .unlockedBy("has_bone", has(Items.BONE))
                     .requires(ItemTags.PLANKS)
                     .requires(Items.BONE)
-                    .requires(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color + "_wool")))
-
-                    .save(pWriter, Constants.MOD_ID + ":pet_bed_item_" + color);
+                    .requires(BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("minecraft", color.getName() + "_wool")))
+                    .save(pWriter, Constants.MOD_ID + ":pet_bed_item_" + color.getName());
         });
     }
 }

@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai.goal;
 
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
@@ -46,9 +47,9 @@ public class FollowOwner2Goal extends Goal {
             return false;
         } else if (livingentity.isSpectator()) {
             return false;
-        } else if (((ITameableEntity) this.tamable).redomesticate$isStayingStill()) {
+        } else if (((ICommandableMob) this.tamable).redomesticate$isStayingStill()) {
             return false;
-        } else if (!((ITameableEntity) this.tamable).redomesticate$isFollowingOwner()) {
+        } else if (!((ICommandableMob) this.tamable).redomesticate$isFollowingOwner()) {
             return false;
         } else if (this.tamable.distanceToSqr(livingentity) < (double) (this.startDistance * this.startDistance)) {
             return false;
@@ -61,9 +62,9 @@ public class FollowOwner2Goal extends Goal {
     public boolean canContinueToUse() {
         if (this.navigation.isDone()) {
             return false;
-        } else if (((ITameableEntity) this.tamable).redomesticate$isStayingStill()) {
+        } else if (((ICommandableMob) this.tamable).redomesticate$isStayingStill()) {
             return false;
-        } else if (!((ITameableEntity) this.tamable).redomesticate$isFollowingOwner()) {
+        } else if (!((ICommandableMob) this.tamable).redomesticate$isFollowingOwner()) {
             return false;
         } else {
             return !(this.tamable.distanceToSqr(this.owner) <= (double) (this.stopDistance * this.stopDistance));

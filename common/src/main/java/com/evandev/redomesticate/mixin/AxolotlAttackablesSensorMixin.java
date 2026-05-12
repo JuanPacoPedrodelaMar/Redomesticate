@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.sensing.AxolotlAttackablesSensor;
@@ -17,11 +18,13 @@ public class AxolotlAttackablesSensorMixin {
             cancellable = true
     )
     private void isHuntTarget(LivingEntity axolotl, LivingEntity livingEntity, CallbackInfoReturnable<Boolean> cir) {
-        if (axolotl instanceof ITameableEntity tamed && tamed.getOwner() != null && !tamed.redomesticate$isStayingStill()) {
-            if (tamed.redomesticate$isValidAttackTarget(livingEntity)) {
-                cir.setReturnValue(true);
-            } else {
-                cir.setReturnValue(false);
+        if (axolotl instanceof ITameableEntity tamed && axolotl instanceof ICommandableMob commandable && tamed.redomesticate$getTameOwner() != null) {
+            if (!commandable.redomesticate$isStayingStill()) {
+                if (commandable.redomesticate$isValidAttackTarget(livingEntity)) {
+                    cir.setReturnValue(true);
+                } else {
+                    cir.setReturnValue(false);
+                }
             }
         }
     }

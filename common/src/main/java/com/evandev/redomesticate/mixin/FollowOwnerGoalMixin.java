@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
@@ -36,7 +36,7 @@ public abstract class FollowOwnerGoalMixin extends Goal {
             cancellable = true
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir) {
-        if (tamable instanceof ITameableEntity tameableEntity && !tameableEntity.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
+        if (tamable instanceof ICommandableMob commandableMob && !commandableMob.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }
@@ -47,7 +47,7 @@ public abstract class FollowOwnerGoalMixin extends Goal {
             cancellable = true
     )
     private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
-        if (tamable instanceof ITameableEntity tameableEntity && !tameableEntity.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
+        if (tamable instanceof ICommandableMob commandableMob && !commandableMob.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
             cir.setReturnValue(false);
         }
     }

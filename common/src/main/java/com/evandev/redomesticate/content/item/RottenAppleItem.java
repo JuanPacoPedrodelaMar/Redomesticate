@@ -1,10 +1,8 @@
 package com.evandev.redomesticate.content.item;
 
 import com.evandev.redomesticate.platform.Services;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -19,20 +17,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class RottenAppleItem extends Item {
 
     public RottenAppleItem() {
         super(new Properties().food((new FoodProperties.Builder()).nutrition(3).saturationModifier(0.3f).effect(new MobEffectInstance(MobEffects.POISON, 100, 1), 1.0F).build()));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_rotten_apple.desc").withStyle(ChatFormatting.GRAY));
     }
 
     @Override

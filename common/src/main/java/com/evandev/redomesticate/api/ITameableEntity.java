@@ -19,15 +19,8 @@ public interface ITameableEntity extends OwnableEntity {
     @Nullable
     LivingEntity redomesticate$getTameOwner();
 
-    boolean redomesticate$isStayingStill();
-
-    boolean redomesticate$isFollowingOwner();
-
-    boolean redomesticate$isValidAttackTarget(LivingEntity target);
-
     @Nullable
     default UUID getOwnerUUID() {
         return redomesticate$getTameOwnerUUID();
     }
-
 }

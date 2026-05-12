@@ -3,10 +3,8 @@ package com.evandev.redomesticate.content.item;
 
 import com.evandev.redomesticate.platform.Services;
 import com.evandev.redomesticate.util.TameableUtils;
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,21 +20,12 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class SinisterCarrotItem extends Item {
 
     public SinisterCarrotItem() {
         super(new Properties().rarity(Rarity.UNCOMMON).food((new FoodProperties.Builder()).nutrition(1).saturationModifier(0.3f).effect(new MobEffectInstance(MobEffects.WITHER, 100), 1.0F).build()));
-    }
-
-    @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-        tooltipComponents.add(Component.translatable("tooltips.redomesticate.substitute_sinister_carrot.desc").withStyle(ChatFormatting.GRAY));
-
     }
 
     public @NotNull InteractionResult interactLivingEntity(@NotNull ItemStack stack, @NotNull Player player, LivingEntity entity, @NotNull InteractionHand hand) {

@@ -66,9 +66,9 @@ public class TameableUtils {
     private static final String FALL_DISTANCE_SYNC = "SyncedFallDistance";
     private static final String SAFE_PET_HEALTH = "SafePetHealth";
     private static final String COLLAR_SWAP_COOLDOWN = "CollarSwapCooldown";
-    private static final ResourceLocation HEALTH_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "health_boost");// UUID.fromString("556E1665-8B10-40C8-8F9D-CF9B166EEEEE");
-    private static final ResourceLocation SPEED_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31744");
-    private static final ResourceLocation SPEED_BOOST_AQUATIC_LAND_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost_aqua");// UUID.fromString("ff465ded-9040-4eb5-93a1-7bbe97c31745");
+    private static final ResourceLocation HEALTH_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "health_boost");
+    private static final ResourceLocation SPEED_BOOST_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost");
+    private static final ResourceLocation SPEED_BOOST_AQUATIC_LAND_UUID = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "speed_boost_aqua");
 
     public static UUID getOwnerUUIDOf(Entity entity) {
         if (entity instanceof TamableAnimal tamable && tamable.getOwnerUUID() != null) {

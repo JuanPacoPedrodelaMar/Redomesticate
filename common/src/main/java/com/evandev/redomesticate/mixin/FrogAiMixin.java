@@ -1,6 +1,6 @@
 package com.evandev.redomesticate.mixin;
 
-import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.registry.ModActivities;
 import com.evandev.redomesticate.registry.ModTags;
 import com.evandev.redomesticate.content.entity.ai.AmphibianFollowOwnerBehavior;
@@ -16,7 +16,6 @@ import net.minecraft.world.entity.animal.frog.ShootTongue;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -48,11 +47,11 @@ public class FrogAiMixin {
     )
     private static void updateActivity(Frog frog, CallbackInfo ci) {
         Brain<Frog> brain = frog.getBrain();
-        if (frog instanceof ITameableEntity tameableEntity) {
-            if (tameableEntity.redomesticate$isStayingStill()) {
+        if (frog instanceof ICommandableMob commandableMob) {
+            if (commandableMob.redomesticate$isStayingStill()) {
                 brain.setActiveActivityIfPossible(ModActivities.FROG_STAY.get());
                 ci.cancel();
-            } else if (tameableEntity.redomesticate$isFollowingOwner()) {
+            } else if (commandableMob.redomesticate$isFollowingOwner()) {
                 if (frog.getTarget() != null && frog.getTarget().isAlive()) {
                     brain.setMemory(MemoryModuleType.ATTACK_TARGET, frog.getTarget());
                     brain.setMemory(MemoryModuleType.NEAREST_ATTACKABLE, frog.getTarget());

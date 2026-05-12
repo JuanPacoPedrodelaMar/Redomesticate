@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.content.entity.ai;
 
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
@@ -31,20 +32,17 @@ public class AmphibianFollowOwnerBehavior<T extends Animal> extends Behavior<T> 
         this.baseSpeedWater = baseSpeedWater;
     }
 
-    protected boolean checkExtraStartConditions(ServerLevel level, T axolotl) {
-        if (axolotl instanceof ITameableEntity tamed) {
+    protected boolean checkExtraStartConditions(@NotNull ServerLevel level, @NotNull T axolotl) {
+        if (axolotl instanceof ITameableEntity tamed && axolotl instanceof ICommandableMob commandable) {
             owner = tamed.redomesticate$getTameOwner();
-            if (owner != null && owner.isAlive() && !owner.isSpectator() && tamed.redomesticate$isFollowingOwner()) {
-                return true;
-            }
+            return owner != null && owner.isAlive() && !owner.isSpectator() && commandable.redomesticate$isFollowingOwner();
         }
         return false;
     }
 
-
-    protected boolean canStillUse(ServerLevel level, T axolotl, long gameTime) {
+    protected boolean canStillUse(@NotNull ServerLevel level, T axolotl, long gameTime) {
         if (!axolotl.getBrain().hasMemoryValue(MemoryModuleType.BREED_TARGET) && owner != null && owner.isAlive()) {
-            return ((ITameableEntity) axolotl).redomesticate$isFollowingOwner() && axolotl.distanceTo(owner) > STOP_DISTANCE;
+            return axolotl instanceof ICommandableMob cmd && cmd.redomesticate$isFollowingOwner() && axolotl.distanceTo(owner) > STOP_DISTANCE;
         }
         return false;
     }

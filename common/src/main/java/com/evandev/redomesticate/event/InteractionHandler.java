@@ -29,10 +29,12 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 public class InteractionHandler {
 
@@ -92,12 +94,38 @@ public class InteractionHandler {
             if (itemInHand.is(ModItems.DEED_OF_OWNERSHIP.get()) && mob instanceof TamableAnimal tamableAnimal) {
                 if (isClient) return InteractionResult.CONSUME;
 
-                tamableAnimal.setTame(false, false);
-                tamableAnimal.setOwnerUUID(null);
-                tamableAnimal.setOrderedToSit(false);
-                tamableAnimal.setInSittingPose(false);
-                player.swing(hand);
-                return InteractionResult.CONSUME;
+                CustomData data = itemInHand.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+                boolean isBound = data.contains("HasBoundEntity") && data.copyTag().getBoolean("HasBoundEntity");
+
+                if (!isBound && TameableUtils.isPetOf(player, mob)) {
+                    CompoundTag tag = data.copyTag();
+                    tag.putBoolean("HasBoundEntity", true);
+                    tag.putString("BoundEntityName", tamableAnimal.getName().getString());
+                    tag.putUUID("BoundEntityUUID", tamableAnimal.getUUID());
+                    itemInHand.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+
+                    tamableAnimal.setTame(false, false);
+                    tamableAnimal.setOwnerUUID(null);
+                    tamableAnimal.setOrderedToSit(false);
+                    tamableAnimal.setInSittingPose(false);
+                    ICommandableMob cmd = (ICommandableMob) tamableAnimal;
+                    cmd.redomesticate$setCommand(0);
+
+                    player.swing(hand);
+                    return InteractionResult.CONSUME;
+                } else if (isBound) {
+                    UUID boundUUID = data.copyTag().contains("BoundEntityUUID") ? data.copyTag().getUUID("BoundEntityUUID") : null;
+                    if (boundUUID != null && boundUUID.equals(tamableAnimal.getUUID())) {
+                        tamableAnimal.setTame(true, false);
+                        tamableAnimal.setOwnerUUID(player.getUUID());
+                        ICommandableMob cmd = (ICommandableMob) tamableAnimal;
+                        cmd.redomesticate$setCommand(1);
+
+                        player.swing(hand);
+                        if (!player.getAbilities().instabuild) itemInHand.shrink(1);
+                        return InteractionResult.CONSUME;
+                    }
+                }
             }
 
             if (TameableUtils.hasEnchant(mob, ModEnchantments.GLUTTONOUS)) {
