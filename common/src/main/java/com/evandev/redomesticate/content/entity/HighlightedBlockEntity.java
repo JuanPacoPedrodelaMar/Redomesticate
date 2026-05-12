@@ -8,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
 
 
 public class HighlightedBlockEntity extends Entity {
@@ -17,7 +18,6 @@ public class HighlightedBlockEntity extends Entity {
     public HighlightedBlockEntity(EntityType<?> type, Level level) {
         super(type, level);
     }
-
 
     @Override
     public void tick() {
@@ -42,15 +42,12 @@ public class HighlightedBlockEntity extends Entity {
         builder.define(LIFESPAN, 20);
     }
 
-
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
-
+    protected void readAdditionalSaveData(@NotNull CompoundTag tag) {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
-
+    protected void addAdditionalSaveData(@NotNull CompoundTag tag) {
     }
 
     public int getLifespan() {
@@ -59,11 +56,6 @@ public class HighlightedBlockEntity extends Entity {
 
     public void setLifespan(int i) {
         this.entityData.set(LIFESPAN, i);
-    }
-
-
-    public boolean shouldRiderSit() {
-        return false;
     }
 
     public BlockState getBlockState() {

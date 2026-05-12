@@ -45,7 +45,7 @@ public class InteractionHandler {
         ICommandableMob commandable = (ICommandableMob) mob;
         boolean isClient = player.level().isClientSide();
 
-        if (!tameable.redomesticate$isTame()) {
+        if (!TameableUtils.isTamed(mob)) {
             Registry<TamingDefinition> tamingRegistry = player.level().registryAccess().registryOrThrow(TamingDefinition.REGISTRY_KEY);
             Optional<TamingDefinition> tamingDef = tamingRegistry.stream()
                     .filter(def -> def.entities().contains(mob.getType().builtInRegistryHolder()) && def.items().test(itemInHand))
@@ -78,7 +78,7 @@ public class InteractionHandler {
             }
         }
 
-        if (tameable.redomesticate$isTame() && TameableUtils.isPetOf(player, mob)) {
+        if (TameableUtils.isTamed(mob) && TameableUtils.isPetOf(player, mob)) {
             if (ModConfig.get().trinaryCommandSystem && itemInHand.isEmpty()) {
                 if (isClient) return InteractionResult.SUCCESS;
 

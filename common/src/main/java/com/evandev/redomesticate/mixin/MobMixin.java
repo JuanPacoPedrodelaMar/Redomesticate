@@ -132,12 +132,12 @@ public abstract class MobMixin extends LivingEntity implements ICommandableMob, 
         }
     }
 
-    @Inject(method = "mobInteract", at = @At("HEAD"), cancellable = true)
-    private void redomesticate_globalInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    @Inject(method = "interact", at = @At("HEAD"), cancellable = true)
+    private void globalInteract(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         ItemStack itemInHand = player.getItemInHand(hand);
         Mob mob = (Mob) (Object) this;
 
-        if (this.redomesticate$isTame() && TameableUtils.isPetOf(player, mob)) {
+        if (TameableUtils.isTamed(mob) && TameableUtils.isPetOf(player, mob)) {
             if (ModConfig.get().trinaryCommandSystem && itemInHand.isEmpty()) {
                 if (!player.level().isClientSide()) {
                     mob.setTarget(null);
