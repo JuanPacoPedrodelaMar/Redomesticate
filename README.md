@@ -193,6 +193,11 @@ Enchants from this mod are compatible with Enchantment Descriptions. Mobs from A
 inside some of the Animal Tamer's cages in villages. If you are a mod dev and want to make sure Redomesticate
 works out of the box for your mod, remember to make sure your tameable mob's class extends TameableAnimal.
 
+## Special Thanks & Credits:
+
+- AlexModGuy, without whom this mod wouldn't be possible.
+- Kobber for the incredible new Wayward Lantern textures.
+
 ## License
 
 [![Code license (GPL3.0)](https://img.shields.io/badge/code%20license-GPL3.0-green.svg?style=flat-square)](https://github.com/evanbones/Redomesticate/blob/1.21.1/LICENSE)
