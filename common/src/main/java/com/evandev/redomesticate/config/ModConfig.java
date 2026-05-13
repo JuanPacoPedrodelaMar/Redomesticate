@@ -23,7 +23,6 @@ public class ModConfig {
     public boolean rottenApple = true;
     public boolean petBedRespawns = true;
     public boolean rabbitsScareRavagers = true;
-    public boolean animalTamerVillager = true;
     public int petStoreVillageWeight = 17;
 
     // Loot Chances

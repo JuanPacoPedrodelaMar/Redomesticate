@@ -59,10 +59,6 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.rabbitsScareRavagers.tooltip"))
                 .setSaveConsumer(val -> config.rabbitsScareRavagers = val).build());
 
-        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.animal_tamer_villager"), config.animalTamerVillager)
-                .setDefaultValue(true)
-                .setSaveConsumer(val -> config.animalTamerVillager = val).build());
-
         general.addEntry(entryBuilder.startIntField(Component.translatable("redomesticate.configuration.petstore_village_weight"), config.petStoreVillageWeight)
                 .setDefaultValue(17)
                 .setTooltip(Component.translatable("redomesticate.configuration.petstore_village_weight.tooltip"))

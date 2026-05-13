@@ -3,200 +3,259 @@
 <a href='https://fabricmc.net'><img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg"></a>
 <a href='https://neoforged.net/'><img alt="neoforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/neoforge_vector.svg"></a>
 
-Redomesticate was created with one goal in mind: Making tamable mobs in Minecraft not only useful and
-engaging, but to promote the taming of mobs as a playstyle by giving massive improvements to how tame mobs behave and
-interact with the world. Not only have we expanded the amount of mobs in vanilla Minecraft that can be tamed, but we
-have also fixed several problems with these mobs, added new items and blocks to improve the tamed mob experience, and
-have introduced a new Pet Enchanting system. Asides from the new command system, most of these changes should be
-reflected in both mobs from vanilla and new tamed mobs introduced in other mods, like Alex's Mobs.
+Redomesticate is a multiloader port and partial remake of Domestication Innovation, which makes tamable mobs in
+Minecraft more useful and engaging by giving massive improvements to how tamed mobs behave and interact with the world.
+There are several new items and blocks to improve the tamed mob experience and a new Pet Enchanting system. Aside from
+the new command system, most of these changes are reflected in both vanilla mobs and new tamed mobs introduced in other
+mods.
 
-With Redomesticate installed, no more will your pets have to sit out battles, exploration, and more, at home.
-Now they can join the fun without worry of permanently losing them, or them being completely outclassed by other mobs
-and mods.
+![A wolf with enchanted collar overlays](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/wolf_enchanted.png)
 
-# Feature Breakdown
+---
+
+## What's New?
+
+Redomesticate has been brought into the modern modding era with massive changes:
+
+**Multiloader Support:**
+
+Now officially available on **1.21.1** for both **NeoForge** and **Fabric**!
+
+**No More Citadel!**
+
+Citadel has been completely stripped out for a cleaner experience with no mandatory dependencies.
+
+**Data-Driven Mechanics:**
+
+Conversions (like Horses → Zombie Horses) and taming are now **fully data-driven**, giving modpack makers and datapack
+authors enormous flexibility. For example, tameable zombies with Rotten Flesh is a single datapack .json file. Supports
+any taming item and chance for any mob-to-mob conversion.
+
+**Jade Integration:**
+
+Compatibility with Jade allows for detailed tooltips showing your pet's active enchantments and pet bed location at a
+glance.
+
+---
+
+## Feature Breakdown
 
 ### Wander, Stay, Follow
 
-Wolves, Cats, Parrots, Axolotls, Rabbits, and Foxes now have 3 possible states when tamed: Wander, Stay and Follow.
-These can be cycled through by right-clicking on the mob. Now it's finally possible to have your cats and dogs wander
-around your house instead of being frozen in place or randomly teleport to you. This feature is configurable.
+Wolves, Cats, Parrots, Axolotls, Rabbits, and Foxes now have 3 possible states when tamed: **Wander**, **Stay**, and
+**Follow**. These are cycled through by right-clicking on the mob. Now it's finally possible to have your cats and dogs
+wander around your house instead of being frozen in place or randomly teleporting to you. This feature is configurable.
 
 ### Swing Through Pets
 
-Unless sneaking, the swing of your sword, fist, or any attack will pass right through any tamed pets of yours. They will
-hit any possible mob behind the pet as well. This means you are free to get in the battle with your pets without fear of
-hurting them! This change applies to arrows and other projectiles as well. If you do want to hurt the tamed mob, you can
-hold sneak during the attack. This feature is configurable.
+Unless sneaking, the swing of your sword, fist, or any attack will pass right through any of your tamed pets, hitting
+any possible mob behind the pet as well. This means you're free to get in the battle with your pets without fear of
+hurting them! This applies to arrows and other projectiles too. If you do want to hit a tamed mob, hold sneak during the
+attack. Configurable.
 
 ### Sweeping Edge Changes
 
-Sweeping edge can now no longer hurt any tamed pets of yours.
+Sweeping Edge can no longer hurt any of your tamed pets.
 
 ### Tameable Axolotls
 
-Gone are the days of weirdly holding a tropical fish bucket if you want to use an Axolotl as a companion: These
-amphibians are now fully tameable! Simply feed a wild axolotl a few tropical fish to tame them. They can be made to sit,
-wander and follow like all the other tameable mobs. Note that axolotls are by default very slow on land, dry out and
-have low health - you have been warned. This feature is configurable.
+Gone are the days of weirdly holding a tropical fish bucket if you want an Axolotl as a companion. These amphibians are
+now fully tameable: simply feed a wild axolotl tropical fish from a bucket to tame them. They can be made to sit,
+wander, and follow like all the other tameable mobs. Note that axolotls are by default very slow on land, dry out, and
+have low health — you've been warned. Configurable.
 
 ### Tameable Foxes
 
-Trustable mobs have always been somewhat scuffed in implementation. Thankfully, we've made it so that tamed foxes are
-actually tamed - and can be made to sit, wander and follow like the other pets. To get a tame fox, you need to breed two
-wild foxes with sweet berries and wait for it to grow up. Note that no matter how tame foxes are, they'll still want to
-kill any chickens and (untamed) rabbits they can see. This feature is configurable.
+Tamed foxes are now actually tamed and can be made to sit, wander and follow like the other pets. To get a tame fox,
+breed two wild foxes with sweet berries and wait for the kit to grow up. No matter how tame foxes are, they'll still
+want to kill any chickens and (untamed) rabbits that they see. Configurable.
 
 ### Tameable Rabbits
 
-When they were initially added to the game, rabbits were fully tameable just like cats and wolves. However, this was
-eventually removed. We've undone this change and made them like the other tamable mobs above. To tame a rabbit, feed it
-several Hay Bales. Rabbits only have 3 health by default and usually (see: Sinister Carrot) cannot attack. However, to
-make them useful we have reintroduced another removed feature: rabbits scare off ravagers. Both them being tameable and
-the scaring of ravagers are configurable.
+When rabbits were initially added to the game, they were fully tameable just like cats and wolves — this was eventually
+removed. This change has been undone. To tame a rabbit, feed it several Hay Bales. Rabbits only have 3 health by default
+and *usually* cannot attack (see: Sinister Carrot). To make them useful, Redomesticate reintroduces another removed
+feature: **rabbits scare off Ravagers**. Both tamability and the scaring of Ravagers are configurable.
 
 ### Tameable Frogs
 
-Lots of people have frogs as pets in the real world... right? Now you can tame them in Minecraft with a few spider eyes.
-Frogs can be made to stay, follow or wander like the other pets, and will come to their owner's defense. They may have
-low attack and health, but they sure make up for it in cuteness.
+Now you can tame Frogs in Minecraft with a few spider eyes. Frogs can be made to stay, follow, or wander like the other
+pets, and will come to their owner's defense. They may have low attack and health, but they make up for it in
+cuteness.
 
 ### Pet Beds
 
-Pet Beds are new craftable blocks that are made like so:
+Pet Beds are craftable blocks that come in all 16 dye colours.
 
-Note that they come in all 16 colors.
+![Pet Bed recipe](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/pet_bed_recipe.png)
 
-By moving one of your tamed mobs onto a pet bed, you enable it to respawn there the next morning if it somehow dies. The
-visual indication for this is if you see a bunch of ZZZ particles appear above your pet's head: this means it has set
-its respawn point. To remove the respawn point, simply break the bed block.
+When a tamed mob walks onto a Pet Bed, it will attempt to claim it as its own — indicated by ZZZ particles appearing
+above the pet's head. Each bed can only be claimed by one pet at a time, and nearby pets without a bed will
+automatically seek out and navigate to an unclaimed bed within range.
 
-Mobs can only respawn at dawn, so if your pet dies some other time you will have to wait until then to see it again. Pet
-enchants are preserved with respawning, but more on that later. The respawning of mobs in beds is configurable.
+Once claimed, if the pet dies, it will respawn at its bed at the next dawn. Pet enchants are preserved on respawn. To
+release a bed, simply break it. Configurable.
 
 ### Wayward Lantern
 
-The Wayward Lantern is a decorative block that can be crafted from iron ingots and a lantern. If you are ever so far
-away from your pets in 'follow' mode that they are unloaded from the world, they will eventually find their way back to
-the closest Wayward Lantern to you. This makes it perfectly fine to die far from home and not loose both your pets and
-your loot.
+The Wayward Lantern is a decorative block crafted from iron ingots and a lantern, and features a newly reworked model
+and texture.
+
+![Wayward Lantern](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/wayward_lantern.png)
+
+![Wayward Lantern recipe](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/wayward_lantern_recipe.png)
+
+If you are ever so far away from your pets in Follow mode that they unload from the world, they will eventually find
+their way back to the closest Wayward Lantern to you. This makes it perfectly fine to die far from home without losing
+both your pets and your loot.
 
 ### Feather on a Stick
 
-Feather on a Stick is a new simple tool crafted like so:
+The Feather on a Stick is a simple tool crafted like so:
 
-When used, this will send out a feather on a string in front of you. The closest pet of yours will then try to move onto
-the feather to play with it. This tool is useful for getting your mob out of places it shouldn't be, like if it's stuck
-in a doorway or on top of a chest. It's also useful for moving a pet onto its bed so you can set its respawn point.
+![Feather on a Stick recipe](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/feather_recipe.png)
+
+When used, it sends out a feather on a string in front of you. The closest pet of yours will then try to move onto the
+feather to play with it. This is useful for getting a mob out of places it shouldn't be (stuck in a doorway, on top of a
+chest).
 
 ### Rotten Apple & Sinister Carrot
 
-Rotten Apples have a chance to form if an apple item despawns on the ground (configurable). These green, wormy apples
-can be fed to a horse in order to turn it into a zombie horse. This zombification process will also preserve the speed
-and other aspects of the horse. Zombie horses cannot wear armor.
+**Rotten Apples** have a chance to form if an apple item despawns on the ground (configurable). Feeding one to a horse
+turns it into a Zombie Horse, preserving its speed and other stats. Zombie horses cannot wear armor.
 
-Sinister Carrots are rarely found as loot in Woodland Mansions (configurable). They can be fed to a zombie horse in
-order to turn it into a skeleton horse. They can also be fed to a rabbit to transform it into a Killer Rabbit,
-which can attack and is much stronger than a normal rabbit.
+**Sinister Carrots** are rarely found as loot in Woodland Mansions (configurable). They can be fed to a Zombie Horse to
+convert it into a Skeleton Horse, or fed to a rabbit to transform it into a **Killer Rabbit** — which can attack and is
+much stronger than a normal rabbit.
 
 ### Animal Tamer Villager
 
-Animal Tamers can be found in villages in their own unique houses (spawn rate configurable) or can be created with a
-unemployed villager using a pet bed as a workstation. They trade a variety of items related to animals from both vanilla
-minecraft and this mod, including unique pet enchants(charisma). Their houses also contain some untamed mobs and
-sometimes fish tanks.
+Animal Tamers can be found in villages in their own unique houses (spawn rate configurable) or can be created from an
+unemployed villager using a Pet Bed as a workstation. They trade a variety of animal-related items from both vanilla
+Minecraft and this mod, including unique pet enchants. Their houses contain untamed mobs and sometimes fish tanks.
 
-The Animal Tamer villager can be disabled via the config.
+The Animal Tamer villager can be disabled via datapacks.
 
 ### Deed of Ownership
 
-The Deed of Ownership is an item that can be purchased from the Animal Tamer villager. By right clicking on a tamed pet
-that you are the owner of, you bind it to the deed. If you give the deed to any other player, and they use it on the
-bounded animal, then the ownership of the pet will pass onto them, making it effectively as if they were the ones who
-tamed the animal.
+The Deed of Ownership is an item purchasable from the Animal Tamer villager. Right-clicking on a tamed pet you own binds
+it to the deed. Giving the deed to another player and having them use it on the bound animal transfers ownership,
+as if they had tamed the animal themselves.
 
 ### Command Drum
 
-The Command Drum block has been added to automate commanding groups of mobs via redstone. Craft it like so:
+The Command Drum automates commanding groups of mobs via redstone.
 
-When interacted with, the drum will beat and change command modes, whilst ordering all tamed mobs of the user to follow,
-stay or wander depending on the beat. If given a redstone signal, it will command the mobs of the player that originally
-placed the block. The block also makes a funny sound if you jump on it.
+![Command Drum recipe](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/drum_recipe.png)
+
+When interacted with, the drum beats and changes command modes, ordering all your tamed mobs to follow, stay, or wander
+depending on the beat. If given a redstone signal, it commands the mobs of the player who originally placed the block.
+The block also makes a funny sound if you jump on it.
 
 ### Collar Tags
 
-Collar Tags are the conduit for pet enchantments. They can be crafted like so:
+Collar Tags are the conduit for pet enchantments.
 
-Like a nametag, these collar tags can be renamed in an anvil and used on a mob to rename it (unlike a nametag, this is
-only for animals that are your pets). However, their real use is that they can be enchanted (configurable).
+![Collar Tag recipe](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/collar_tag_recipe.png)
+
+Like a Name Tag, Collar Tags can be renamed in an anvil and used on a mob to rename it (only for your own pets, unlike
+Name Tags). Their real power is that they can be enchanted (configurable).
 
 ### Enchanting Your Pets
 
-Pets can be enchanted by applying enchants to a collar tag in either an anvil or an enchanting table.
+Pets are enchanted by applying enchants to a Collar Tag in either an anvil or an enchanting table, then placing the
+collar on your tamed pet by right-clicking. To retrieve an enchanted collar, swap it with any other collar (even an
+unenchanted one). You can view a pet's enchants by sneaking and looking at them, or via Jade if it's installed.
 
-These collars can then be placed on a tamed pet of yours by interacting with it. To get the enchanted collar back, you
-can simply swap it with any other collar, including an unenchanted one. You can view a pet's enchants by sneaking and
-looking at them.
+![Enchanting table with collar tag](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/enchanting_table.gif)
+
+---
 
 ## All Pet Enchantments
 
-35 Pet Enchantments are added, including 4 curses and 5 loot/trade exclusive enchantments. These are:
+35 Pet Enchantments are added in total, including 4 curses and 5 loot/trade-exclusive enchantments:
+
+![Full enchantment list](https://raw.githubusercontent.com/evanbones/Redomesticate/1.21.1/images/list_of_enchantments.png)
 
 ```
-    Health Boost I-III : Pet gains 10 additional maximum health per level.
-    Fireproof : Pet cannot be damaged by fire or lava.
-    Immunity Frame I-III : Pet gains immunity frames (1 second for each level) after attacked, donated by an energy barrier overlay. While active, pet will not be damaged further during this time.
-    Deflecting : Pet is protected by a ghostly shield which deflects any projectile attacks.
-    Poison Resistance : Pet cannot be inflicted with poison effect.
-    Chain Lightning I-II : When attacking, Pet shoots lightning that arcs from the target to nearby mobs. Perfect for dealing with swarms of mobs like zombies. Level determines amount of mobs the lightning arcs between.
-    Speedster I-III : Increases pets movement speed.
-    Frost Fang : Inflicts attack targets with frozen effect (ie. powdered snow effect) that slows them and damages them over time
-    Magnetic : Pet is aided by a ghostly magnet which pulls attack targets closer to it.
-    Linked Inventory : Pet can pick up items and teleport them to its owners inventory.
-    Total Recall : When below 2 health, pet enters a recall orb and is protected from any further damage until released by its owner.
-    Health Siphon : Transfers any incoming damage from the pet to its owner, if nearby.
-    Bubbling I-II : Pet attacks trap target inside a giant bubble which floats upwards and pops, sending the target plummeting to the ground. Level determines duration of the bubble. Only found as loot in Buried Treasure.
-    Herding I-II : Pet can be followed by untamed animals. Level determines maximum amount of followers.
-    Amphibious : Pet cannot dry out (if aquatic like axolotls) or drown (if a land animal) in water or on land. Improves movement underwater and allows land animals to properly swim instead of splashing at the top of the water.
-    Vampire's Familiar I-II : Pet regains a portion of health for each successful attack. Level I is 50% of the attack, level II is 100%. Only found as loot in Woodland Mansions.
-    Void Cloud : If pet falls off a cliff or into the void, a cloud will be summoned to lift it back up and towards its owner, if nearby. Only found as loot in End Cities.
-    Charisma I-III : Lowers trade prices if near owner. Level determines how great of a deal is given. Only given as a trade by villagers.
-    Shadow Hands I-IV : Pet gains dark magical abilities in the form of shadow hands that emerge from the creature. These hands deal melee damage at a decent range. Level determines count and speed of hands when attacking.
-    Disc Jockey : Pet is followed by a magical jukebox that can play any record on loop.
-    Defusal I-III : Pet will nullify any nearby explosion, such as from creepers or TNT. Level determines range of effect.
-    Warping Bite : Pet will teleport target away from itself when attacking.
-    Ore Scenting I-III : Pet will occasionally sniff out local ores and highlight them to nearby players. Level determines frequency, range and amount of ores highlighted. Only found as loot in Abandoned Mineshafts.
-    Gluttonous : This pet can eat any food if low on health to heal, ignoring dietary restrictions and negative effects of the food.
-    Psychic Wall I-III : This pet can summon a psychic wall of energy between its owner and any close monsters during combat. This wall will stop any unfriendly entity from walking through it. Level determines size of wall, length and frequency of the effect.
-    Intimidation I-II : This pet can occasionally scare all nearby monsters away from it. Level determines frequency and range.
-    Tethered Teleport : This pet will automatically teleport with you whenever you do when following. That includes through portals, via commands, ender pearls and more.
-    Muffled : This pet will not emit sound or vibrations. Only found as loot in Ancient Cities.
-    Blazing Protection I-III : This pet is surrounded by multiple (2 per level) blaze bars, which absorb incoming damage and ignite attackers. Only found as loot in Nether Fortresses.
-    Healing Aura I-II : When this pet or its allies are injured, it will create a circle of regeneration around itself, healing nearby mobs.
-    Rejuvenation : This pet can absorb experience orbs when injured to convert to health points.
-    Curse of Afterlife : If pet is slain, a hostile, zombifed version of it appears, with all the enchants and abilities of its past life.
-    Curse of Infamy : Pet attracts attention from nearby monsters, which will begin targeting it.
-    Curse of Blight : Random flowers, crops, grass blocks, etc. will wither and die occasionally when this pet is near.
-    Curse of Immaturity : Pet appears as a baby animal version of itself, and deals less damage when attacking.
+Health Boost I-III        : Pet gains 10 additional maximum health per level.
+Fireproof                 : Pet cannot be damaged by fire or lava.
+Immunity Frame I-III      : Pet gains immunity frames (1 second per level) after being attacked,
+                            shown by an energy barrier overlay. Pet takes no further damage during this window.
+Deflecting                : Pet is protected by a ghostly shield which deflects any projectile attacks.
+Poison Resistance         : Pet cannot be inflicted with the Poison effect.
+Chain Lightning I-II      : When attacking, pet shoots lightning that arcs from the target to nearby mobs.
+                            Level determines how many mobs the lightning arcs between.
+Speedster I-III           : Increases pet's movement speed.
+Frost Fang                : Inflicts attack targets with the frozen effect, slowing them and damaging them over time.
+Magnetic                  : Pet is aided by a ghostly magnet which pulls attack targets closer to it.
+Linked Inventory          : Pet can pick up items and teleport them directly to its owner's inventory.
+Total Recall              : When below 2 health, pet enters a recall orb and is protected from all damage
+                            until released by its owner.
+Health Siphon             : Transfers any incoming damage from the pet to its owner, if nearby.
+Bubbling I-II             : Pet attacks trap the target inside a giant bubble which floats upward and pops,
+                            sending the target plummeting. Level determines bubble duration.
+                            Only found as loot in Buried Treasure.
+Herding I-II              : Pet can be followed by untamed animals. Level determines max followers.
+Amphibious                : Pet cannot dry out (if aquatic) or drown (if a land animal).
+                            Improves underwater movement and allows land animals to properly swim.
+Vampire's Familiar I-II   : Pet regains a portion of health per successful attack.
+                            Level I = 50%, Level II = 100%. Only found in Woodland Mansions.
+Void Cloud                : If pet falls off a cliff or into the void, a cloud lifts it back toward its owner.
+                            Only found in End Cities.
+Charisma I-III            : Lowers villager trade prices when nearby owner.
+                            Level determines discount amount. Only given as a villager trade.
+Shadow Hands I-IV         : Pet gains dark magical shadow hands that deal melee damage at range.
+                            Level determines count and speed of hands when attacking.
+Disc Jockey               : Pet is followed by a magical jukebox that can play any record on loop.
+Defusal I-III             : Pet will nullify nearby explosions (creepers, TNT, etc.).
+                            Level determines range of effect.
+Warping Bite              : Pet teleports its target away when attacking.
+Ore Scenting I-III        : Pet occasionally sniffs out local ores and highlights them to nearby players.
+                            Level determines frequency, range, and amount highlighted.
+                            Only found in Abandoned Mineshafts.
+Gluttonous                : Pet can eat any food when low on health to heal, ignoring dietary restrictions
+                            and negative food effects.
+Psychic Wall I-III        : Pet summons a psychic energy wall between its owner and nearby monsters during
+                            combat, stopping unfriendly entities from walking through it.
+                            Level determines wall size, duration, and frequency.
+Intimidation I-II         : Pet occasionally scares all nearby monsters away from it.
+                            Level determines frequency and range.
+Tethered Teleport         : Pet automatically teleports with its owner whenever the owner teleports,
+                            including through portals, via commands, ender pearls, and more.
+Muffled                   : Pet emits no sound or vibrations. Only found in Ancient Cities.
+Blazing Protection I-III  : Pet is surrounded by blaze bars (2 per level) which absorb incoming damage
+                            and ignite attackers. Only found in Nether Fortresses.
+Healing Aura I-II         : When this pet or its allies are injured, it creates a circle of regeneration
+                            around itself, healing nearby mobs.
+Rejuvenation              : Pet absorbs nearby experience orbs when injured to convert them to health.
+Curse of Afterlife        : If the pet is slain, a hostile zombified version appears with all of its
+                            enchants and abilities.
+Curse of Infamy           : Pet attracts attention from nearby monsters, which will begin targeting it.
+Curse of Blight           : Random flowers, crops, and grass blocks occasionally wither and die near this pet.
+Curse of Immaturity       : Pet appears as a baby animal and deals less damage when attacking.
 ```
 
-Most of these enchants are not compatible with each other and have varying levels of occurrence. See the chart below:
-enchantment chart
+Most enchants are mutually exclusive with certain others and have varying rarity. See the enchantment chart above for
+full compatibility details.
+
+---
 
 ## A Word on Mod Compatibility
 
-The Wander, Stay and Follow command system is implemented for vanilla mobs only. It is up to other mods to develop a
-similar system for their mobs.
+The Wander, Stay, and Follow command system works automatically for any mod mob that uses standard goal-based AI.
+Brain-based AI mobs (like axolotls and frogs) need to be tagged with `redomesticate:uses_brain_ai`;
+vanilla examples are handled automatically, but other mods' brain-based mobs may have limited trinary command support.
+All other features (pet beds, enchants, deed of ownership, etc.) work with any tameable mob from any mod.
 
-However, all other features of the mod like the pet beds and enchants should work with any tameable mob in other mods.
-Enchants from this mod are compatible with Enchantment Descriptions. Mobs from Alex's Mobs should spawn by default
-inside some of the Animal Tamer's cages in villages. If you are a mod dev and want to make sure Redomesticate
-works out of the box for your mod, remember to make sure your tameable mob's class extends TameableAnimal.
+---
 
-## Special Thanks & Credits:
+## Special Thanks & Credits
 
-- AlexModGuy, without whom this mod wouldn't be possible.
-- Kobber for the incredible new Wayward Lantern textures.
+- **AlexModGuy**, without whom this mod wouldn't be possible.
+- **Kobber** for the incredible new Wayward Lantern model and textures.
+
+---
 
 ## License
 

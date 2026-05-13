@@ -153,7 +153,6 @@ public class ModLangProvider extends LanguageProvider {
 
         // Integrations & Misc
         add("config.jade.plugin_redomesticate.collar_tag", "Collar Description");
-        add(LangUtil.conf("animal_tamer_villager"), "Animal Tamer");
         add(LangUtil.conf("rotten_apple"), "Apples become rotten apples when disappearing");
         add(LangUtil.conf("rotten_apple.tooltip"), "Apples become rotten apples when disappearing");
         add(LangDefinition.has_pet_bed_at_pos, "Has Pet Bed at (%s)");

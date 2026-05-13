@@ -1,20 +1,20 @@
 {
   "values": [
-    "redomesticate:pet_bed_lime",
-    "redomesticate:pet_bed_yellow",
-    "redomesticate:pet_bed_light_gray",
-    "redomesticate:pet_bed_red",
-    "redomesticate:pet_bed_cyan",
-    "redomesticate:pet_bed_white",
-    "redomesticate:pet_bed_light_blue",
-    "redomesticate:pet_bed_pink",
-    "redomesticate:pet_bed_black",
-    "redomesticate:pet_bed_purple",
-    "redomesticate:pet_bed_gray",
-    "redomesticate:pet_bed_orange",
     "redomesticate:pet_bed_green",
-    "redomesticate:pet_bed_magenta",
+    "redomesticate:pet_bed_gray",
+    "redomesticate:pet_bed_light_blue",
+    "redomesticate:pet_bed_cyan",
     "redomesticate:pet_bed_brown",
-    "redomesticate:pet_bed_blue"
+    "redomesticate:pet_bed_purple",
+    "redomesticate:pet_bed_blue",
+    "redomesticate:pet_bed_black",
+    "redomesticate:pet_bed_orange",
+    "redomesticate:pet_bed_red",
+    "redomesticate:pet_bed_lime",
+    "redomesticate:pet_bed_light_gray",
+    "redomesticate:pet_bed_yellow",
+    "redomesticate:pet_bed_white",
+    "redomesticate:pet_bed_magenta",
+    "redomesticate:pet_bed_pink"
   ]
 }
