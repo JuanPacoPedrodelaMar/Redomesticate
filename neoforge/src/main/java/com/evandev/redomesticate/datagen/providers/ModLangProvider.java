@@ -156,7 +156,7 @@ public class ModLangProvider extends LanguageProvider {
         add(LangUtil.conf("animal_tamer_villager"), "Animal Tamer");
         add(LangUtil.conf("rotten_apple"), "Apples become rotten apples when disappearing");
         add(LangUtil.conf("rotten_apple.tooltip"), "Apples become rotten apples when disappearing");
-        add(LangDefinition.has_pet_bed_at_pos, "Has Pet Bed at ( %s )");
+        add(LangDefinition.has_pet_bed_at_pos, "Has Pet Bed at (%s)");
         add(LangDefinition.health_text, "Health");
         add(LangDefinition.network_failed, "Network Failed");
 
