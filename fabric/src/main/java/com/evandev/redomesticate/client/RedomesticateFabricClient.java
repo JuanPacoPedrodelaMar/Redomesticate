@@ -5,17 +5,15 @@ import com.evandev.redomesticate.client.event.OutlineColorCallback;
 import com.evandev.redomesticate.client.particle.*;
 import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
+import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.content.item.DeedOfOwnershipItem;
 import com.evandev.redomesticate.network.FabricNetworking;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.registry.ModParticles;
-import com.evandev.redomesticate.event.EventProxy;
-import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
@@ -49,8 +47,6 @@ public class RedomesticateFabricClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.INTIMIDATION.get(), new ParticleIntimidation.Factory());
         ParticleFactoryRegistry.getInstance().register(ModParticles.BLIGHT.get(), ParticleBlight.Factory::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.QUESTION_MARK_PARTICLE_TYPE.get(), ParticleQuestionMark.Factory::new);
-
-        ItemTooltipCallback.EVENT.register(EventProxy::onItemTooltip);
 
         TooltipComponentCallback.EVENT.register(data -> {
             if (data instanceof ItemMobTooltip tooltipData) {

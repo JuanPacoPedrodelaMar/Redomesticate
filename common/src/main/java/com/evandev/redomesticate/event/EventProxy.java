@@ -1,6 +1,5 @@
 package com.evandev.redomesticate.event;
 
-import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.client.data.RenderData;
 import com.evandev.redomesticate.config.ModConfig;
@@ -19,26 +18,17 @@ import com.evandev.redomesticate.data.trades.BuyingItemTrade;
 import com.evandev.redomesticate.data.trades.EnchantItemTrade;
 import com.evandev.redomesticate.data.trades.SellingItemTrade;
 import com.evandev.redomesticate.data.trades.SellingRandomEnchantedBook;
-import com.evandev.redomesticate.platform.Services;
 import com.evandev.redomesticate.registry.*;
 import com.evandev.redomesticate.util.FriendlyFireCommon;
 import com.evandev.redomesticate.util.TameableUtils;
 import com.evandev.redomesticate.worldgen.VillageHouseManager;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -58,8 +48,8 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.GameRules;
@@ -74,7 +64,6 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public class EventProxy {
-    private static final String[] KEY_TYPES = {"desc", "description", "info"};
     private static final Map<Level, CollarTickTracker> COLLAR_TICK_TRACKER_MAP = new HashMap<>();
     public static List<TeleportData> teleportingPets = new ArrayList<>();
     public static MinecraftServer currentServer;
@@ -779,46 +768,6 @@ public class EventProxy {
             trades.put(3, level3);
             trades.put(4, level4);
             trades.put(5, level5);
-        }
-    }
-
-    private static MutableComponent getDescription(String baseKey, int level) {
-        for (String keyType : KEY_TYPES) {
-            String key = baseKey + keyType;
-            if (I18n.exists(key)) {
-                return Component.translatable(key).withStyle(ChatFormatting.DARK_GRAY);
-            }
-            key = key + "." + level;
-            if (I18n.exists(key)) {
-                return Component.translatable(key).withStyle(ChatFormatting.DARK_GRAY);
-            }
-        }
-        return null;
-    }
-
-    private static MutableComponent getDescription(Holder<Enchantment> enchantment, ResourceLocation id, int level) {
-        MutableComponent description = getDescription("enchantment." + id.getNamespace() + "." + id.getPath() + ".", level);
-        if (description == null && enchantment.value().description().getContents() instanceof TranslatableContents translatable) {
-            description = getDescription(translatable.getKey() + ".", level);
-        }
-        return description;
-    }
-
-    public static void onItemTooltip(ItemStack stack, Item.TooltipContext context, TooltipFlag tooltipFlag, List<Component> tooltip) {
-        if (!Services.PLATFORM.isModLoaded("enchdesc") && !stack.isEmpty() && stack.getItem() instanceof EnchantedBookItem) {
-            var enchantments = stack.get(DataComponents.STORED_ENCHANTMENTS);
-            if (enchantments != null && !enchantments.isEmpty()) {
-                for (Holder<Enchantment> enchantmentHolder : enchantments.keySet()) {
-                    var e = enchantmentHolder.value();
-                    var resourceKey = enchantmentHolder.unwrapKey();
-                    if (resourceKey.isPresent() && resourceKey.get().location().getNamespace().contains(Constants.MOD_ID)) {
-                        final MutableComponent description = getDescription(enchantmentHolder, resourceKey.get().location(), e.getMaxLevel());
-                        if (description != null) {
-                            tooltip.add(description);
-                        }
-                    }
-                }
-            }
         }
     }
 }

@@ -23,7 +23,6 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
@@ -173,10 +172,5 @@ public class Redomesticate {
     @SubscribeEvent
     public void onVillagerTrades(VillagerTradesEvent event) {
         EventProxy.onVillagerTrades(event.getType(), event.getTrades());
-    }
-
-    @SubscribeEvent
-    public void onItemTooltip(ItemTooltipEvent event) {
-        EventProxy.onItemTooltip(event.getItemStack(), event.getContext(), event.getFlags(), event.getToolTip());
     }
 }

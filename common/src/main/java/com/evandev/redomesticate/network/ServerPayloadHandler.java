@@ -11,15 +11,12 @@ import org.slf4j.Logger;
 
 public class ServerPayloadHandler {
     private static final ServerPayloadHandler INSTANCE = new ServerPayloadHandler();
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static ServerPayloadHandler getInstance() {
         return INSTANCE;
     }
 
     public static void handleData(final PropertiesMessage data, final IMessageContext context) {
         context.enqueueWork(() -> {
-                    LOGGER.info(String.valueOf(data.entityID()));
                     var level = context.getPlayer().level();
                     Entity e = level.getEntity(data.entityID());
                     if (e instanceof LivingEntity && (data.propertyID().equals(Constants.ENTITY_DATA_TAG_UPDATE))) {
