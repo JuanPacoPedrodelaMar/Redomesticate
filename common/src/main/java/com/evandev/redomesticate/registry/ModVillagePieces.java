@@ -8,11 +8,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElementType;
 
 public class ModVillagePieces {
-    public static final RegistrationProvider<StructurePoolElementType<?>> DEF_REG =
+    public static final RegistrationProvider<StructurePoolElementType<?>> VILLAGE_PIECE_REGISTRY =
             RegistrationProvider.get(Registries.STRUCTURE_POOL_ELEMENT, Constants.MOD_ID);
 
     public static final RegistryObject<StructurePoolElementType<PetshopStructurePoolElement>> PETSHOP =
-            DEF_REG.register("petshop", () -> () -> PetshopStructurePoolElement.CODEC);
+            VILLAGE_PIECE_REGISTRY.register("petshop", () -> () -> PetshopStructurePoolElement.CODEC);
 
     public static void init() {
     }

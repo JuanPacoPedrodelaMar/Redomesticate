@@ -10,8 +10,8 @@ have also fixed several problems with these mobs, added new items and blocks to 
 have introduced a new Pet Enchanting system. Asides from the new command system, most of these changes should be
 reflected in both mobs from vanilla and new tamed mobs introduced in other mods, like Alex's Mobs.
 
-With Redomesticate installed, no more will your pets have to sit out battles, exploration and more at home.
-Now they can join the fun without worry of permanently loosing them, or them being completely outclassed by other mobs
+With Redomesticate installed, no more will your pets have to sit out battles, exploration, and more, at home.
+Now they can join the fun without worry of permanently losing them, or them being completely outclassed by other mobs
 and mods.
 
 # Feature Breakdown
@@ -19,9 +19,10 @@ and mods.
 ### Wander, Stay, Follow
 
 Wolves, Cats, Parrots, Axolotls, Rabbits, and Foxes now have 3 possible states when tamed: Wander, Stay and Follow.
-These can be cycled through by right clicking on the mob. Now its finally possible to have your cats and dogs wander
+These can be cycled through by right-clicking on the mob. Now it's finally possible to have your cats and dogs wander
 around your house instead of being frozen in place or randomly teleport to you. This feature is configurable.
-Swing Through Pets
+
+### Swing Through Pets
 
 Unless sneaking, the swing of your sword, fist, or any attack will pass right through any tamed pets of yours. They will
 hit any possible mob behind the pet as well. This means you are free to get in the battle with your pets without fear of

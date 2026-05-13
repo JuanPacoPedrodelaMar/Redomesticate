@@ -38,7 +38,6 @@ public class VillageHouseManager {
         int weight = ModConfig.get().petStoreVillageWeight;
         StructurePoolElement plains = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "plains_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/plains/houses"), (pool) -> VillageHouseManager.addToPool(pool, plains, weight)));
-
         StructurePoolElement desert = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "desert_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/desert/houses"), (pool) -> VillageHouseManager.addToPool(pool, desert, weight)));
         StructurePoolElement savanna = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "savanna_petshop"), StructurePoolElement.EMPTY);
@@ -46,8 +45,8 @@ public class VillageHouseManager {
         StructurePoolElement snowy = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "snowy_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/snowy/houses"), (pool) -> VillageHouseManager.addToPool(pool, snowy, weight)));
         StructurePoolElement taiga = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "taiga_petshop"), StructurePoolElement.EMPTY);
-
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/taiga/houses"), (pool) -> VillageHouseManager.addToPool(pool, taiga, weight)));
+
         try {
             for (ResourceLocation villagePool : VILLAGE_REPLACEMENT_POOLS) {
                 StructureTemplatePool pool = registryAccess.registryOrThrow(Registries.TEMPLATE_POOL).getOptional(villagePool).orElse(null);

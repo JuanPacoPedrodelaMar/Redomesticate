@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.content.block.entity;
 
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.content.block.PetBedBlock;
 import com.evandev.redomesticate.data.ModWorldData;
 import com.evandev.redomesticate.data.request.RespawnRequest;
@@ -36,6 +37,7 @@ public class PetBedBlockEntity extends BlockEntity {
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, PetBedBlockEntity blockEntity) {
+        if (!ModConfig.get().petBedRespawns) return;
         long time = level.dayTime() % 24000L;
         if (time == 1) {
             ModWorldData data = ModWorldData.get(level);

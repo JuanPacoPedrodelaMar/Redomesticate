@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 
 public class ModSounds {
 
-    public static final RegistrationProvider<SoundEvent> DEF_REG = RegistrationProvider.get(Registries.SOUND_EVENT, Constants.MOD_ID);
+    public static final RegistrationProvider<SoundEvent> SOUND_REGISTRRY = RegistrationProvider.get(Registries.SOUND_EVENT, Constants.MOD_ID);
 
     public static final RegistryObject<SoundEvent> COLLAR_TAG = createSoundEvent("collar_tag");
     public static final RegistryObject<SoundEvent> MAGNET_LOOP = createSoundEvent("magnet_loop");
@@ -23,7 +23,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> BLAZING_PROTECTION = createSoundEvent("blazing_protection");
 
     private static RegistryObject<SoundEvent> createSoundEvent(final String soundName) {
-        return DEF_REG.register(soundName, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, soundName)));
+        return SOUND_REGISTRRY.register(soundName, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, soundName)));
     }
 
     public static void init() {

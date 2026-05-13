@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,12 +28,6 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
     @Shadow
     protected float playerJumpPendingScale;
 
-    @Shadow
-    protected boolean isJumping;
-
-    @Shadow
-    protected boolean allowStandSliding;
-
     protected AbstractHorseMixin(EntityType<? extends Animal> type, Level level) {
         super(type, level);
     }
@@ -44,17 +39,11 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
     public abstract void setTamed(boolean tame);
 
     @Shadow
-    public abstract void setIsJumping(boolean p_30656_);
-
-    @Shadow
-    public abstract boolean isStanding();
-
-    @Shadow
     @Nullable
     public abstract UUID getOwnerUUID();
 
     @Shadow
-    public abstract void setOwnerUUID(@org.jetbrains.annotations.Nullable UUID p_30587_);
+    public abstract void setOwnerUUID(@Nullable UUID owner);
 
     @Inject(
             method = "tickRidden(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;)V",
@@ -64,6 +53,8 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
     private void tickRidden(Player rider, Vec3 vec3, CallbackInfo ci) {
         if (this.isAlive() && this.isVehicle() && this.isInWaterOrBubble() && TameableUtils.hasEnchant(this, ModEnchantments.AMPHIBIOUS)) {
             LivingEntity livingentity = this.getControllingPassenger();
+            if (livingentity == null) return;
+
             this.setYRot(livingentity.getYRot());
             this.yRotO = this.getYRot();
             this.setXRot(livingentity.getXRot() * 0.5F);
@@ -92,22 +83,27 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
         }
     }
 
+    @Unique
     public boolean redomesticate$isTame() {
         return this.isTamed() && ModConfig.get().tameableHorse;
     }
 
+    @Unique
     public void redomesticate$setTame(boolean tame) {
         this.setTamed(tame);
     }
 
+    @Unique
     public UUID redomesticate$getTameOwnerUUID() {
         return this.getOwnerUUID();
     }
 
+    @Unique
     public void redomesticate$setTameOwnerUUID(@Nullable UUID uuid) {
         this.setOwnerUUID(uuid);
     }
 
+    @Unique
     @Nullable
     public LivingEntity redomesticate$getTameOwner() {
         try {
@@ -118,14 +114,17 @@ public abstract class AbstractHorseMixin extends Animal implements ITameableEnti
         }
     }
 
+    @Unique
     public boolean redomesticate$isFollowingOwner() {
         return false;
     }
 
+    @Unique
     public boolean redomesticate$isStayingStill() {
         return false;
     }
 
+    @Unique
     public boolean redomesticate$isValidAttackTarget(LivingEntity target) {
         return false;
     }
