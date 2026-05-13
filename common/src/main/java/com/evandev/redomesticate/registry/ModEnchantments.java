@@ -22,8 +22,8 @@ public class ModEnchantments {
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "chain_lightning"));
     public static final ResourceKey<Enchantment> CHARISMA = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "charisma"));
-    public static final ResourceKey<Enchantment> DISK_JOCKEY = ResourceKey.create(Registries.ENCHANTMENT,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "disk_jockey"));
+    public static final ResourceKey<Enchantment> DISC_JOCKEY = ResourceKey.create(Registries.ENCHANTMENT,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "disc_jockey"));
     public static final ResourceKey<Enchantment> HEALTH_BOOST = ResourceKey.create(Registries.ENCHANTMENT,
             ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "health_boost"));
     public static final ResourceKey<Enchantment> IMMUNITY_FRAME = ResourceKey.create(Registries.ENCHANTMENT,
@@ -294,9 +294,9 @@ public class ModEnchantments {
                 1,
                 Enchantment.dynamicCost(5, 7),
                 Enchantment.dynamicCost(25, 7),
-                2)).exclusiveWith(checkCompatible(enchantments, DISK_JOCKEY))
+                2)).exclusiveWith(checkCompatible(enchantments, DISC_JOCKEY))
         );
-        register(context, DISK_JOCKEY, Enchantment.enchantment(Enchantment.definition(
+        register(context, DISC_JOCKEY, Enchantment.enchantment(Enchantment.definition(
                 items.getOrThrow(ModTags.COLLAR_TAG_KEY),
                 5,
                 1,

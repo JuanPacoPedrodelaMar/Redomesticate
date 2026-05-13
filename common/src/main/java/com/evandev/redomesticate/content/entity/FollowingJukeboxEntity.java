@@ -60,7 +60,7 @@ public class FollowingJukeboxEntity extends Entity {
                     this.level().broadcastEntityEvent(this, (byte) 67);
                 }
 
-                if (following instanceof LivingEntity livingFollowing && !TameableUtils.hasEnchant(livingFollowing, ModEnchantments.DISK_JOCKEY)) {
+                if (following instanceof LivingEntity livingFollowing && !TameableUtils.hasEnchant(livingFollowing, ModEnchantments.DISC_JOCKEY)) {
                     this.setFollowingUUID(null);
                 }
             } else {

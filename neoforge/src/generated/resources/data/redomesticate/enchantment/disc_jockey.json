@@ -1,7 +1,7 @@
 {
   "anvil_cost": 2,
   "description": {
-    "translate": "enchantment.redomesticate.disk_jockey"
+    "translate": "enchantment.redomesticate.disc_jockey"
   },
   "exclusive_set": [
     "redomesticate:shadow_hands",

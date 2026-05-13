@@ -3,7 +3,7 @@
   "description": {
     "translate": "enchantment.redomesticate.muffled"
   },
-  "exclusive_set": "redomesticate:disk_jockey",
+  "exclusive_set": "redomesticate:disc_jockey",
   "max_cost": {
     "base": 25,
     "per_level_above_first": 7
