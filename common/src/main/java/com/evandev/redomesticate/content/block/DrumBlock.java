@@ -117,7 +117,7 @@ public class DrumBlock extends BaseEntityBlock {
                         count++;
                     }
                 }
-                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0));
+                mob.addEffect(new MobEffectInstance(MobEffects.GLOWING, 60, 0, true, false));
             }
         }
         return count;

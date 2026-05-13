@@ -5,8 +5,10 @@ import com.evandev.redomesticate.client.event.OutlineColorCallback;
 import com.evandev.redomesticate.client.particle.*;
 import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
+import com.evandev.redomesticate.content.item.DeedOfOwnershipItem;
 import com.evandev.redomesticate.network.FabricNetworking;
 import com.evandev.redomesticate.registry.ModEntities;
+import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.registry.ModParticles;
 import com.evandev.redomesticate.event.EventProxy;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
@@ -19,7 +21,9 @@ import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.fabricmc.fabric.api.client.rendering.v1.TooltipComponentCallback;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 
 public class RedomesticateFabricClient implements ClientModInitializer {
@@ -54,6 +58,11 @@ public class RedomesticateFabricClient implements ClientModInitializer {
             }
             return null;
         });
+
+        ItemProperties.register(ModItems.DEED_OF_OWNERSHIP.get(),
+                ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "bound"),
+                (stack, level, entity, seed) -> DeedOfOwnershipItem.isBound(stack) ? 1.0F : 0.0F
+        );
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register((entityType, entityRenderer, registrationHelper, context) -> {
             if (LayerManager.canApply(entityType) && entityType != EntityType.ENDER_DRAGON) {

@@ -19,12 +19,11 @@ public class ModItemProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         simpleItem(ModItems.COLLAR_TAG);
-        simpleItem(ModItems.DEED_OF_OWNERSHIP);
         simpleItem(ModItems.DEFLECTION_SHIELD);
     }
 
-    private ItemModelBuilder simpleItem(RegistryObject<Item> item) {
-        return withExistingParent(item.getId().getPath(),
+    private void simpleItem(RegistryObject<Item> item) {
+        withExistingParent(item.getId().getPath(),
                 ResourceLocation.parse("item/generated")).texture("layer0",
                 ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + item.getId().getPath()));
     }
@@ -34,5 +33,4 @@ public class ModItemProvider extends ItemModelProvider {
                 ResourceLocation.parse("item/handheld")).texture("layer0",
                 ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + item.getId().getPath()));
     }
-
 }

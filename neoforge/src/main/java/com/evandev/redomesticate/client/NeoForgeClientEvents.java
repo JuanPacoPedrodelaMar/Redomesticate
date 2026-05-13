@@ -5,14 +5,18 @@ import com.evandev.redomesticate.client.event.OutlineColorCallback;
 import com.evandev.redomesticate.client.particle.*;
 import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
-import com.evandev.redomesticate.registry.ModEntities;
-import com.evandev.redomesticate.registry.ModParticles;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
+import com.evandev.redomesticate.content.item.DeedOfOwnershipItem;
+import com.evandev.redomesticate.registry.ModEntities;
+import com.evandev.redomesticate.registry.ModItems;
+import com.evandev.redomesticate.registry.ModParticles;
 import com.evandev.redomesticate.util.ClientMobTooltip;
 import com.evandev.redomesticate.util.ItemMobTooltip;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
@@ -92,6 +96,11 @@ public class NeoForgeClientEvents {
                     }
                     return null;
                 });
+
+                ItemProperties.register(ModItems.DEED_OF_OWNERSHIP.get(),
+                        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "bound"),
+                        (stack, level, entity, seed) -> DeedOfOwnershipItem.isBound(stack) ? 1.0F : 0.0F
+                );
             });
         }
     }
