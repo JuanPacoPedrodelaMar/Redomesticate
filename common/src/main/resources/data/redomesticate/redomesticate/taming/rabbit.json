@@ -1,0 +1,7 @@
+{
+  "entities": "minecraft:rabbit",
+  "items": {
+    "item": "minecraft:hay_block"
+  },
+  "chance": 0.33
+}

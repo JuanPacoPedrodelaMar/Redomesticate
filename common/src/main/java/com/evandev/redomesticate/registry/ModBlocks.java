@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
 
-    public static final RegistrationProvider<Block> DEF_REG = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
+    public static final RegistrationProvider<Block> BLOCK_REGISTRY = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
     public static final HashMap<DyeColor, RegistryObject<Block>> PET_BED_BLOCKS = new HashMap<>();
 
     public static final RegistryObject<Block> WAYWARD_LANTERN = registerBlockAndItem("wayward_lantern", WaywardLanternBlock::new);
@@ -39,8 +39,8 @@ public class ModBlocks {
     }
 
     public static RegistryObject<Block> registerBlockAndItem(String name, Supplier<Block> block) {
-        RegistryObject<Block> blockObj = DEF_REG.register(name, block);
-        ModItems.DEF_REG.register(name, () -> new ModBlockItem(blockObj, new Item.Properties()));
+        RegistryObject<Block> blockObj = BLOCK_REGISTRY.register(name, block);
+        ModItems.ITEM_REGISTRY.register(name, () -> new ModBlockItem(blockObj, new Item.Properties()));
         return blockObj;
     }
 

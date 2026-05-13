@@ -14,7 +14,6 @@ public class ModDamageTypes {
 
     public static DamageSource causeSiphonDamage(RegistryAccess registryAccess) {
         return new DamageSource(registryAccess.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(SIPHON));
-
     }
 
     public static void init() {

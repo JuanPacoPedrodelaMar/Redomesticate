@@ -26,7 +26,6 @@ public class CommonClass {
         ModEntities.init();
         ModDamageTypes.init();
         ModBlockEntities.init();
-        ModDataComponents.init();
         ModEnchantments.init();
         ModActivities.init();
         ModParticles.init();

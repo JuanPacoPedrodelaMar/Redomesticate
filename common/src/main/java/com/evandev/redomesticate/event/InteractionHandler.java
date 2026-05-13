@@ -226,23 +226,6 @@ public class InteractionHandler {
             }
         }
 
-        if (mob instanceof Rabbit rabbit && itemInHand.is(ModItems.SINISTER_CARROT.get())) {
-            if (tameable.redomesticate$isTame() && TameableUtils.isPetOf(player, mob) && rabbit.getVariant() != Rabbit.Variant.EVIL) {
-                if (isClient) return InteractionResult.CONSUME;
-
-                player.swing(hand);
-                rabbit.playSound(SoundEvents.RABBIT_ATTACK, 0.8F, rabbit.getVoicePitch());
-                rabbit.playSound(SoundEvents.ZOMBIE_INFECT, 0.8F, rabbit.getVoicePitch());
-
-                rabbit.setVariant(Rabbit.Variant.EVIL);
-
-                if (!player.isCreative()) {
-                    itemInHand.shrink(1);
-                }
-                return InteractionResult.CONSUME;
-            }
-        }
-
         return InteractionResult.PASS;
     }
 

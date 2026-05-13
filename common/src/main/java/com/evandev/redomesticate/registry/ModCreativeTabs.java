@@ -12,16 +12,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
 public class ModCreativeTabs {
-
-    public static final RegistrationProvider<CreativeModeTab> DEF_REG = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
+    public static final RegistrationProvider<CreativeModeTab> TAB_REGISTRY = RegistrationProvider.get(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
 
     @SuppressWarnings("unused")
-    public static final RegistryObject<CreativeModeTab> TAB = DEF_REG.register(Constants.MOD_ID, () ->
+    public static final RegistryObject<CreativeModeTab> TAB = TAB_REGISTRY.register(Constants.MOD_ID, () ->
             CreativeModeTab.builder(CreativeModeTab.Row.TOP, 0)
                     .title(Component.translatable("itemGroup." + Constants.MOD_ID))
                     .icon(() -> new ItemStack(ModItems.COLLAR_TAG.get()))
                     .displayItems((parameters, output) -> {
-                        for (var item : ModItems.DEF_REG.getEntries()) {
+                        for (var item : ModItems.ITEM_REGISTRY.getEntries()) {
                             if (item.get() instanceof CustomTabBehavior customTabBehavior) {
                                 customTabBehavior.fillItemCategory(output);
                             } else {

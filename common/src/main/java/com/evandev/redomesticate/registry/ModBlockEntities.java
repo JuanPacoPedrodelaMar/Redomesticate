@@ -13,16 +13,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModBlockEntities {
 
-    public static final RegistrationProvider<BlockEntityType<?>> DEF_REG = RegistrationProvider.get(Registries.BLOCK_ENTITY_TYPE, Constants.MOD_ID);
+    public static final RegistrationProvider<BlockEntityType<?>> BE_REGISTRY = RegistrationProvider.get(Registries.BLOCK_ENTITY_TYPE, Constants.MOD_ID);
 
-    public static final RegistryObject<BlockEntityType<PetBedBlockEntity>> PET_BED = DEF_REG.register("pet_bed", () -> build(BlockEntityType.Builder.of(PetBedBlockEntity::new, ModBlocks.PET_BED_BLOCKS.values().stream().map(RegistryObject::get).toArray(Block[]::new)
+    public static final RegistryObject<BlockEntityType<PetBedBlockEntity>> PET_BED = BE_REGISTRY.register("pet_bed", () -> build(BlockEntityType.Builder.of(PetBedBlockEntity::new, ModBlocks.PET_BED_BLOCKS.values().stream().map(RegistryObject::get).toArray(Block[]::new)
     )));
 
-     public static final RegistryObject<BlockEntityType<DrumBlockEntity>> DRUM = DEF_REG.register("drum", () -> build(BlockEntityType.Builder.of(DrumBlockEntity::new,
+     public static final RegistryObject<BlockEntityType<DrumBlockEntity>> DRUM = BE_REGISTRY.register("drum", () -> build(BlockEntityType.Builder.of(DrumBlockEntity::new,
              ModBlocks.DRUM.get()
      )));
 
-    public static final RegistryObject<BlockEntityType<WaywardLanternBlockEntity>> WAYWARD_LANTERN = DEF_REG.register("wayward_lantern", () -> build(BlockEntityType.Builder.of(WaywardLanternBlockEntity::new,
+    public static final RegistryObject<BlockEntityType<WaywardLanternBlockEntity>> WAYWARD_LANTERN = BE_REGISTRY.register("wayward_lantern", () -> build(BlockEntityType.Builder.of(WaywardLanternBlockEntity::new,
             ModBlocks.WAYWARD_LANTERN.get()
     )));
 

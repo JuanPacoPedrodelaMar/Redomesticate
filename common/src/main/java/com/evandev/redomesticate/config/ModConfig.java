@@ -17,18 +17,14 @@ public class ModConfig {
 
     // General
     public boolean trinaryCommandSystem = true;
-    public boolean tameableAxolotl = true;
     public boolean tameableHorse = true;
     public boolean tameableFox = true;
-    public boolean tameableRabbit = true;
-    public boolean tameableFrog = true;
     public boolean swingThroughPets = true;
     public boolean rottenApple = true;
     public boolean petBedRespawns = true;
-    public boolean collarTag = true;
     public boolean rabbitsScareRavagers = true;
     public boolean animalTamerVillager = true;
-    public int petstoreVillageWeight = 17;
+    public int petStoreVillageWeight = 17;
 
     // Loot Chances
     public boolean petCurseEnchantmentsLootOnly = true;

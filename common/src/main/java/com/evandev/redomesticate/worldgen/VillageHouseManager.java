@@ -35,7 +35,7 @@ public class VillageHouseManager {
     }
 
     public static void addAllHouses(RegistryAccess registryAccess) {
-        int weight = ModConfig.get().petstoreVillageWeight;
+        int weight = ModConfig.get().petStoreVillageWeight;
         StructurePoolElement plains = new PetshopStructurePoolElement(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "plains_petshop"), StructurePoolElement.EMPTY);
         REGISTRY.add(new Pair<>(ResourceLocation.parse("minecraft:village/plains/houses"), (pool) -> VillageHouseManager.addToPool(pool, plains, weight)));
 

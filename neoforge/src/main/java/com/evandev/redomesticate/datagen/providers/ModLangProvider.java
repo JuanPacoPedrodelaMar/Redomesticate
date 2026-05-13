@@ -167,22 +167,14 @@ public class ModLangProvider extends LanguageProvider {
 
         add("redomesticate.configuration.trinaryCommandSystem", "Trinary Command System");
         add("redomesticate.configuration.trinaryCommandSystem.tooltip", "Allows vanilla pets to be commanded to wander, sit, or follow.");
-        add("redomesticate.configuration.tameableAxolotl", "Tameable Axolotls");
-        add("redomesticate.configuration.tameableAxolotl.tooltip", "Makes Axolotls fully tameable using Tropical Fish.");
         add("redomesticate.configuration.tameableHorse", "Tameable Horses");
         add("redomesticate.configuration.tameableHorse.tooltip", "Allows Horses, Donkeys, and Llamas to use pet beds and enchantments.");
         add("redomesticate.configuration.tameableFox", "Tameable Foxes");
         add("redomesticate.configuration.tameableFox.tooltip", "Makes Foxes fully tameable via breeding.");
-        add("redomesticate.configuration.tameableRabbit", "Tameable Rabbits");
-        add("redomesticate.configuration.tameableRabbit.tooltip", "Makes Rabbits fully tameable using Carrots.");
-        add("redomesticate.configuration.tameableFrog", "Tameable Frogs");
-        add("redomesticate.configuration.tameableFrog.tooltip", "Makes Frogs fully tameable using Spider Eyes.");
         add("redomesticate.configuration.swingThroughPets", "Swing Through Pets");
         add("redomesticate.configuration.swingThroughPets.tooltip", "Prevents owners from accidentally hitting their own pets during combat.");
         add("redomesticate.configuration.petBedRespawns", "Pet Bed Respawns");
         add("redomesticate.configuration.petBedRespawns.tooltip", "Allows tamed pets to respawn at their assigned Pet Bed the morning after they die.");
-        add("redomesticate.configuration.collarTag", "Collar Tag Features");
-        add("redomesticate.configuration.collarTag.tooltip", "Enables Collar Tags, allowing pets to be enchanted.");
         add("redomesticate.configuration.rabbitsScareRavagers", "Rabbits Scare Ravagers");
         add("redomesticate.configuration.rabbitsScareRavagers.tooltip", "Restores the old mechanic where Rabbits scare away Ravagers.");
         add("redomesticate.configuration.petstore_village_weight", "Animal Tamer Village Weight");

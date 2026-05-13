@@ -32,7 +32,7 @@ public abstract class AxolotlMixin extends Animal {
 
         CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, compoundNBT -> {
             compoundNBT.putInt("RedomesticateCommand", commandable.redomesticate$getCommand());
-            compoundNBT.putBoolean("Tamed", tameable.redomesticate$isTame());
+            compoundNBT.putBoolean("RedomesticateTamed", tameable.redomesticate$isTame());
             if (tameable.redomesticate$getTameOwnerUUID() != null) {
                 compoundNBT.putUUID("Owner", tameable.redomesticate$getTameOwnerUUID());
             }
@@ -45,7 +45,7 @@ public abstract class AxolotlMixin extends Animal {
         ICommandableMob commandable = (ICommandableMob) this;
 
         commandable.redomesticate$setCommand(compoundNBT.getInt("RedomesticateCommand"));
-        tameable.redomesticate$setTame(compoundNBT.getBoolean("Tamed"));
+        tameable.redomesticate$setTame(compoundNBT.getBoolean("RedomesticateTamed"));
 
         UUID uuid = null;
         if (compoundNBT.hasUUID("Owner")) {

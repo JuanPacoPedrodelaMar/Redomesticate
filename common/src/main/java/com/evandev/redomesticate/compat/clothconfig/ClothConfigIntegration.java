@@ -29,11 +29,6 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.trinaryCommandSystem.tooltip"))
                 .setSaveConsumer(val -> config.trinaryCommandSystem = val).build());
 
-        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableAxolotl"), config.tameableAxolotl)
-                .setDefaultValue(true)
-                .setTooltip(Component.translatable("redomesticate.configuration.tameableAxolotl.tooltip"))
-                .setSaveConsumer(val -> config.tameableAxolotl = val).build());
-
         general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableHorse"), config.tameableHorse)
                 .setDefaultValue(true)
                 .setTooltip(Component.translatable("redomesticate.configuration.tameableHorse.tooltip"))
@@ -43,16 +38,6 @@ public class ClothConfigIntegration {
                 .setDefaultValue(true)
                 .setTooltip(Component.translatable("redomesticate.configuration.tameableFox.tooltip"))
                 .setSaveConsumer(val -> config.tameableFox = val).build());
-
-        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableRabbit"), config.tameableRabbit)
-                .setDefaultValue(true)
-                .setTooltip(Component.translatable("redomesticate.configuration.tameableRabbit.tooltip"))
-                .setSaveConsumer(val -> config.tameableRabbit = val).build());
-
-        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.tameableFrog"), config.tameableFrog)
-                .setDefaultValue(true)
-                .setTooltip(Component.translatable("redomesticate.configuration.tameableFrog.tooltip"))
-                .setSaveConsumer(val -> config.tameableFrog = val).build());
 
         general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.swingThroughPets"), config.swingThroughPets)
                 .setDefaultValue(true)
@@ -69,11 +54,6 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.petBedRespawns.tooltip"))
                 .setSaveConsumer(val -> config.petBedRespawns = val).build());
 
-        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.collarTag"), config.collarTag)
-                .setDefaultValue(true)
-                .setTooltip(Component.translatable("redomesticate.configuration.collarTag.tooltip"))
-                .setSaveConsumer(val -> config.collarTag = val).build());
-
         general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.rabbitsScareRavagers"), config.rabbitsScareRavagers)
                 .setDefaultValue(true)
                 .setTooltip(Component.translatable("redomesticate.configuration.rabbitsScareRavagers.tooltip"))
@@ -83,10 +63,10 @@ public class ClothConfigIntegration {
                 .setDefaultValue(true)
                 .setSaveConsumer(val -> config.animalTamerVillager = val).build());
 
-        general.addEntry(entryBuilder.startIntField(Component.translatable("redomesticate.configuration.petstore_village_weight"), config.petstoreVillageWeight)
+        general.addEntry(entryBuilder.startIntField(Component.translatable("redomesticate.configuration.petstore_village_weight"), config.petStoreVillageWeight)
                 .setDefaultValue(17)
                 .setTooltip(Component.translatable("redomesticate.configuration.petstore_village_weight.tooltip"))
-                .setSaveConsumer(val -> config.petstoreVillageWeight = val).build());
+                .setSaveConsumer(val -> config.petStoreVillageWeight = val).build());
 
         // Loot Category
         loot.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petCurseEnchantmentsLootOnly"), config.petCurseEnchantmentsLootOnly)

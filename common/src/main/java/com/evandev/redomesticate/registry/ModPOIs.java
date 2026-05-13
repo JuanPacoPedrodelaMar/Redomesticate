@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Set;
 
 public class ModPOIs {
-    public static final RegistrationProvider<PoiType> DEF_REG = RegistrationProvider.get(Registries.POINT_OF_INTEREST_TYPE, Constants.MOD_ID);
+    public static final RegistrationProvider<PoiType> POI_REGISTRY = RegistrationProvider.get(Registries.POINT_OF_INTEREST_TYPE, Constants.MOD_ID);
 
-    public static final RegistryObject<PoiType> PET_BED = DEF_REG.register("pet_bed", () -> new PoiType(getBeds(), 1, 1));
+    public static final RegistryObject<PoiType> PET_BED = POI_REGISTRY.register("pet_bed", () -> new PoiType(getBeds(), 1, 1));
 
     public static Set<BlockState> getBeds() {
         return ModBlocks.PET_BED_BLOCKS.values().stream().flatMap((petbed) -> {
