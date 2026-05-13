@@ -38,7 +38,7 @@ public abstract class WolfMixin extends TamableAnimal {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Wolf;setOrderedToSit(Z)V"),
             cancellable = true
     )
-    private void redomesticate$intercepWolfSitToggle(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
+    private void redomesticate$interceptWolfSitToggle(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         Wolf wolf = (Wolf) (Object) this;
 
         if (ModConfig.get().trinaryCommandSystem && wolf.isTame() && wolf.isOwnedBy(player) && this instanceof ICommandableMob commandable) {
