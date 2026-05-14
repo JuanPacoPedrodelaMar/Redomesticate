@@ -1,3 +1,3 @@
 ### Fixed
 
-- Renamed "disk jockey" to "disc jockey".
+- Fix Fabric crash.
