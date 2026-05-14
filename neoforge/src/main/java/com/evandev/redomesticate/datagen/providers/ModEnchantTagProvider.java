@@ -28,8 +28,10 @@ public class ModEnchantTagProvider extends EnchantmentTagsProvider {
         ;
 
         tag(EnchantmentTags.CURSE).addOptional(ModEnchantments.BLIGHT_CURSE.location())
+                .addOptional(ModEnchantments.BLIGHT_CURSE.location())
                 .addOptional(ModEnchantments.INFAMY_CURSE.location())
                 .addOptional(ModEnchantments.IMMATURITY_CURSE.location())
+                .addOptional(ModEnchantments.UNDEAD_CURSE.location())
                 .replace(false)
         ;
 

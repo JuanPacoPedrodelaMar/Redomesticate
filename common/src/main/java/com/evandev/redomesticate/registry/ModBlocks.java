@@ -2,7 +2,6 @@ package com.evandev.redomesticate.registry;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.content.block.DrumBlock;
-import com.evandev.redomesticate.content.block.DyeColors;
 import com.evandev.redomesticate.content.block.PetBedBlock;
 import com.evandev.redomesticate.content.block.WaywardLanternBlock;
 import com.evandev.redomesticate.content.item.ModBlockItem;
@@ -16,21 +15,28 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.function.Supplier;
 
 public class ModBlocks {
 
     public static final RegistrationProvider<Block> BLOCK_REGISTRY = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
-    public static final HashMap<DyeColor, RegistryObject<Block>> PET_BED_BLOCKS = new HashMap<>();
+    public static final LinkedHashMap<DyeColor, RegistryObject<Block>> PET_BED_BLOCKS = new LinkedHashMap<>();
 
     public static final RegistryObject<Block> WAYWARD_LANTERN = registerBlockAndItem("wayward_lantern", WaywardLanternBlock::new);
-    public static final RegistryObject<Block> DRUM = registerBlockAndItem("drum",
+    public static final RegistryObject<Block> COMMAND_DRUM = registerBlockAndItem("drum",
             () -> new DrumBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).sound(SoundType.WOOD).strength(1F).noOcclusion())
     );
 
     static {
-        for (DyeColor color : DyeColors.COLORS.keySet()) {
+        DyeColor[] BED_ORDER = new DyeColor[]{
+                DyeColor.WHITE, DyeColor.LIGHT_GRAY, DyeColor.GRAY, DyeColor.BLACK,
+                DyeColor.BROWN, DyeColor.RED, DyeColor.ORANGE, DyeColor.YELLOW,
+                DyeColor.LIME, DyeColor.GREEN, DyeColor.CYAN, DyeColor.LIGHT_BLUE,
+                DyeColor.BLUE, DyeColor.PURPLE, DyeColor.MAGENTA, DyeColor.PINK
+        };
+
+        for (DyeColor color : BED_ORDER) {
             RegistryObject<Block> blockObj = registerBlockAndItem("pet_bed_" + color.name().toLowerCase(),
                     () -> new PetBedBlock(color.name().toLowerCase(), color));
 

@@ -32,6 +32,15 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.FEATHER_ON_A_STICK.get()).pattern("I ").pattern(" C").define('I', Items.FISHING_ROD).define('C', Tags.Items.FEATHERS)
                 .unlockedBy("has_craft", has(Items.CRAFTING_TABLE)).save(pWriter);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.COMMAND_DRUM.get())
+                .pattern("LLL")
+                .pattern("P P")
+                .pattern("PPP")
+                .define('L', Items.LEATHER)
+                .define('P', ItemTags.PLANKS)
+                .unlockedBy("has_leather", has(Items.LEATHER))
+                .save(pWriter);
+
         ModBlocks.PET_BED_BLOCKS.forEach((color, blockObj) -> {
             ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, blockObj.get(), 1)
                     .unlockedBy("has_bone", has(Items.BONE))

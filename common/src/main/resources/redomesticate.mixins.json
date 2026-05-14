@@ -33,7 +33,8 @@
     "VillagerMixin",
     "WolfMixin",
     "accessor.ExperienceOrbAccessor",
-    "accessor.MobAccessor"
+    "accessor.MobAccessor",
+    "accessor.PoiTypesAccessor"
   ],
   "client": [
     "accessor.SpriteContentsAccessor"

@@ -19,7 +19,7 @@ public class ModBlockEntities {
     )));
 
      public static final RegistryObject<BlockEntityType<DrumBlockEntity>> DRUM = BE_REGISTRY.register("drum", () -> build(BlockEntityType.Builder.of(DrumBlockEntity::new,
-             ModBlocks.DRUM.get()
+             ModBlocks.COMMAND_DRUM.get()
      )));
 
     public static final RegistryObject<BlockEntityType<WaywardLanternBlockEntity>> WAYWARD_LANTERN = BE_REGISTRY.register("wayward_lantern", () -> build(BlockEntityType.Builder.of(WaywardLanternBlockEntity::new,
