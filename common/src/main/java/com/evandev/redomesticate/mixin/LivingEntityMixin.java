@@ -2,13 +2,9 @@ package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.IPetbedDataEntity;
-import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,18 +19,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin({LivingEntity.class})
 public abstract class LivingEntityMixin extends Entity implements IPetbedDataEntity {
     @Unique
-    private static final EntityDataAccessor<CompoundTag> REDOMESTICATE_SAVED_DATA = SynchedEntityData.defineId(LivingEntityMixin.class, EntityDataSerializers.COMPOUND_TAG);
+    private CompoundTag redomesticate$redomesticateSavedData = new CompoundTag();
 
     protected LivingEntityMixin(EntityType<? extends Entity> entityType, Level world) {
         super(entityType, world);
-    }
-
-    @Inject(
-            at = @At("TAIL"),
-            method = "defineSynchedData"
-    )
-    private void registerData(SynchedEntityData.Builder builder, CallbackInfo ci) {
-        builder.define(REDOMESTICATE_SAVED_DATA, new CompoundTag());
     }
 
     @Inject(
@@ -53,11 +41,9 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
             method = "addAdditionalSaveData(Lnet/minecraft/nbt/CompoundTag;)V"
     )
     private void writeAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
-        CompoundTag citadelDat = this.redomesticate$getEntityData();
-        if (citadelDat != null) {
-            compoundNBT.put(Constants.ENTITY_SYNC_DATA, citadelDat);
+        if (!this.redomesticate$redomesticateSavedData.isEmpty()) {
+            compoundNBT.put(Constants.ENTITY_SYNC_DATA, this.redomesticate$redomesticateSavedData);
         }
-
     }
 
     @Inject(
@@ -66,9 +52,8 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     )
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         if (compoundNBT.contains(Constants.ENTITY_SYNC_DATA)) {
-            this.redomesticate$setEntityData(compoundNBT.getCompound(Constants.ENTITY_SYNC_DATA));
+            this.redomesticate$redomesticateSavedData = compoundNBT.getCompound(Constants.ENTITY_SYNC_DATA);
         }
-
     }
 
     @Unique
@@ -78,12 +63,11 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
 
     @Override
     public CompoundTag redomesticate$getEntityData() {
-        return this.entityData.get(REDOMESTICATE_SAVED_DATA);
+        return this.redomesticate$redomesticateSavedData;
     }
 
     @Override
     public void redomesticate$setEntityData(CompoundTag nbt) {
-        this.entityData.set(REDOMESTICATE_SAVED_DATA, nbt);
+        this.redomesticate$redomesticateSavedData = nbt;
     }
-
 }

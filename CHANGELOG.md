@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-05-14
+
+### Fixed
+
+- Fixed buggy Shield behaviour.
+- Fixed various behaviour regressions from Domestication Innovation.
+
+## [1.1.0] - 2026-05-14
+
+### Fixed
+
+- Fixed missing Command Drum recipe.
+- Pet Beds now follow the vanilla dye order in the creative tab.
+- Fixed Pet Beds not acting as Villager workstations on Fabric.
+- Fixed missing tags for some curses.
+
 ## [1.0.1] - 2026-05-13
 
 ### Fixed

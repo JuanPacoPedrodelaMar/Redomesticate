@@ -10,6 +10,8 @@ import com.evandev.redomesticate.registry.NeoForgeModLootModifiers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -17,12 +19,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.entity.*;
 import net.neoforged.neoforge.event.entity.item.ItemExpireEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
@@ -91,14 +91,45 @@ public class Redomesticate {
     }
 
     @SubscribeEvent
+    public void onAnvilUpdate(AnvilUpdateEvent event) {
+        int[] outCost = new int[1];
+        ItemStack result = EventProxy.onUpdateAnvil(event.getLeft(), event.getRight(), outCost);
+        if (!result.isEmpty()) {
+            event.setOutput(result);
+            event.setCost(outCost[0]);
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingChangeTarget(LivingChangeTargetEvent event) {
+        if (event.getEntity() instanceof Mob mob) {
+            if (EventProxy.onSetAttackTarget(mob, event.getOriginalAboutToBeSetTarget())) {
+                event.setNewAboutToBeSetTarget(null);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public void onLivingHurt(LivingDamageEvent.Pre event) {
-        EventProxy.onTameHurt(event.getEntity(), event.getSource());
-        event.setNewDamage(event.getOriginalDamage());
+        float original = event.getNewDamage();
+        float newDamage = EventProxy.onLivingDamageModifier(event.getEntity(), event.getSource(), original);
+
+        if (newDamage != original) {
+            event.setNewDamage(newDamage);
+        }
     }
 
     @SubscribeEvent
     public void onLivingDamage(LivingIncomingDamageEvent event) {
-        if (EventProxy.onLivingDamage(event.getEntity(), event.getSource(), event.getAmount())) {
+        if (EventProxy.onTameHurt(event.getEntity(), event.getSource()) ||
+                EventProxy.onLivingDamage(event.getEntity(), event.getSource(), event.getAmount())) {
+            event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityMount(EntityMountEvent event) {
+        if (EventProxy.onEntityMount(event.getEntityBeingMounted(), event.getEntityMounting(), event.isDismounting())) {
             event.setCanceled(true);
         }
     }
@@ -121,13 +152,6 @@ public class Redomesticate {
     @SubscribeEvent
     public void onProjectileImpact(ProjectileImpactEvent event) {
         if (EventProxy.onProjectileImpactEvent(event.getProjectile(), event.getRayTraceResult())) {
-            event.setCanceled(true);
-        }
-    }
-
-    @SubscribeEvent
-    public void onEntityMount(EntityMountEvent event) {
-        if (EventProxy.onEntityMount(event.getEntityBeingMounted(), event.getEntityMounting(), event.isDismounting())) {
             event.setCanceled(true);
         }
     }

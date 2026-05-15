@@ -8,6 +8,7 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,15 +41,23 @@ public abstract class FabricLivingEntityMixin {
         EventProxy.onLivingDie((LivingEntity) (Object) this, damageSource);
     }
 
+    // 1. Handles Canceling the Damage completely
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void redomesticate$onLivingDamagePre(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        EventProxy.onTameHurt(entity, source);
 
-        if (EventProxy.onLivingDamage(entity, source, amount)) {
+        if (EventProxy.onTameHurt(entity, source) || EventProxy.onLivingDamage(entity, source, amount)) {
             cir.setReturnValue(false);
-        } else {
-            EventProxy.onEntityHurt(entity, source, amount, amount);
         }
+    }
+
+    @ModifyVariable(method = "hurt", at = @At("HEAD"), argsOnly = true)
+    private float redomesticate$modifyDamageAmount(float amount, DamageSource source) {
+        return EventProxy.onLivingDamageModifier((LivingEntity) (Object) this, source, amount);
+    }
+
+    @Inject(method = "actuallyHurt", at = @At("TAIL"))
+    private void redomesticate$onActuallyHurt(DamageSource source, float damageAmount, CallbackInfo ci) {
+        EventProxy.onEntityHurt((LivingEntity) (Object) this, source, damageAmount, damageAmount);
     }
 }
