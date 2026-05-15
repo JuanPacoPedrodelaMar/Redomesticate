@@ -57,12 +57,12 @@ public class ModLootModifier extends LootModifier {
                     generatedLoot.add(enchantedBook(ModEnchantments.VAMPIRE, context.getRandom(), context));
                 }
             }
-            case 4 -> {
+            case 3 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().oreScentingLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.ORE_SCENTING, context.getRandom(), context));
                 }
             }
-            case 6 -> {
+            case 4 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().blazingProtectionLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.BLAZING_PROTECTION, context.getRandom(), context));
                 }

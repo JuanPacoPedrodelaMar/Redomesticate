@@ -5,6 +5,7 @@ import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
+import com.evandev.redomesticate.registry.ModTags;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -138,7 +139,7 @@ public abstract class MobMixin extends LivingEntity implements ICommandableMob, 
         Mob mob = (Mob) (Object) this;
 
         if (TameableUtils.isTamed(mob) && TameableUtils.isPetOf(player, mob)) {
-            if (ModConfig.get().trinaryCommandSystem && itemInHand.isEmpty()) {
+            if (ModConfig.get().trinaryCommandSystem && !mob.getType().is(ModTags.COMMAND_BLACKLIST) && itemInHand.isEmpty()) {
                 if (!player.level().isClientSide()) {
                     mob.setTarget(null);
                     mob.getNavigation().stop();

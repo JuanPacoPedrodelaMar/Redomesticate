@@ -1,4 +1,7 @@
+### Added
+
+- Added `command_blacklist` tag for entities that shouldn't use the trinary command system.
+
 ### Fixed
 
-- Fixed buggy Shield behaviour.
-- Fixed various behaviour regressions from Domestication Innovation.
+- Fixed invalid data crash on loot generation.

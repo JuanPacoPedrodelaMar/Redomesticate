@@ -2,6 +2,7 @@ package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -28,7 +29,7 @@ public abstract class CatMixin extends TamableAnimal {
     private void redomesticate$interceptCatSitToggle(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
         Cat cat = (Cat) (Object) this;
 
-        if (ModConfig.get().trinaryCommandSystem && cat.isTame() && cat.isOwnedBy(player) && this instanceof ICommandableMob commandable) {
+        if (ModConfig.get().trinaryCommandSystem && !cat.getType().is(ModTags.COMMAND_BLACKLIST) && cat.isTame() && cat.isOwnedBy(player) && this instanceof ICommandableMob commandable) {
 
             if (!cat.level().isClientSide) {
                 cat.setTarget(null);

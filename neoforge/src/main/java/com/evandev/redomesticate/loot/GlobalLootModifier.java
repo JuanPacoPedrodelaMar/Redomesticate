@@ -22,14 +22,10 @@ public class GlobalLootModifier extends GlobalLootModifierProvider {
     @Override
     public void start() {
         add("sinister_carrot", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.WOODLAND_MANSION.location()).build()}, 0));
-        add("ore_scenting_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build()}, 4));
         add("bubbling_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.BURIED_TREASURE.location()).build()}, 1));
         add("vampirism_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.WOODLAND_MANSION.location()).build()}, 2));
-        add("blazing_protection_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.NETHER_BRIDGE.location()).build()}, 6));
-        add("share_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.END_CITY_TREASURE.location()).build()}, 3));
-        add("sonic_boom_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ANCIENT_CITY.location()).build()}, 5));
-        add("paralysis_enchanted_book", new ModLootModifier(new LootItemCondition[]{AnyOfCondition.anyOf(manyChests(BuiltInLootTables.ABANDONED_MINESHAFT, BuiltInLootTables.DESERT_PYRAMID, BuiltInLootTables.FISHING, BuiltInLootTables.SPAWN_BONUS_CHEST)).build()}, 7));
-        add("tough_enchant_book", new ModLootModifier(new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build()}, 8));
+        add("ore_scenting_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build()}, 3));
+        add("blazing_protection_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.NETHER_BRIDGE.location()).build()}, 4));
     }
 
     @SafeVarargs

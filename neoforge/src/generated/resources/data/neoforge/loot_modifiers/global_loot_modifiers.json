@@ -1,14 +1,10 @@
 {
   "entries": [
     "redomesticate:sinister_carrot",
-    "redomesticate:ore_scenting_enchanted_book",
     "redomesticate:bubbling_enchanted_book",
     "redomesticate:vampirism_enchanted_book",
-    "redomesticate:blazing_protection_enchanted_book",
-    "redomesticate:share_enchanted_book",
-    "redomesticate:sonic_boom_enchanted_book",
-    "redomesticate:paralysis_enchanted_book",
-    "redomesticate:tough_enchant_book"
+    "redomesticate:ore_scenting_enchanted_book",
+    "redomesticate:blazing_protection_enchanted_book"
   ],
   "replace": false
 }

@@ -10,6 +10,7 @@ import com.evandev.redomesticate.platform.Services;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.registry.ModSounds;
+import com.evandev.redomesticate.registry.ModTags;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -117,7 +118,7 @@ public class InteractionHandler {
         }
 
         if (TameableUtils.isTamed(mob) && TameableUtils.isPetOf(player, mob)) {
-            if (ModConfig.get().trinaryCommandSystem && player.isShiftKeyDown()) {
+            if (ModConfig.get().trinaryCommandSystem && player.isShiftKeyDown() && !mob.getType().is(ModTags.COMMAND_BLACKLIST)) {
                 if (isClient) return InteractionResult.SUCCESS;
 
                 mob.setTarget(null);

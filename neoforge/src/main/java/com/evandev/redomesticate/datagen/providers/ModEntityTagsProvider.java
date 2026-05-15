@@ -5,9 +5,7 @@ import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.tags.PoiTypeTags;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +21,15 @@ public class ModEntityTagsProvider extends EntityTypeTagsProvider {
     @Override
     protected void addTags(HolderLookup.@NotNull Provider provider) {
         tag(ModTags.BLACKLISTED).add(EntityType.PAINTING);
+        tag(ModTags.COMMAND_BLACKLIST)
+                .add(EntityType.HORSE)
+                .add(EntityType.DONKEY)
+                .add(EntityType.MULE)
+                .add(EntityType.ZOMBIE_HORSE)
+                .add(EntityType.CAMEL)
+                .add(EntityType.LLAMA)
+                .add(EntityType.SKELETON_HORSE);
+
         // For the plains & taiga pet store cage
         this.tag(ModTags.PETSTORE_CAGE_0).add(EntityType.WOLF).add(EntityType.CAT).add(EntityType.RABBIT);
         // For the desert pet store cage
