@@ -1,7 +1,4 @@
-### Added
-
-- Added `command_blacklist` tag for entities that shouldn't use the trinary command system.
-
 ### Fixed
 
-- Fixed invalid data crash on loot generation.
+- Fixed baby animals being unkillable.
+- Fixed shifting not bypassing swing through pets.

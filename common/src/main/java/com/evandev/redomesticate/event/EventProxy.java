@@ -106,10 +106,15 @@ public class EventProxy {
     }
 
     public static boolean onTameHurt(LivingEntity livingEntity, DamageSource source) {
-        if (TameableUtils.isTamed(livingEntity) && source.getDirectEntity() instanceof Player player && TameableUtils.isPetOf(player, livingEntity) && !player.isShiftKeyDown()) {
+        if (!TameableUtils.isTamed(livingEntity)) {
+            return false;
+        }
+
+        if (source.getDirectEntity() instanceof Player player && TameableUtils.isPetOf(player, livingEntity) && !player.isShiftKeyDown()) {
             return true;
         }
-        return livingEntity.isBaby() && source.getEntity() instanceof Player player && !player.isShiftKeyDown();
+
+        return livingEntity.isBaby() && source.getEntity() instanceof Player player2 && !player2.isShiftKeyDown();
     }
 
     public static void onServerTick(ServerLevel level) {

@@ -5,6 +5,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -21,6 +22,10 @@ public class FriendlyFireCommon {
         }
 
         if (attacker == null) {
+            return false;
+        }
+
+        if (attacker instanceof Player player && player.isShiftKeyDown()) {
             return false;
         }
 
