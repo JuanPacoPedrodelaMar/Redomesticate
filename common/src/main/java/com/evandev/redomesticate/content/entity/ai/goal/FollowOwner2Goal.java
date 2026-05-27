@@ -2,6 +2,7 @@ package com.evandev.redomesticate.content.entity.ai.goal;
 
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;
@@ -91,12 +92,11 @@ public class FollowOwner2Goal extends Goal {
         if (--this.timeToRecalcPath <= 0) {
             this.timeToRecalcPath = this.adjustedTickDelay(10);
             if (!this.tamable.isLeashed() && !this.tamable.isPassenger()) {
-                if (this.tamable.distanceToSqr(this.owner) >= 144.0D) {
+                if (this.tamable.distanceToSqr(this.owner) >= 144.0D && !ModConfig.get().disablePetTeleportation) {
                     this.teleportToOwner();
                 } else {
                     this.navigation.moveTo(this.owner, this.speedModifier);
                 }
-
             }
         }
     }

@@ -30,6 +30,7 @@
     "SculkSensorBlockMixin",
     "ShootTongueMixin",
     "TamableAnimalMixin",
+    "TargetGoalMixin",
     "VillagerMixin",
     "WolfMixin",
     "accessor.ExperienceOrbAccessor",
@@ -37,6 +38,7 @@
     "accessor.PoiTypesAccessor"
   ],
   "client": [
+    "OcelotModelMixin",
     "accessor.SpriteContentsAccessor"
   ],
   "server": [],

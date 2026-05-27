@@ -64,6 +64,23 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.petstore_village_weight.tooltip"))
                 .setSaveConsumer(val -> config.petStoreVillageWeight = val).build());
 
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.disablePetTeleportation"), config.disablePetTeleportation)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("redomesticate.configuration.disablePetTeleportation.tooltip"))
+                .setSaveConsumer(val -> config.disablePetTeleportation = val).build());
+
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petWontAttackWhenInjured"), config.petWontAttackWhenInjured)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration.petWontAttackWhenInjured.tooltip"))
+                .setSaveConsumer(val -> config.petWontAttackWhenInjured = val).build());
+
+        general.addEntry(entryBuilder.startDoubleField(Component.translatable("redomesticate.configuration.petInjuredStatusHealthRatio"), config.petInjuredStatusHealthRatio)
+                .setDefaultValue(0.2D)
+                .setMin(0.0D)
+                .setMax(1.0D)
+                .setTooltip(Component.translatable("redomesticate.configuration.petInjuredStatusHealthRatio.tooltip"))
+                .setSaveConsumer(val -> config.petInjuredStatusHealthRatio = val).build());
+
         // Loot Category
         loot.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petCurseEnchantmentsLootOnly"), config.petCurseEnchantmentsLootOnly)
                 .setDefaultValue(true)

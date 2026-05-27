@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetEnchantmentsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
@@ -59,13 +60,15 @@ public class LootTableGen {
                             .add(enchantItem(Items.BOOK, ModEnchantments.AMPHIBIOUS, 1, 1))
                             .add(enchantItem(Items.BOOK, ModEnchantments.VAMPIRE, 1, 2))
 
-                    ).withPool(LootPool.lootPool()
+                    )
+                    .withPool(LootPool.lootPool()
                             .name("petshop_chest_collars")
                             .setRolls(UniformGenerator.between(1, 2))
                             .when(LootItemRandomChanceCondition.randomChance(0.5f))
-                            .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get()).setWeight(1).apply(EnchantRandomlyFunction.randomEnchantment().withOneOf(provider.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ModTags.TRADABLE_ENCHANTMENT_KEY))))
+                            .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get())
+                                    .setWeight(1)
+                                    .apply(EnchantWithLevelsFunction.enchantWithLevels(provider, UniformGenerator.between(12.0F, 40.0F))))
                             .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get()).setWeight(2))
-
                     )
                     .withPool(LootPool.lootPool()
                             .name("petshop_chest")

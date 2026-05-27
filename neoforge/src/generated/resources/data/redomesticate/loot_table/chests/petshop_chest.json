@@ -112,8 +112,13 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:enchant_randomly",
-              "options": "#redomesticate:trade_enchantment_book"
+              "function": "minecraft:enchant_with_levels",
+              "levels": {
+                "type": "minecraft:uniform",
+                "max": 40.0,
+                "min": 12.0
+              },
+              "options": "#minecraft:on_random_loot"
             }
           ],
           "name": "redomesticate:collar_tag"

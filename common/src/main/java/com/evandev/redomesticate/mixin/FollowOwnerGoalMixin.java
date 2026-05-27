@@ -58,7 +58,8 @@ public abstract class FollowOwnerGoalMixin extends Goal {
             cancellable = true
     )
     private void tick(CallbackInfo ci) {
-        if (TameableUtils.hasEnchant(tamable, ModEnchantments.AMPHIBIOUS) && tamable.isInWaterOrBubble() && this.tamable.distanceToSqr(this.owner) < 144.0D) {
+        double maxDist = ModConfig.get().disablePetTeleportation ? Double.MAX_VALUE : 144.0D;
+        if (TameableUtils.hasEnchant(tamable, ModEnchantments.AMPHIBIOUS) && tamable.isInWaterOrBubble() && this.tamable.distanceToSqr(this.owner) < maxDist) {
             tamable.getNavigation().moveTo(owner, speedModifier);
             ci.cancel();
         }

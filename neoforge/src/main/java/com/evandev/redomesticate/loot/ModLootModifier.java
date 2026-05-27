@@ -58,16 +58,25 @@ public class ModLootModifier extends LootModifier {
                 }
             }
             case 3 -> {
+                if (context.getRandom().nextFloat() < ModConfig.get().voidCloudLootChance) {
+                    generatedLoot.add(enchantedBook(ModEnchantments.VOID_CLOUD, context.getRandom(), context));
+                }
+            }
+            case 4 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().oreScentingLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.ORE_SCENTING, context.getRandom(), context));
                 }
             }
-            case 4 -> {
+            case 5 -> {
+                if (context.getRandom().nextFloat() < ModConfig.get().muffledLootChance) {
+                    generatedLoot.add(enchantedBook(ModEnchantments.MUFFLED, context.getRandom(), context));
+                }
+            }
+            case 6 -> {
                 if (context.getRandom().nextFloat() < ModConfig.get().blazingProtectionLootChance) {
                     generatedLoot.add(enchantedBook(ModEnchantments.BLAZING_PROTECTION, context.getRandom(), context));
                 }
             }
-
             default -> throw new IllegalStateException("Unexpected value: " + lootType);
         }
         return generatedLoot;

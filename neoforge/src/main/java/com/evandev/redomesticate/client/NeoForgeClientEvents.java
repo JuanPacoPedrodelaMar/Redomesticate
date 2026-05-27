@@ -7,6 +7,7 @@ import com.evandev.redomesticate.client.registry.OreColorRegistry;
 import com.evandev.redomesticate.client.render.*;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.content.item.DeedOfOwnershipItem;
+import com.evandev.redomesticate.content.item.FeatherOnAStickItem;
 import com.evandev.redomesticate.registry.ModEntities;
 import com.evandev.redomesticate.registry.ModItems;
 import com.evandev.redomesticate.registry.ModParticles;
@@ -20,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.DefaultAttributes;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -95,6 +97,21 @@ public class NeoForgeClientEvents {
                         return OreColorRegistry.getBlockColor(blockEntity.getBlockState());
                     }
                     return null;
+                });
+
+                ItemProperties.register(ModItems.FEATHER_ON_A_STICK.get(), ResourceLocation.withDefaultNamespace("cast"), (stack, level, entity, seed) -> {
+                    if (entity == null) {
+                        return 0.0F;
+                    } else {
+                        boolean isMainHand = entity.getMainHandItem() == stack;
+                        boolean isOffHand = entity.getOffhandItem() == stack;
+
+                        if (entity.getMainHandItem().getItem() instanceof FeatherOnAStickItem) {
+                            isOffHand = false;
+                        }
+
+                        return (isMainHand || isOffHand) && entity instanceof Player player && player.fishing != null ? 1.0F : 0.0F;
+                    }
                 });
 
                 ItemProperties.register(ModItems.DEED_OF_OWNERSHIP.get(),

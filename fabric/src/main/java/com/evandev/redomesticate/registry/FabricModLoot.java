@@ -12,6 +12,7 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -50,6 +51,20 @@ public class FabricModLoot {
 
             if (key.equals(BuiltInLootTables.ANCIENT_CITY)) {
                 addEnchantedBookPool(tableBuilder, registries, ModEnchantments.MUFFLED, (float) ModConfig.get().muffledLootChance);
+            }
+
+            if (key.location().getPath().equals("chests/pet_shop") && key.location().getNamespace().equals("redomesticate")) {
+                tableBuilder.pool(LootPool.lootPool()
+                        .setRolls(UniformGenerator.between(1.0F, 2.0F))
+                        .conditionally(LootItemRandomChanceCondition.randomChance(0.5F).build())
+                        .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get())
+                                .setWeight(1)
+                                .apply(EnchantWithLevelsFunction.enchantWithLevels(registries, UniformGenerator.between(12.0F, 40.0F)))
+                        )
+                        .add(LootItem.lootTableItem(ModItems.COLLAR_TAG.get())
+                                .setWeight(2)
+                        ).build()
+                );
             }
         });
     }

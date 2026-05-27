@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2026-05-26
+
+### Added
+
+- Ocelots are now tamable like they once were in Vanilla, using raw fishes (anything in the `#minecraft:cat_food` tag).
+- Added a config option to disable pet teleportation.
+- Added a config option to stop pets from attacking when their health dips below a specific threshold (default 20%).
+
+### Changed
+
+- Added collar tags to `#c:enchantables`.
+- Adjusted loot table weights.
+
+### Fixed
+
+- Fixed Feather on a Stick held model not being cast.
+
 ## [1.3.1] - 2026-05-16
 
 ### Fixed

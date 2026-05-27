@@ -24,8 +24,10 @@ public class GlobalLootModifier extends GlobalLootModifierProvider {
         add("sinister_carrot", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.WOODLAND_MANSION.location()).build()}, 0));
         add("bubbling_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.BURIED_TREASURE.location()).build()}, 1));
         add("vampirism_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.WOODLAND_MANSION.location()).build()}, 2));
-        add("ore_scenting_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build()}, 3));
-        add("blazing_protection_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.NETHER_BRIDGE.location()).build()}, 4));
+        add("void_cloud_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.END_CITY_TREASURE.location()).build()}, 3));
+        add("ore_scenting_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ABANDONED_MINESHAFT.location()).build()}, 4));
+        add("muffled_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.ANCIENT_CITY.location()).build()}, 5));
+        add("blazing_protection_enchanted_book", new ModLootModifier(new LootItemCondition[]{new LootTableIdCondition.Builder(BuiltInLootTables.NETHER_BRIDGE.location()).build()}, 6));
     }
 
     @SafeVarargs

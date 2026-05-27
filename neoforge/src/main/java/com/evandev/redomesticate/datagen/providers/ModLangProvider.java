@@ -180,6 +180,12 @@ public class ModLangProvider extends LanguageProvider {
         add("redomesticate.configuration.petstore_village_weight.tooltip", "Spawn weight of the Animal Tamer house in villages. Set to 0 to disable.");
         add("redomesticate.configuration.petCurseEnchantmentsLootOnly", "Pet Curse Enchantments Loot Only");
         add("redomesticate.configuration.petCurseEnchantmentsLootOnly.tooltip", "Restricts pet curse enchantments to loot generation only.");
+        add("redomesticate.configuration.disablePetTeleportation", "Disable Pet Teleportation");
+        add("redomesticate.configuration.disablePetTeleportation.tooltip", "If enabled, pets will no longer teleport to you when following from a distance.");
+        add("redomesticate.configuration.petWontAttackWhenInjured", "Injured Pets Flee");
+        add("redomesticate.configuration.petWontAttackWhenInjured.tooltip", "If true, tamed pets will refuse to attack dangerous enemies when their health is critically low.");
+        add("redomesticate.configuration.petInjuredStatusHealthRatio", "Injured Health Threshold");
+        add("redomesticate.configuration.petInjuredStatusHealthRatio.tooltip", "The health percentage (0.0 to 1.0) at which a pet is considered injured and stops attacking.");
 
         // Loot Chances
         add("redomesticate.configuration.blazing_protection_loot_chance", "Blazing Protection Loot Chance");

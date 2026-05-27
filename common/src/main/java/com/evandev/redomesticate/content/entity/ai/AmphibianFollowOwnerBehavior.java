@@ -2,6 +2,7 @@ package com.evandev.redomesticate.content.entity.ai;
 
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import com.google.common.collect.ImmutableMap;
@@ -22,8 +23,8 @@ public class AmphibianFollowOwnerBehavior<T extends Animal> extends Behavior<T> 
 
     private static final float START_DISTANCE = 10F;
     private static final float STOP_DISTANCE = 2F;
-    private float baseSpeedLand = 1.0F;
-    private float baseSpeedWater = 1.0F;
+    private final float baseSpeedLand;
+    private final float baseSpeedWater;
     private LivingEntity owner;
 
     public AmphibianFollowOwnerBehavior(float baseSpeedLand, float baseSpeedWater) {
@@ -47,12 +48,12 @@ public class AmphibianFollowOwnerBehavior<T extends Animal> extends Behavior<T> 
         return false;
     }
 
-    protected void stop(@NotNull ServerLevel p_23492_, T axolotl, long gameTime) {
+    protected void stop(@NotNull ServerLevel level, T axolotl, long gameTime) {
         axolotl.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
     }
 
-    protected void tick(@NotNull ServerLevel p_23503_, T axolotl, long gameTime) {
-        if (axolotl.distanceToSqr(this.owner) >= 144.0D) {
+    protected void tick(@NotNull ServerLevel level, T axolotl, long gameTime) {
+        if (axolotl.distanceToSqr(this.owner) >= 144.0D && !ModConfig.get().disablePetTeleportation) {
             this.teleportToOwner(axolotl);
         } else {
             int speedsterLevel = TameableUtils.getEnchantLevel(axolotl, ModEnchantments.SPEEDSTER);
@@ -62,9 +63,8 @@ public class AmphibianFollowOwnerBehavior<T extends Animal> extends Behavior<T> 
         }
     }
 
-
-    private int randomIntInclusive(int p_25301_, int p_25302_) {
-        return this.owner.getRandom().nextInt(p_25302_ - p_25301_ + 1) + p_25301_;
+    private int randomIntInclusive(int low, int high) {
+        return this.owner.getRandom().nextInt(high - low + 1) + low;
     }
 
     private void teleportToOwner(T axolotl) {
@@ -88,7 +88,7 @@ public class AmphibianFollowOwnerBehavior<T extends Animal> extends Behavior<T> 
         } else if (!this.canTeleportTo(axolotl, new BlockPos(p_25304_, p_25305_, p_25306_))) {
             return false;
         } else {
-            axolotl.moveTo((double) p_25304_ + 0.5D, (double) p_25305_, (double) p_25306_ + 0.5D, axolotl.getYRot(), axolotl.getXRot());
+            axolotl.moveTo((double) p_25304_ + 0.5D, p_25305_, (double) p_25306_ + 0.5D, axolotl.getYRot(), axolotl.getXRot());
             axolotl.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
             return true;
         }

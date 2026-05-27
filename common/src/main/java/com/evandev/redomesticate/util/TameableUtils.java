@@ -4,6 +4,7 @@ import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.api.PetCommand;
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.content.entity.HighlightedBlockEntity;
 import com.evandev.redomesticate.mixin.accessor.ExperienceOrbAccessor;
 import com.evandev.redomesticate.network.PropertiesMessage;
@@ -27,6 +28,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -735,5 +737,21 @@ public class TameableUtils {
             }
         }
         return false;
+    }
+
+    public static boolean isInjured(LivingEntity entity) {
+        return entity.getHealth() < entity.getMaxHealth() &&
+                (entity.getHealth() / entity.getMaxHealth()) <= ModConfig.get().petInjuredStatusHealthRatio;
+    }
+
+    public static boolean wantsToAttack(LivingEntity pet, @Nullable LivingEntity enemy) {
+        if (!isTamed(pet)) {
+            return true;
+        }
+
+        if (ModConfig.get().petWontAttackWhenInjured && isInjured(pet)) {
+            return enemy != null && !(enemy instanceof Enemy || enemy instanceof IronGolem);
+        }
+        return true;
     }
 }

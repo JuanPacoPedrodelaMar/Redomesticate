@@ -47,7 +47,6 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
 
     public static List<EnchantmentInstance> selectEnchantment(RandomSource random, ItemStack stack, int expIThink, int enchantmentCount, Entity trader) {
         List<EnchantmentInstance> list = Lists.newArrayList();
-
         int i = stack.getItem().getEnchantmentValue();
         if (i <= 0) {
             return list;
@@ -56,8 +55,14 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
         expIThink += 1 + random.nextInt(i / 4 + 1) + random.nextInt(i / 4 + 1);
         float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
         expIThink = Mth.clamp(Math.round((float) expIThink + (float) expIThink * f), 1, Integer.MAX_VALUE);
-
         List<EnchantmentInstance> availableEnchants = getAvailableEnchantmentResults(expIThink, trader);
+
+        if (availableEnchants.isEmpty()) {
+            var enchantRegistry = trader.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+            for (var holder : enchantRegistry.getTagOrEmpty(ModTags.TRADABLE_ENCHANTMENT_KEY)) {
+                availableEnchants.add(new EnchantmentInstance(holder, Mth.nextInt(random, holder.value().getMinLevel(), holder.value().getMaxLevel())));
+            }
+        }
 
         if (availableEnchants.isEmpty()) {
             return list;
@@ -70,11 +75,9 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
             if (!list.isEmpty()) {
                 EnchantmentHelper.filterCompatibleEnchantments(availableEnchants, Util.lastOf(list));
             }
-
             if (availableEnchants.isEmpty()) {
                 break;
             }
-
             WeightedRandom.getRandomItem(random, availableEnchants).ifPresent(list::add);
             enchantmentsSoFar++;
             expIThink /= 2;

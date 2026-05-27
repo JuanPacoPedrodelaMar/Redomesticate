@@ -24,6 +24,9 @@ public class ModConfig {
     public boolean petBedRespawns = true;
     public boolean rabbitsScareRavagers = true;
     public int petStoreVillageWeight = 17;
+    public boolean disablePetTeleportation = false;
+    public boolean petWontAttackWhenInjured = true;
+    public double petInjuredStatusHealthRatio = 0.2D;
 
     // Loot Chances
     public boolean petCurseEnchantmentsLootOnly = true;
