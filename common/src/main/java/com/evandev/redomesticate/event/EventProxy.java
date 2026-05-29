@@ -310,7 +310,7 @@ public class EventProxy {
                     }
                     entity.playSound(SoundEvents.ENDER_CHEST_CLOSE, 1.0F, 1.5F);
                     CompoundTag tag = new CompoundTag();
-                    entity.addAdditionalSaveData(tag);
+                    entity.saveWithoutId(tag);
                     entity.stopRiding();
 
                     isCanceled = true;
@@ -417,6 +417,7 @@ public class EventProxy {
 
             if (tameable.redomesticate$isTame()) {
                 UniversalAIManager.applyPetAI(mob);
+                TameableUtils.onUpdateEnchants(null, mob);
 
                 if (TameableUtils.hasEnchant(mob, ModEnchantments.HEALTH_BOOST)) {
                     mob.setHealth((float) Math.max(mob.getHealth(), TameableUtils.getSafePetHealth(mob)));
@@ -454,7 +455,7 @@ public class EventProxy {
             BlockPos bedPos = TameableUtils.getPetBedPos(entity);
             if (bedPos != null) {
                 CompoundTag data = new CompoundTag();
-                entity.addAdditionalSaveData(data);
+                entity.saveWithoutId(data);
                 String saveName = entity.hasCustomName() ? entity.getCustomName().getString() : "";
                 RespawnRequest request = new RespawnRequest(BuiltInRegistries.ENTITY_TYPE.getKey(entity.getType()).toString(), TameableUtils.getPetBedDimension(entity), data, bedPos, entity.level().dayTime(), saveName);
                 ModWorldData worldData = ModWorldData.get(entity.level());

@@ -27,7 +27,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -62,6 +61,12 @@ public class InteractionHandler {
                 if (player.getRandom().nextFloat() < tamingDef.get().chance()) {
                     tameable.redomesticate$setTame(true);
                     tameable.redomesticate$setTameOwnerUUID(player.getUUID());
+
+                    if (mob instanceof TamableAnimal tamableAnimal) {
+                        tamableAnimal.setTame(true, false);
+                        tamableAnimal.setOwnerUUID(player.getUUID());
+                    }
+
                     commandable.redomesticate$setCommand(0);
 
                     mob.setTarget(null);

@@ -1,0 +1,19 @@
+{
+  "values": [
+    "minecraft:horse",
+    "minecraft:donkey",
+    "minecraft:mule",
+    "minecraft:zombie_horse",
+    "minecraft:camel",
+    "minecraft:llama",
+    "minecraft:skeleton_horse",
+    {
+      "id": "scguns:supply_scamp",
+      "required": false
+    },
+    {
+      "id": "scguns:viventrum",
+      "required": false
+    }
+  ]
+}

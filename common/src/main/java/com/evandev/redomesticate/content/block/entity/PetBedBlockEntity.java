@@ -90,7 +90,7 @@ public class PetBedBlockEntity extends BlockEntity {
         if (type != null) {
             Entity entity = type.create(level);
             if (entity instanceof LivingEntity living) {
-                living.readAdditionalSaveData(request.getEntityData());
+                living.load(request.getEntityData());
                 living.setPos(Vec3.upFromBottomCenterOf(pos, 0.8F));
                 living.setHealth(living.getMaxHealth());
                 if (!request.getNametag().isEmpty()) {

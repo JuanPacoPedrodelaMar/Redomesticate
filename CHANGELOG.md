@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0] - 2026-05-29
+
+### Changed
+
+- Improved Wayward Lantern performance.
+
+### Fixed
+
+- Fixed Cat sitting model.
+- Fixed issues with tamed Wolf AI.
+- Fixed crash with Caverns and Chasms Rats.
+- Fixed pets sometimes changing variants when using Pet Beds.
+- Fixed issues with Scorched Guns mobs.
+- Fixed race condition with Wayward Lantern teleportation.
+
 ## [1.4.0] - 2026-05-26
 
 ### Added

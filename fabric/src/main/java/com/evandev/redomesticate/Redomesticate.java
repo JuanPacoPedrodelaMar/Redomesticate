@@ -20,7 +20,6 @@ import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistries;
 import net.fabricmc.fabric.api.object.builder.v1.trade.TradeOfferHelper;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -70,10 +69,6 @@ public class Redomesticate implements ModInitializer {
         }
 
         ResourceKey<PoiType> petBedKey = ResourceKey.create(Registries.POINT_OF_INTEREST_TYPE, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "pet_bed"));
-        Holder<PoiType> petBedHolder = BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolder(petBedKey).orElse(null);
-
-        if (petBedHolder != null) {
-            PoiTypesAccessor.registerBlockStates(petBedHolder, ModPOIs.getBeds());
-        }
+        BuiltInRegistries.POINT_OF_INTEREST_TYPE.getHolder(petBedKey).ifPresent(petBedHolder -> PoiTypesAccessor.registerBlockStates(petBedHolder, ModPOIs.getBeds()));
     }
 }

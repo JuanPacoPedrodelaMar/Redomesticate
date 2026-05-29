@@ -152,7 +152,7 @@
   "redomesticate.configuration.tameableHorse": "Tameable Horses",
   "redomesticate.configuration.tameableHorse.tooltip": "Allows Horses, Donkeys, and Llamas to use pet beds and enchantments.",
   "redomesticate.configuration.trinaryCommandSystem": "Trinary Command System",
-  "redomesticate.configuration.trinaryCommandSystem.tooltip": "Allows vanilla pets to be commanded to wander, sit, or follow.",
+  "redomesticate.configuration.trinaryCommandSystem.tooltip": "Allows tamed pets to be commanded to wander, sit, or follow.",
   "redomesticate.configuration.vampirism_loot_chance": "Vampirism Loot Chance",
   "redomesticate.configuration.vampirism_loot_chance.tooltip": "Percent chance of generating a Vampire's Familiar book in Woodland Mansions.",
   "redomesticate.configuration.voidCloudLootChance": "Void Cloud Loot Chance",

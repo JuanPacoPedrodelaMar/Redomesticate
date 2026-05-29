@@ -3,6 +3,7 @@ package com.evandev.redomesticate.mixin;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.world.entity.TamableAnimal;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -17,7 +18,7 @@ public abstract class TamableAnimalMixin {
     private void redomesticate$lockSitStateToCommand(boolean pOrderedToSit, CallbackInfo ci) {
         TamableAnimal tamable = (TamableAnimal) (Object) this;
 
-        if (ModConfig.get().trinaryCommandSystem && tamable.isTame() && this instanceof ICommandableMob commandable) {
+        if (ModConfig.get().trinaryCommandSystem && tamable.isTame() && this instanceof ICommandableMob commandable && !tamable.getType().is(ModTags.COMMAND_BLACKLIST)) {
             boolean shouldSit = commandable.redomesticate$getPetCommand() == PetCommand.SIT;
 
             if (pOrderedToSit != shouldSit) {

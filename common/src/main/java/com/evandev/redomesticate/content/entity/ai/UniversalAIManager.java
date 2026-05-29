@@ -10,8 +10,11 @@ import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.GoalSelector;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UniversalAIManager {
 
@@ -22,11 +25,17 @@ public class UniversalAIManager {
             GoalSelector goalSelector = ((MobAccessor) mob).redomesticate$getGoalSelector();
             GoalSelector targetSelector = ((MobAccessor) mob).redomesticate$getTargetSelector();
 
-            targetSelector.getAvailableGoals().removeIf(wrapped -> {
+            List<Goal> goalsToRemove = new ArrayList<>();
+            for (var wrapped : targetSelector.getAvailableGoals()) {
                 Goal goal = wrapped.getGoal();
-                return goal instanceof NearestAttackableTargetGoal<?> ||
-                        goal instanceof HurtByTargetGoal;
-            });
+                if (goal instanceof NearestAttackableTargetGoal<?> || goal instanceof HurtByTargetGoal) {
+                    goalsToRemove.add(goal);
+                }
+            }
+
+            for (Goal goal : goalsToRemove) {
+                targetSelector.removeGoal(goal);
+            }
 
             boolean alreadyHasPetAI = goalSelector.getAvailableGoals().stream()
                     .anyMatch(wrapped -> wrapped.getGoal() instanceof Sit2Goal);

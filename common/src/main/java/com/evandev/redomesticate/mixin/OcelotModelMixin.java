@@ -4,6 +4,7 @@ import com.evandev.redomesticate.api.ICommandableMob;
 import net.minecraft.client.model.OcelotModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,7 +44,7 @@ public abstract class OcelotModelMixin<T extends Entity> {
 
     @Inject(method = "prepareMobModel", at = @At("TAIL"))
     private void redomesticate$applySittingPose(T entity, float limbSwing, float limbSwingAmount, float partialTick, CallbackInfo ci) {
-        if (entity instanceof ICommandableMob commandable && commandable.redomesticate$isStayingStill()) {
+        if (entity instanceof ICommandableMob commandable && commandable.redomesticate$isStayingStill() && entity.getType() == EntityType.OCELOT) {
             this.body.xRot = ((float) Math.PI / 4F);
             this.body.y += -4.0F;
             this.body.z += 5.0F;

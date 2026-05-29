@@ -20,7 +20,6 @@ public class ModTags {
     public static final TagKey<Enchantment> INFUSE_EXTRA = TagKey.create(Registries.ENCHANTMENT, ResourceLocation.parse("enchantinginfuser:infuse_extra"));
 
     // Entities
-    public static final TagKey<EntityType<?>> BLACKLISTED = registerEntity("blacklisted");
     public static final TagKey<EntityType<?>> PETSTORE_FISHTANK = registerEntity("petstore_fishtank");
     public static final TagKey<EntityType<?>> PETSTORE_CAGE_0 = registerEntity("petstore_cage_0");
     public static final TagKey<EntityType<?>> PETSTORE_CAGE_1 = registerEntity("petstore_cage_1");

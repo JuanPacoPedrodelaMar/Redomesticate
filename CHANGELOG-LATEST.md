@@ -1,14 +1,12 @@
-### Added
-
-- Ocelots are now tamable like they once were in Vanilla, using raw fishes (anything in the `#minecraft:cat_food` tag).
-- Added a config option to disable pet teleportation.
-- Added a config option to stop pets from attacking when their health dips below a specific threshold (default 20%).
-
 ### Changed
 
-- Added collar tags to `#c:enchantables`.
-- Adjusted loot table weights.
+- Improved Wayward Lantern performance.
 
 ### Fixed
 
-- Fixed Feather on a Stick held model not being cast.
+- Fixed Cat sitting model.
+- Fixed issues with tamed Wolf AI.
+- Fixed crash with Caverns and Chasms Rats.
+- Fixed pets sometimes changing variants when using Pet Beds.
+- Fixed issues with Scorched Guns mobs.
+- Fixed race condition with Wayward Lantern teleportation.

@@ -241,7 +241,7 @@ public class TameableUtils {
         return enchanted.getType().getCategory() == MobCategory.WATER_CREATURE || enchanted.getType().getCategory() == MobCategory.UNDERGROUND_WATER_CREATURE || enchanted.getType().getCategory() == MobCategory.WATER_AMBIENT;
     }
 
-    private static void onUpdateEnchants(@Nullable Map<ResourceLocation, Integer> prevEnchants, LivingEntity enchanted) {
+    public static void onUpdateEnchants(@Nullable Map<ResourceLocation, Integer> prevEnchants, LivingEntity enchanted) {
         int healthExtra = getEnchantLevel(enchanted, ModEnchantments.HEALTH_BOOST);
         int speedExtra = getEnchantLevel(enchanted, ModEnchantments.SPEEDSTER);
         boolean amphib = hasEnchant(enchanted, ModEnchantments.AMPHIBIOUS) && !enchanted.isInWaterOrBubble() && isWaterCreature(enchanted);
@@ -253,7 +253,6 @@ public class TameableUtils {
             AgeableMob ageable = (AgeableMob) enchanted;
             ageable.setBaby(true);
             enchanted.refreshDimensions();
-
         }
 
         if (health != null) {
@@ -262,12 +261,11 @@ public class TameableUtils {
             if (healthExtra > 0) {
                 if (health.hasModifier(healthBoostPetUpgrade.id())) {
                     health.removeModifier(healthBoostPetUpgrade);
-                    health.addPermanentModifier(healthBoostPetUpgrade);
+                    health.addTransientModifier(healthBoostPetUpgrade);
                 } else {
-                    health.addPermanentModifier(healthBoostPetUpgrade);
+                    health.addTransientModifier(healthBoostPetUpgrade);
                 }
             } else {
-
                 health.removeModifier(healthBoostPetUpgrade);
             }
         }
@@ -277,9 +275,9 @@ public class TameableUtils {
             if (speedExtra > 0) {
                 if (speed.hasModifier(speedsterPetUpgrade.id())) {
                     speed.removeModifier(speedsterPetUpgrade);
-                    speed.addPermanentModifier(speedsterPetUpgrade);
+                    speed.addTransientModifier(speedsterPetUpgrade);
                 } else {
-                    speed.addPermanentModifier(speedsterPetUpgrade);
+                    speed.addTransientModifier(speedsterPetUpgrade);
                 }
             } else {
                 speed.removeModifier(speedsterPetUpgrade);
@@ -289,9 +287,9 @@ public class TameableUtils {
             if (amphib) {
                 if (speed.hasModifier(speed_aqua.id())) {
                     speed.removeModifier(speed_aqua);
-                    speed.addPermanentModifier(speed_aqua);
+                    speed.addTransientModifier(speed_aqua);
                 } else {
-                    speed.addPermanentModifier(speed_aqua);
+                    speed.addTransientModifier(speed_aqua);
                 }
             } else {
                 speed.removeModifier(speed_aqua);

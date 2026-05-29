@@ -10,13 +10,11 @@ import net.minecraft.world.damagesource.DeathMessageType;
 public class DamageTypeModifier {
     public static void bootstrap(BootstrapContext<DamageType> bootstrap) {
 
-
         bootstrap.register(ModDamageTypes.SIPHON, new DamageType("redomesticate.siphon",
                 DamageScaling.NEVER,
                 0,
                 DamageEffects.HURT,
                 DeathMessageType.DEFAULT));
-
 
     }
 }

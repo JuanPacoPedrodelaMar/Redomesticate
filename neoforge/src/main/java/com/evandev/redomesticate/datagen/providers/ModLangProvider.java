@@ -165,7 +165,7 @@ public class ModLangProvider extends LanguageProvider {
         add("config.redomesticate.category.loot", "Loot");
 
         add("redomesticate.configuration.trinaryCommandSystem", "Trinary Command System");
-        add("redomesticate.configuration.trinaryCommandSystem.tooltip", "Allows vanilla pets to be commanded to wander, sit, or follow.");
+        add("redomesticate.configuration.trinaryCommandSystem.tooltip", "Allows tamed pets to be commanded to wander, sit, or follow.");
         add("redomesticate.configuration.tameableHorse", "Tameable Horses");
         add("redomesticate.configuration.tameableHorse.tooltip", "Allows Horses, Donkeys, and Llamas to use pet beds and enchantments.");
         add("redomesticate.configuration.tameableFox", "Tameable Foxes");

@@ -1,96 +1,145 @@
 package com.evandev.redomesticate.content.block.entity;
 
-
-import com.evandev.redomesticate.registry.ModBlockEntities;
-import com.evandev.redomesticate.data.request.LanternRequest;
 import com.evandev.redomesticate.data.ModWorldData;
+import com.evandev.redomesticate.data.request.LanternRequest;
+import com.evandev.redomesticate.registry.ModBlockEntities;
 import com.evandev.redomesticate.util.ChunkLoader;
-import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
 public class WaywardLanternBlockEntity extends BlockEntity {
 
+    private final List<LanternRequest> workingRequests = new ArrayList<>();
+    private final List<UUID> finishedRequests = new ArrayList<>();
+    private final List<CompoundTag> pendingSpawns = new ArrayList<>();
+
     private int checkAgainIn = 100;
-    private int entityLoadTimeout = 0;
-    private List<LanternRequest> workingRequests = new ArrayList<>();
-    private List<UUID> finishedRequests = new ArrayList<>();
 
     public WaywardLanternBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.WAYWARD_LANTERN.get(), pos, state);
     }
 
     public static void tick(Level level, BlockPos pos, BlockState state, WaywardLanternBlockEntity te) {
+        if (!te.pendingSpawns.isEmpty() && level instanceof ServerLevel serverLevel) {
+            Iterator<CompoundTag> spawnIt = te.pendingSpawns.iterator();
+            while (spawnIt.hasNext()) {
+                CompoundTag petData = spawnIt.next();
+
+                Entity newPet = EntityType.loadEntityRecursive(petData, serverLevel, (entity) -> {
+                    BlockPos putAt = getPlaceFor(entity, pos, level.random);
+                    entity.moveTo(putAt.getX() + 0.5D, putAt.getY(), putAt.getZ() + 0.5D, entity.getYRot(), entity.getXRot());
+                    return entity;
+                });
+
+                if (newPet != null) {
+                    serverLevel.addFreshEntityWithPassengers(newPet);
+
+                    UUID ownerId = petData.contains("LanternOwner") ? petData.getUUID("LanternOwner") : null;
+                    if (ownerId != null) {
+                        Player player = serverLevel.getPlayerByUUID(ownerId);
+                        if (player != null) {
+                            player.displayClientMessage(Component.translatable("message.redomesticate.wayward_lantern_return", newPet.getName()), false);
+                        }
+                    }
+                }
+                spawnIt.remove();
+            }
+        }
+
         if (!te.finishedRequests.isEmpty()) {
             ModWorldData data = ModWorldData.get(level);
-            te.workingRequests.removeIf(lanternRequest -> te.finishedRequests.contains(lanternRequest.getPetUUID()));
-            for (UUID uuid : te.finishedRequests) {
-                data.removeMatchingLanternRequests(uuid);
+            if (data != null) {
+                te.workingRequests.removeIf(lanternRequest -> te.finishedRequests.contains(lanternRequest.getPetUUID()));
+                for (UUID uuid : te.finishedRequests) {
+                    data.removeMatchingLanternRequests(uuid);
+                }
+                te.finishedRequests.clear();
             }
-            te.finishedRequests.clear();
         }
+
         if (te.workingRequests.isEmpty()) {
             if (te.checkAgainIn > 0) {
                 te.checkAgainIn--;
             } else {
                 te.checkAgainIn = 200 + level.random.nextInt(400);
                 ModWorldData data = ModWorldData.get(level);
-                for (Player player : getPlayers(level, pos)) {
-                    te.workingRequests.addAll(data.getLanternRequestsFor(player.getUUID()));
+                if (data != null) {
+                    for (Player player : getPlayers(level, pos)) {
+                        te.workingRequests.addAll(data.getLanternRequestsFor(player.getUUID()));
+                    }
                 }
             }
         } else {
             if (level instanceof ServerLevel serverLevel) {
-                for (LanternRequest request : te.workingRequests) {
-                    loadChunksAround(serverLevel, request.getPetUUID(), request.getChunkPosition(), true);
+                Iterator<LanternRequest> iterator = te.workingRequests.iterator();
+                while (iterator.hasNext()) {
+                    LanternRequest request = iterator.next();
+
+                    if (!request.areChunksLoaded()) {
+                        loadChunksAround(serverLevel, request.getPetUUID(), request.getChunkPosition(), true);
+                        request.setChunksLoaded(true);
+                    }
+
                     Entity entityFromChunk = serverLevel.getEntity(request.getPetUUID());
-                    te.entityLoadTimeout++;
-                    //takes a while to load in entities from the forced chunk, be patient...
-                    if (entityFromChunk != null || te.entityLoadTimeout > 200) {
-                        te.entityLoadTimeout = 0;
+                    request.incrementLoadTimeout();
+
+                    if (entityFromChunk != null || request.getLoadTimeout() > 100) {
                         if (entityFromChunk != null) {
-                            BlockPos putAt = getPlaceFor(entityFromChunk, pos, level.random);
-                            entityFromChunk.teleportTo(putAt.getX() + 0.5F, putAt.getY(), putAt.getZ() + 0.5F);
-                            Entity owner = TameableUtils.getOwnerOf(entityFromChunk);
-                            if (owner instanceof Player) {
-                                ((Player) owner).displayClientMessage(Component.translatable("message.redomesticate.wayward_lantern_return", entityFromChunk.getName()), false);
+
+                            double distSqr = Vec3.atCenterOf(request.getChunkPosition()).distanceToSqr(Vec3.atCenterOf(pos));
+                            if (distSqr > 24 * 24) {
+
+                                CompoundTag clonedData = new CompoundTag();
+                                if (entityFromChunk.saveAsPassenger(clonedData)) {
+                                    clonedData.putUUID("LanternOwner", request.getOwnerUUID());
+                                    te.pendingSpawns.add(clonedData);
+
+                                    entityFromChunk.discard();
+                                }
                             }
                             te.finishedRequests.add(request.getPetUUID());
                         }
+
                         loadChunksAround(serverLevel, request.getPetUUID(), request.getChunkPosition(), false);
+
+                        request.resetLoadTimeout();
+                        request.setChunksLoaded(false);
+                        iterator.remove();
                     }
                 }
             }
         }
     }
 
-    private static void loadChunksAround(ServerLevel serverLevel, UUID ticket, BlockPos center, boolean load) {
-        ChunkPos chunkPos = new ChunkPos(center);
-
+    private static void loadChunksAround(ServerLevel serverLevel, UUID petId, BlockPos center, boolean load) {
+        ChunkPos centerChunkPos = new ChunkPos(center);
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
+                ChunkPos targetChunk = new ChunkPos(centerChunkPos.x + i, centerChunkPos.z + j);
                 if (load) {
-                    ChunkLoader.forceLoadChunk(serverLevel, chunkPos);
+                    ChunkLoader.forceLoadChunk(serverLevel, targetChunk, petId);
                 } else {
-                    ChunkLoader.unloadChunk(serverLevel, chunkPos);
+                    ChunkLoader.unloadChunk(serverLevel, targetChunk, petId);
                 }
-//                ForcedChunkManager.writeModForcedChunks();
-//                ForgeChunkManager.forceChunk(serverLevel, Constants.MOD_ID, ticket, chunkPos.x + i, chunkPos.z + j, load, true);
             }
         }
     }
@@ -104,23 +153,6 @@ public class WaywardLanternBlockEntity extends BlockEntity {
             }
         }
         return withinDist;
-    }
-
-    @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        if (tag.contains("CheckAgainIn")) {
-            this.checkAgainIn = tag.getInt("CheckAgainIn");
-        }
-    }
-
-
-    @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-
-
-        tag.putInt("CheckAgainIn", this.checkAgainIn);
     }
 
     private static BlockPos getPlaceFor(Entity entity, BlockPos lanternPos, RandomSource random) {
@@ -138,5 +170,29 @@ public class WaywardLanternBlockEntity extends BlockEntity {
             }
         }
         return lanternPos.above();
+    }
+
+    @Override
+    protected void loadAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+        super.loadAdditional(tag, registries);
+        if (tag.contains("CheckAgainIn")) {
+            this.checkAgainIn = tag.getInt("CheckAgainIn");
+        }
+        if (tag.contains("PendingSpawns")) {
+            ListTag spawnsList = tag.getList("PendingSpawns", 10);
+            for (int i = 0; i < spawnsList.size(); i++) {
+                this.pendingSpawns.add(spawnsList.getCompound(i));
+            }
+        }
+    }
+
+    @Override
+    protected void saveAdditional(@NotNull CompoundTag tag, HolderLookup.@NotNull Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putInt("CheckAgainIn", this.checkAgainIn);
+
+        ListTag spawnsList = new ListTag();
+        spawnsList.addAll(this.pendingSpawns);
+        tag.put("PendingSpawns", spawnsList);
     }
 }

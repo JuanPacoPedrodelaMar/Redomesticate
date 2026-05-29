@@ -16,6 +16,8 @@ public class LanternRequest {
     private final UUID ownerUUID;
 
     private final BlockPos chunkPosition;
+    private boolean chunksForceLoaded = false;
+    private int loadTimeout = 0;
 
     public LanternRequest(UUID petUUID, String entityType, UUID ownerUUID, BlockPos chunkPosition, long timestamp, String nametag) {
         this.petUUID = petUUID;
@@ -60,5 +62,25 @@ public class LanternRequest {
         } else {
             return getNametag() + "|" + this.entityType;
         }
+    }
+
+    public boolean areChunksLoaded() {
+        return this.chunksForceLoaded;
+    }
+
+    public void setChunksLoaded(boolean state) {
+        this.chunksForceLoaded = state;
+    }
+
+    public int getLoadTimeout() {
+        return this.loadTimeout;
+    }
+
+    public void incrementLoadTimeout() {
+        this.loadTimeout++;
+    }
+
+    public void resetLoadTimeout() {
+        this.loadTimeout = 0;
     }
 }
