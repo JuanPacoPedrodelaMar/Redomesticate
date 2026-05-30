@@ -40,5 +40,8 @@ public class Sit2Goal extends Goal {
     }
 
     public void stop() {
+        if (this.mob instanceof Fox fox) {
+            fox.setSitting(false);
+        }
     }
 }

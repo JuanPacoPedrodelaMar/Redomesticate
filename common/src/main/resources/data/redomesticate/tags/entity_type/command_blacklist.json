@@ -14,6 +14,34 @@
     {
       "id": "scguns:viventrum",
       "required": false
+    },
+    {
+      "id": "iceandfire:cockatrice",
+      "required": false
+    },
+    {
+      "id": "iceandfire:firedragon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:icedragon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:lightningdragon",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippogryph",
+      "required": false
+    },
+    {
+      "id": "iceandfire:hippocampus",
+      "required": false
+    },
+    {
+      "id": "iceandfire:amphithere",
+      "required": false
     }
   ]
 }

@@ -3,6 +3,7 @@ package com.evandev.redomesticate.mixin;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModEnchantments;
+import com.evandev.redomesticate.registry.ModTags;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
@@ -37,7 +38,9 @@ public abstract class FollowOwnerGoalMixin extends Goal {
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir) {
         if (tamable instanceof ICommandableMob commandableMob && !commandableMob.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
-            cir.setReturnValue(false);
+            if (!this.tamable.getType().is(ModTags.COMMAND_BLACKLIST)) {
+                cir.setReturnValue(false);
+            }
         }
     }
 
@@ -48,7 +51,9 @@ public abstract class FollowOwnerGoalMixin extends Goal {
     )
     private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
         if (tamable instanceof ICommandableMob commandableMob && !commandableMob.redomesticate$isFollowingOwner() && ModConfig.get().trinaryCommandSystem) {
-            cir.setReturnValue(false);
+            if (!this.tamable.getType().is(ModTags.COMMAND_BLACKLIST)) {
+                cir.setReturnValue(false);
+            }
         }
     }
 

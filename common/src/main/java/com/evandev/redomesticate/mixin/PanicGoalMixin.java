@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.mixin;
 
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 import org.spongepowered.asm.mixin.Final;
@@ -23,7 +24,7 @@ public class PanicGoalMixin {
             cancellable = true
     )
     private void di_canUse(CallbackInfoReturnable<Boolean> cir) {
-        if (mob instanceof ITameableEntity tameableEntity && tameableEntity.redomesticate$isTame()) {
+        if (!this.mob.getType().is(ModTags.COMMAND_BLACKLIST) && mob instanceof ITameableEntity tameableEntity && tameableEntity.redomesticate$isTame()) {
             cir.setReturnValue(false);
         }
     }
@@ -34,7 +35,7 @@ public class PanicGoalMixin {
             cancellable = true
     )
     private void di_canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
-        if (mob instanceof ITameableEntity tameableEntity && tameableEntity.redomesticate$isTame()) {
+        if (!this.mob.getType().is(ModTags.COMMAND_BLACKLIST) && mob instanceof ITameableEntity tameableEntity && tameableEntity.redomesticate$isTame()) {
             cir.setReturnValue(false);
         }
     }

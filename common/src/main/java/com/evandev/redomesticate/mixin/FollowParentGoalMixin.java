@@ -3,6 +3,7 @@ package com.evandev.redomesticate.mixin;
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
+import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.world.entity.ai.goal.FollowParentGoal;
 import net.minecraft.world.entity.animal.Animal;
 import org.spongepowered.asm.mixin.Final;
@@ -26,7 +27,9 @@ public class FollowParentGoalMixin {
     )
     private void canUse(CallbackInfoReturnable<Boolean> cir) {
         if (animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getPetCommand() != PetCommand.WANDER && ModConfig.get().trinaryCommandSystem) {
-            cir.setReturnValue(false);
+            if (!this.animal.getType().is(ModTags.COMMAND_BLACKLIST)) {
+                cir.setReturnValue(false);
+            }
         }
     }
 
@@ -37,7 +40,9 @@ public class FollowParentGoalMixin {
     )
     private void canContinueToUse(CallbackInfoReturnable<Boolean> cir) {
         if (animal instanceof ICommandableMob commandableMob && commandableMob.redomesticate$getPetCommand() != PetCommand.WANDER && ModConfig.get().trinaryCommandSystem) {
-            cir.setReturnValue(false);
+            if (!this.animal.getType().is(ModTags.COMMAND_BLACKLIST)) {
+                cir.setReturnValue(false);
+            }
         }
     }
 }
