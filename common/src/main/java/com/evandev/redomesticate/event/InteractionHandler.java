@@ -2,6 +2,7 @@ package com.evandev.redomesticate.event;
 
 import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.api.taming.TamingDefinition;
 import com.evandev.redomesticate.api.taming.TransformationDefinition;
 import com.evandev.redomesticate.config.ModConfig;
@@ -28,10 +29,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.Map;
 import java.util.Optional;
@@ -186,6 +189,22 @@ public class InteractionHandler {
                     TameableUtils.clearEnchants(mob);
                 }
                 return InteractionResult.SUCCESS;
+            }
+
+            if (!ModConfig.get().trinaryCommandSystem && !(mob instanceof TamableAnimal) && !mob.getType().is(ModTags.COMMAND_BLACKLIST)) {
+                boolean isFood = mob instanceof Animal animal && animal.isFood(itemInHand);
+
+                if (!isFood) {
+                    if (isClient) return InteractionResult.SUCCESS;
+
+                    boolean isSitting = commandable.redomesticate$getPetCommand() == PetCommand.SIT;
+                    commandable.redomesticate$setPetCommand(isSitting ? PetCommand.FOLLOW : PetCommand.SIT);
+                    mob.setTarget(null);
+                    mob.getNavigation().stop();
+                    mob.setDeltaMovement(0, mob.getDeltaMovement().y, 0);
+
+                    return InteractionResult.SUCCESS;
+                }
             }
         }
 

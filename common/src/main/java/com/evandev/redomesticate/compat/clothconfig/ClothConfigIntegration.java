@@ -7,6 +7,8 @@ import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.function.Consumer;
+
 public class ClothConfigIntegration {
 
     public static Screen createScreen(Screen parent) {
@@ -20,6 +22,7 @@ public class ClothConfigIntegration {
 
         ConfigCategory general = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.general"));
         ConfigCategory loot = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.loot"));
+        ConfigCategory enchantments = builder.getOrCreateCategory(Component.translatable("config.redomesticate.category.enchantments"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
 
@@ -122,6 +125,50 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.ore_scenting_loot_chance.tooltip"))
                 .setSaveConsumer(val -> config.oreScentingLootChance = val).build());
 
+        // Enchantments Category
+        addEnchantToggle(enchantments, entryBuilder, "enableAmphibious", config.enableAmphibious, val -> config.enableAmphibious = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableBlightCurse", config.enableBlightCurse, val -> config.enableBlightCurse = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableBubbling", config.enableBubbling, val -> config.enableBubbling = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableChainLightning", config.enableChainLightning, val -> config.enableChainLightning = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableCharisma", config.enableCharisma, val -> config.enableCharisma = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableDiscJockey", config.enableDiscJockey, val -> config.enableDiscJockey = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableHealthBoost", config.enableHealthBoost, val -> config.enableHealthBoost = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableImmunityFrame", config.enableImmunityFrame, val -> config.enableImmunityFrame = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableFireproof", config.enableFireproof, val -> config.enableFireproof = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableDeflection", config.enableDeflection, val -> config.enableDeflection = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableSpeedster", config.enableSpeedster, val -> config.enableSpeedster = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableHealingAura", config.enableHealingAura, val -> config.enableHealingAura = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableHealthSiphon", config.enableHealthSiphon, val -> config.enableHealthSiphon = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableRejuvenation", config.enableRejuvenation, val -> config.enableRejuvenation = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableVampire", config.enableVampire, val -> config.enableVampire = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableLinkedInventory", config.enableLinkedInventory, val -> config.enableLinkedInventory = val);
+        addEnchantToggle(enchantments, entryBuilder, "enablePsychicWall", config.enablePsychicWall, val -> config.enablePsychicWall = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableShepherd", config.enableShepherd, val -> config.enableShepherd = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableMagnetic", config.enableMagnetic, val -> config.enableMagnetic = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableInfamyCurse", config.enableInfamyCurse, val -> config.enableInfamyCurse = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableGluttonous", config.enableGluttonous, val -> config.enableGluttonous = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableIntimidation", config.enableIntimidation, val -> config.enableIntimidation = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableOreScenting", config.enableOreScenting, val -> config.enableOreScenting = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableMuffled", config.enableMuffled, val -> config.enableMuffled = val);
+        addEnchantToggle(enchantments, entryBuilder, "enablePoisonResistance", config.enablePoisonResistance, val -> config.enablePoisonResistance = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableFrostFang", config.enableFrostFang, val -> config.enableFrostFang = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableWarpingBite", config.enableWarpingBite, val -> config.enableWarpingBite = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableShadowHands", config.enableShadowHands, val -> config.enableShadowHands = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableTetheredTeleport", config.enableTetheredTeleport, val -> config.enableTetheredTeleport = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableImmaturityCurse", config.enableImmaturityCurse, val -> config.enableImmaturityCurse = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableBlazingProtection", config.enableBlazingProtection, val -> config.enableBlazingProtection = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableTotalRecall", config.enableTotalRecall, val -> config.enableTotalRecall = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableDefusal", config.enableDefusal, val -> config.enableDefusal = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableVoidCloud", config.enableVoidCloud, val -> config.enableVoidCloud = val);
+        addEnchantToggle(enchantments, entryBuilder, "enableUndeadCurse", config.enableUndeadCurse, val -> config.enableUndeadCurse = val);
+
         return builder.build();
+    }
+
+    private static void addEnchantToggle(ConfigCategory category, ConfigEntryBuilder entryBuilder, String name, boolean currentValue, Consumer<Boolean> saveConsumer) {
+        category.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration." + name), currentValue)
+                .setDefaultValue(true)
+                .setTooltip(Component.translatable("redomesticate.configuration." + name + ".tooltip"))
+                .setSaveConsumer(saveConsumer).build());
     }
 }

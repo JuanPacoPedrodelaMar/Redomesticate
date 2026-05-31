@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.data.trades;
 
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModTags;
 import com.google.common.collect.Lists;
 import net.minecraft.Util;
@@ -55,11 +56,15 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
         expIThink += 1 + random.nextInt(i / 4 + 1) + random.nextInt(i / 4 + 1);
         float f = (random.nextFloat() + random.nextFloat() - 1.0F) * 0.15F;
         expIThink = Mth.clamp(Math.round((float) expIThink + (float) expIThink * f), 1, Integer.MAX_VALUE);
+
         List<EnchantmentInstance> availableEnchants = getAvailableEnchantmentResults(expIThink, trader);
 
         if (availableEnchants.isEmpty()) {
             var enchantRegistry = trader.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
             for (var holder : enchantRegistry.getTagOrEmpty(ModTags.TRADABLE_ENCHANTMENT_KEY)) {
+                if (holder.unwrapKey().isPresent() && !ModConfig.get().isEnchantmentEnabled(holder.unwrapKey().get().location()))
+                    continue;
+
                 availableEnchants.add(new EnchantmentInstance(holder, Mth.nextInt(random, holder.value().getMinLevel(), holder.value().getMaxLevel())));
             }
         }
@@ -93,6 +98,9 @@ public class EnchantItemTrade implements VillagerTrades.ItemListing {
                 .registryOrThrow(Registries.ENCHANTMENT);
 
         for (Holder<Enchantment> enchantmentHolder : enchantRegistry.getTagOrEmpty(ModTags.TRADABLE_ENCHANTMENT_KEY)) {
+            if (enchantmentHolder.unwrapKey().isPresent() && !ModConfig.get().isEnchantmentEnabled(enchantmentHolder.unwrapKey().get().location()))
+                continue;
+
             var enchant = enchantmentHolder.value();
             for (int i = enchant.getMaxLevel(); i > enchant.getMinLevel() - 1; --i) {
                 if (levels >= enchant.getMinCost(i) && levels <= enchant.getMaxCost(i)) {

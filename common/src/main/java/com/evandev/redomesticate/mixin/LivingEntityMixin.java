@@ -5,6 +5,7 @@ import com.evandev.redomesticate.api.IPetbedDataEntity;
 import com.evandev.redomesticate.registry.ModEnchantments;
 import com.evandev.redomesticate.util.TameableUtils;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,13 +17,29 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Mixin({LivingEntity.class})
 public abstract class LivingEntityMixin extends Entity implements IPetbedDataEntity {
     @Unique
     private CompoundTag redomesticate$redomesticateSavedData = new CompoundTag();
 
+    @Unique
+    private Map<ResourceLocation, Integer> redomesticate$cachedEnchants = new HashMap<>();
+
     protected LivingEntityMixin(EntityType<? extends Entity> entityType, Level world) {
         super(entityType, world);
+    }
+
+    @Override
+    public Map<ResourceLocation, Integer> redomesticate$getCachedEnchants() {
+        return this.redomesticate$cachedEnchants;
+    }
+
+    @Override
+    public void redomesticate$setCachedEnchants(Map<ResourceLocation, Integer> enchants) {
+        this.redomesticate$cachedEnchants = enchants;
     }
 
     @Inject(
@@ -53,6 +70,7 @@ public abstract class LivingEntityMixin extends Entity implements IPetbedDataEnt
     private void readAdditional(CompoundTag compoundNBT, CallbackInfo ci) {
         if (compoundNBT.contains(Constants.ENTITY_SYNC_DATA)) {
             this.redomesticate$redomesticateSavedData = compoundNBT.getCompound(Constants.ENTITY_SYNC_DATA);
+            this.redomesticate$cachedEnchants = TameableUtils.getEnchants((LivingEntity) (Object) this);
         }
     }
 

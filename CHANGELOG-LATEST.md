@@ -1,8 +1,8 @@
 ### Added
 
-- Taming and transforming datapacks can now specify required entity data.
-    - Format: `"required_data": "{MyData: 1b}"`
+- Added config options to enable/disable every enchantment from the mod.
 
 ### Fixed
 
-- Fixed further issues with Caverns & Chasms Rats.
+- Performance improvements.
+- Fixed tamed Foxes not sitting when trinary commands are disabled.

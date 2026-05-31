@@ -1,5 +1,6 @@
 package com.evandev.redomesticate.data.trades;
 
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.registry.ModTags;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -17,6 +18,8 @@ import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class SellingRandomEnchantedBook implements VillagerTrades.ItemListing {
@@ -28,24 +31,35 @@ public class SellingRandomEnchantedBook implements VillagerTrades.ItemListing {
 
     @Override
     public MerchantOffer getOffer(Entity trader, @NotNull RandomSource random) {
-        Optional<Holder<Enchantment>> optional = trader.level()
-                .registryAccess()
-                .registryOrThrow(Registries.ENCHANTMENT)
-                .getRandomElementOf(ModTags.TRADABLE_ENCHANTMENT_KEY, random);
+        List<Holder<Enchantment>> validEnchants = new ArrayList<>();
+        var enchantRegistry = trader.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT);
+
+        for (Holder<Enchantment> holder : enchantRegistry.getTagOrEmpty(ModTags.TRADABLE_ENCHANTMENT_KEY)) {
+            if (holder.unwrapKey().isPresent() && ModConfig.get().isEnchantmentEnabled(holder.unwrapKey().get().location())) {
+                validEnchants.add(holder);
+            }
+        }
+
+        Optional<Holder<Enchantment>> optional = validEnchants.isEmpty()
+                ? Optional.empty()
+                : Optional.of(validEnchants.get(random.nextInt(validEnchants.size())));
+
         int i;
         ItemStack itemstack;
+
         if (optional.isPresent()) {
             Holder<Enchantment> holder = optional.get();
             Enchantment enchantment = holder.value();
             int j = Math.max(enchantment.getMinLevel(), 0);
             int k = enchantment.getMaxLevel();
             int l = Mth.nextInt(random, j, k);
+
             itemstack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(holder, l));
             i = 2 + random.nextInt(5 + l * 10) + 3 * l;
+
             if (holder.is(EnchantmentTags.DOUBLE_TRADE_PRICE)) {
                 i *= 2;
             }
-
             if (i > 64) {
                 i = 64;
             }

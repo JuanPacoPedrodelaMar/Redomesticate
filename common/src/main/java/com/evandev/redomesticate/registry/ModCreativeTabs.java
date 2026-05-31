@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.registry;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.platform.registry.RegistrationProvider;
 import com.evandev.redomesticate.platform.registry.RegistryObject;
 import com.evandev.redomesticate.data.CustomTabBehavior;
@@ -30,6 +31,7 @@ public class ModCreativeTabs {
                         parameters.holders().lookup(Registries.ENCHANTMENT).ifPresent(enchantmentRegistry -> {
                             enchantmentRegistry.listElements()
                                     .filter(holder -> holder.key().location().getNamespace().equals(Constants.MOD_ID))
+                                    .filter(holder -> ModConfig.get().isEnchantmentEnabled(holder.key()))
                                     .forEach(holder -> {
                                         output.accept(EnchantedBookItem.createForEnchantment(
                                                 new EnchantmentInstance(holder, holder.value().getMaxLevel())

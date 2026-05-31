@@ -2,6 +2,7 @@ package com.evandev.redomesticate.util;
 
 import com.evandev.redomesticate.Constants;
 import com.evandev.redomesticate.api.ICommandableMob;
+import com.evandev.redomesticate.api.IPetbedDataEntity;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.config.ModConfig;
@@ -233,6 +234,11 @@ public class TameableUtils {
         tag.put(ENCHANTMENT_TAG, enchants);
         tag.putInt(COLLAR_SWAP_COOLDOWN, 20);
         tag.putBoolean(COLLAR_TAG, true);
+
+        if (enchanted instanceof IPetbedDataEntity dataEntity) {
+            dataEntity.redomesticate$setCachedEnchants(getEnchants(enchanted));
+        }
+
         sync(enchanted, tag);
         onUpdateEnchants(prevEnchants, enchanted);
     }
@@ -298,23 +304,17 @@ public class TameableUtils {
     }
 
     public static boolean hasEnchant(LivingEntity entity, ResourceKey<Enchantment> enchantment) {
+        if (!ModConfig.get().isEnchantmentEnabled(enchantment)) return false;
         return getEnchantLevel(entity, enchantment) > 0;
     }
 
     public static int getEnchantLevel(LivingEntity entity, ResourceKey<Enchantment> enchantment) {
-        ListTag listtag = getEnchantmentList(entity);
-
-        if (listtag != null) {
-            for (int i = 0; i < listtag.size(); ++i) {
-
-                CompoundTag compoundtag = listtag.getCompound(i);
-                var location = ResourceLocation.parse(compoundtag.getString("id"));
-
-                if (enchantment.location().equals(location)) {
-                    return compoundtag.getInt("lvl");
-                }
+        if (!ModConfig.get().isEnchantmentEnabled(enchantment)) return 0;
+        if (entity instanceof IPetbedDataEntity dataEntity) {
+            Map<ResourceLocation, Integer> cache = dataEntity.redomesticate$getCachedEnchants();
+            if (cache != null && cache.containsKey(enchantment.location())) {
+                return cache.get(enchantment.location());
             }
-
         }
         return 0;
     }
