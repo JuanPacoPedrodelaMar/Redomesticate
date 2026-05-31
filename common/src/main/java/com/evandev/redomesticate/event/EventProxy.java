@@ -1,6 +1,7 @@
 package com.evandev.redomesticate.event;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.api.IPetbedDataEntity;
 import com.evandev.redomesticate.api.ITameableEntity;
 import com.evandev.redomesticate.client.data.RenderData;
 import com.evandev.redomesticate.config.ModConfig;
@@ -526,297 +527,303 @@ public class EventProxy {
                 return;
             }
 
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.BLAZING_PROTECTION) && !entity.level().isClientSide()) {
-                int bars = TameableUtils.getBlazingProtectionBars(pet);
-                if (bars < 2 * TameableUtils.getEnchantLevel(pet, ModEnchantments.BLAZING_PROTECTION)) {
-                    int cooldown = TameableUtils.getBlazingProtectionCooldown(pet);
-                    if (cooldown > 0) {
-                        cooldown--;
-                    } else {
-                        TameableUtils.setBlazingProtectionBars(pet, bars + 1);
-                        cooldown = 200;
+            if (pet instanceof IPetbedDataEntity dataEntity) {
+                Map<ResourceLocation, Integer> enchants = dataEntity.redomesticate$getCachedEnchants();
+
+                if (enchants != null && !enchants.isEmpty()) {
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.BLAZING_PROTECTION) && !entity.level().isClientSide()) {
+                        int bars = TameableUtils.getBlazingProtectionBars(pet);
+                        if (bars < 2 * TameableUtils.getEnchantLevel(pet, ModEnchantments.BLAZING_PROTECTION)) {
+                            int cooldown = TameableUtils.getBlazingProtectionCooldown(pet);
+                            if (cooldown > 0) {
+                                cooldown--;
+                            } else {
+                                TameableUtils.setBlazingProtectionBars(pet, bars + 1);
+                                cooldown = 200;
+                            }
+                            TameableUtils.setBlazingProtectionCooldown(pet, cooldown);
+                        }
                     }
-                    TameableUtils.setBlazingProtectionCooldown(pet, cooldown);
-                }
-            }
 
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.VOID_CLOUD) && !pet.isInWaterOrBubble() && pet.fallDistance > 3.0F && !pet.onGround()) {
-                Entity owner = TameableUtils.getOwnerOf(pet);
-                boolean shouldMoveToOwnerXZ = owner != null && Math.abs(owner.getY() - pet.getY()) < 1;
-                double targetX = shouldMoveToOwnerXZ ? owner.getX() : pet.getX();
-                double targetY = Math.max(pet.level().getMinBuildHeight() + 0.5F, owner == null ? 64F : owner.getY() < pet.getY() ? owner.getY() + 0.6F : owner.getY(1.0F) + pet.getBbHeight());
-                if (owner != null && owner.getRootVehicle() == pet) {
-                    targetY = Math.min(pet.level().getMinBuildHeight() + 0.5F, pet.getY() - 0.5F);
-                }
-                double targetZ = shouldMoveToOwnerXZ ? owner.getZ() : pet.getZ();
-                if (pet.verticalCollision) {
-                    pet.setOnGround(true);
-                    targetX += (pet.getRandom().nextFloat() - 0.5F) * 4;
-                    targetZ += (pet.getRandom().nextFloat() - 0.5F) * 4;
-                }
-                Vec3 move = new Vec3(targetX - pet.getX(), targetY - pet.getY(), targetZ - pet.getZ());
-                pet.setDeltaMovement(pet.getDeltaMovement().add(move.normalize().scale(0.15D)).multiply(0.5F, 0.5F, 0.5F));
-                if (pet.level() instanceof ServerLevel) {
-                    TameableUtils.setFallDistance(pet, pet.fallDistance);
-                    ((ServerLevel) pet.level()).sendParticles(ParticleTypes.REVERSE_PORTAL, pet.getRandomX(1.5F), pet.getY() - pet.getRandom().nextFloat(), pet.getRandomZ(1.5F), 0, 0, -0.2F, 0, 1.0D);
-                }
-            }
-
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.IMMUNITY_FRAME) && !entity.level().isClientSide()) {
-                int i = TameableUtils.getImmuneTime(pet);
-                if (i > 0) {
-                    TameableUtils.setImmuneTime(pet, i - 1);
-                }
-            }
-            if (pet.hasEffect(MobEffects.POISON) && TameableUtils.hasEnchant(pet, ModEnchantments.POISON_RESISTANCE)) {
-                pet.removeEffect(MobEffects.POISON);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.BLIGHT_CURSE)) {
-                TameableUtils.destroyRandomPlants(pet);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.REJUVENATION)) {
-                TameableUtils.absorbExpOrbs(pet);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.INFAMY_CURSE)) {
-                TameableUtils.aggroRandomMonsters(pet);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.AMPHIBIOUS)) {
-                pet.setAirSupply(pet.getMaxAirSupply());
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.INTIMIDATION)) {
-                TameableUtils.scareRandomMonsters(pet, TameableUtils.getEnchantLevel(pet, ModEnchantments.INTIMIDATION));
-            }
-
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.DISC_JOCKEY) && !entity.level().isClientSide && entity.tickCount % 10 == 0) {
-                boolean hasJukebox = false;
-                for (FollowingJukeboxEntity e : pet.level().getEntitiesOfClass(FollowingJukeboxEntity.class, pet.getBoundingBox().inflate(16))) {
-                    if (pet.getUUID().equals(e.getFollowerUUID())) {
-                        hasJukebox = true;
-                        break;
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.VOID_CLOUD) && !pet.isInWaterOrBubble() && pet.fallDistance > 3.0F && !pet.onGround()) {
+                        Entity owner = TameableUtils.getOwnerOf(pet);
+                        boolean shouldMoveToOwnerXZ = owner != null && Math.abs(owner.getY() - pet.getY()) < 1;
+                        double targetX = shouldMoveToOwnerXZ ? owner.getX() : pet.getX();
+                        double targetY = Math.max(pet.level().getMinBuildHeight() + 0.5F, owner == null ? 64F : owner.getY() < pet.getY() ? owner.getY() + 0.6F : owner.getY(1.0F) + pet.getBbHeight());
+                        if (owner != null && owner.getRootVehicle() == pet) {
+                            targetY = Math.min(pet.level().getMinBuildHeight() + 0.5F, pet.getY() - 0.5F);
+                        }
+                        double targetZ = shouldMoveToOwnerXZ ? owner.getZ() : pet.getZ();
+                        if (pet.verticalCollision) {
+                            pet.setOnGround(true);
+                            targetX += (pet.getRandom().nextFloat() - 0.5F) * 4;
+                            targetZ += (pet.getRandom().nextFloat() - 0.5F) * 4;
+                        }
+                        Vec3 move = new Vec3(targetX - pet.getX(), targetY - pet.getY(), targetZ - pet.getZ());
+                        pet.setDeltaMovement(pet.getDeltaMovement().add(move.normalize().scale(0.15D)).multiply(0.5F, 0.5F, 0.5F));
+                        if (pet.level() instanceof ServerLevel) {
+                            TameableUtils.setFallDistance(pet, pet.fallDistance);
+                            ((ServerLevel) pet.level()).sendParticles(ParticleTypes.REVERSE_PORTAL, pet.getRandomX(1.5F), pet.getY() - pet.getRandom().nextFloat(), pet.getRandomZ(1.5F), 0, 0, -0.2F, 0, 1.0D);
+                        }
                     }
-                }
-                if (!hasJukebox) {
-                    FollowingJukeboxEntity follower = ModEntities.FOLLOWING_JUKEBOX.get().create(pet.level());
-                    if (follower != null) {
-                        follower.setFollowingUUID(pet.getUUID());
-                        follower.copyPosition(pet);
-                        pet.level().addFreshEntity(follower);
-                    }
-                }
-            }
 
-            int shadowHandsLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.SHADOW_HANDS);
-            if (shadowHandsLevel > 0) {
-                RenderData.updateVisualDataForMob(entity, TameableUtils.getShadowPunchTimes(pet));
-                if (!pet.level().isClientSide()) {
-                    var targetEntity = TameableUtils.getPetAttackTarget(pet);
-                    Entity punching = ((targetEntity instanceof Player) || (targetEntity instanceof TamableAnimal)) ? null : targetEntity;
-                    int[] punchProgress = TameableUtils.getShadowPunchTimes(pet);
-                    if (punching != null && punching.isAlive() && pet.hasLineOfSight(punching) && pet.distanceTo(punching) < 16) {
-                        int[] striking = TameableUtils.getShadowPunchStriking(pet);
-                        if (punchProgress.length < shadowHandsLevel) {
-                            int[] clean = new int[shadowHandsLevel];
-                            TameableUtils.setShadowPunchTimes(pet, clean);
-                            TameableUtils.setShadowPunchStriking(pet, clean);
-                        } else {
-                            int cooldown = TameableUtils.getShadowPunchCooldown(pet);
-                            if (cooldown <= 0) {
-                                boolean flag = false;
-                                int start = shadowHandsLevel == 1 ? 0 : pet.getRandom().nextInt(shadowHandsLevel - 1);
-                                for (int i = start; i < shadowHandsLevel; i++) {
-                                    if (striking[i] == 0) {
-                                        striking[i] = 1;
-                                        flag = true;
-                                        break;
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.IMMUNITY_FRAME) && !entity.level().isClientSide()) {
+                        int i = TameableUtils.getImmuneTime(pet);
+                        if (i > 0) {
+                            TameableUtils.setImmuneTime(pet, i - 1);
+                        }
+                    }
+                    if (pet.hasEffect(MobEffects.POISON) && TameableUtils.hasEnchant(pet, ModEnchantments.POISON_RESISTANCE)) {
+                        pet.removeEffect(MobEffects.POISON);
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.BLIGHT_CURSE)) {
+                        TameableUtils.destroyRandomPlants(pet);
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.REJUVENATION)) {
+                        TameableUtils.absorbExpOrbs(pet);
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.INFAMY_CURSE)) {
+                        TameableUtils.aggroRandomMonsters(pet);
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.AMPHIBIOUS)) {
+                        pet.setAirSupply(pet.getMaxAirSupply());
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.INTIMIDATION)) {
+                        TameableUtils.scareRandomMonsters(pet, TameableUtils.getEnchantLevel(pet, ModEnchantments.INTIMIDATION));
+                    }
+
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.DISC_JOCKEY) && !entity.level().isClientSide && entity.tickCount % 10 == 0) {
+                        boolean hasJukebox = false;
+                        for (FollowingJukeboxEntity e : pet.level().getEntitiesOfClass(FollowingJukeboxEntity.class, pet.getBoundingBox().inflate(16))) {
+                            if (pet.getUUID().equals(e.getFollowerUUID())) {
+                                hasJukebox = true;
+                                break;
+                            }
+                        }
+                        if (!hasJukebox) {
+                            FollowingJukeboxEntity follower = ModEntities.FOLLOWING_JUKEBOX.get().create(pet.level());
+                            if (follower != null) {
+                                follower.setFollowingUUID(pet.getUUID());
+                                follower.copyPosition(pet);
+                                pet.level().addFreshEntity(follower);
+                            }
+                        }
+                    }
+
+                    int shadowHandsLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.SHADOW_HANDS);
+                    if (shadowHandsLevel > 0) {
+                        RenderData.updateVisualDataForMob(entity, TameableUtils.getShadowPunchTimes(pet));
+                        if (!pet.level().isClientSide()) {
+                            var targetEntity = TameableUtils.getPetAttackTarget(pet);
+                            Entity punching = ((targetEntity instanceof Player) || (targetEntity instanceof TamableAnimal)) ? null : targetEntity;
+                            int[] punchProgress = TameableUtils.getShadowPunchTimes(pet);
+                            if (punching != null && punching.isAlive() && pet.hasLineOfSight(punching) && pet.distanceTo(punching) < 16) {
+                                int[] striking = TameableUtils.getShadowPunchStriking(pet);
+                                if (punchProgress.length < shadowHandsLevel) {
+                                    int[] clean = new int[shadowHandsLevel];
+                                    TameableUtils.setShadowPunchTimes(pet, clean);
+                                    TameableUtils.setShadowPunchStriking(pet, clean);
+                                } else {
+                                    int cooldown = TameableUtils.getShadowPunchCooldown(pet);
+                                    if (cooldown <= 0) {
+                                        boolean flag = false;
+                                        int start = shadowHandsLevel == 1 ? 0 : pet.getRandom().nextInt(shadowHandsLevel - 1);
+                                        for (int i = start; i < shadowHandsLevel; i++) {
+                                            if (striking[i] == 0) {
+                                                striking[i] = 1;
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                        if (flag) {
+                                            TameableUtils.setShadowPunchCooldown(pet, 5);
+                                        }
+                                    } else {
+                                        TameableUtils.setShadowPunchCooldown(pet, cooldown - 1);
                                     }
-                                }
-                                if (flag) {
-                                    TameableUtils.setShadowPunchCooldown(pet, 5);
+                                    for (int i = 0; i < Math.min(shadowHandsLevel, Math.min(striking.length, punchProgress.length)); i++) {
+                                        if (striking[i] != 0) {
+                                            if (punchProgress[i] < 10) {
+                                                punchProgress[i] = punchProgress[i] + 1;
+                                            } else {
+                                                punching.hurt(punching.damageSources().mobAttack(pet), Mth.clamp(shadowHandsLevel, 2, 4));
+                                                striking[i] = 0;
+                                            }
+                                        }
+                                        if (striking[i] == 0 && punchProgress[i] > 0) {
+                                            punchProgress[i] = punchProgress[i] - 1;
+                                        }
+                                    }
+                                    TameableUtils.setShadowPunchStriking(pet, striking);
+                                    TameableUtils.setShadowPunchTimes(pet, punchProgress);
                                 }
                             } else {
-                                TameableUtils.setShadowPunchCooldown(pet, cooldown - 1);
-                            }
-                            for (int i = 0; i < Math.min(shadowHandsLevel, Math.min(striking.length, punchProgress.length)); i++) {
-                                if (striking[i] != 0) {
-                                    if (punchProgress[i] < 10) {
-                                        punchProgress[i] = punchProgress[i] + 1;
-                                    } else {
-                                        punching.hurt(punching.damageSources().mobAttack(pet), Mth.clamp(shadowHandsLevel, 2, 4));
-                                        striking[i] = 0;
+                                if (punching != null) {
+                                    boolean flag = true;
+                                    for (int i = 0; i < Math.min(shadowHandsLevel, punchProgress.length); i++) {
+                                        if (punchProgress[i] > 0) {
+                                            punchProgress[i] = punchProgress[i] - 1;
+                                            flag = false;
+                                        }
+                                    }
+                                    TameableUtils.setShadowPunchStriking(pet, new int[shadowHandsLevel]);
+                                    TameableUtils.setShadowPunchTimes(pet, punchProgress);
+                                    if (flag) {
+                                        TameableUtils.setPetAttackTarget(pet, -1);
                                     }
                                 }
-                                if (striking[i] == 0 && punchProgress[i] > 0) {
-                                    punchProgress[i] = punchProgress[i] - 1;
+                                Entity punchingTarget = null;
+                                if (pet.getTarget() != null) {
+                                    punchingTarget = pet.getTarget();
+                                } else if (TameableUtils.getOwnerOf(pet) instanceof LivingEntity owner) {
+                                    if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtByMob())) {
+                                        punchingTarget = owner.getLastHurtByMob();
+                                    }
+                                    if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtMob())) {
+                                        punchingTarget = owner.getLastHurtMob();
+                                    }
+                                }
+                                if (punchingTarget != null && punchingTarget.isAlive()) {
+                                    TameableUtils.setPetAttackTarget(pet, punchingTarget.getId());
                                 }
                             }
-                            TameableUtils.setShadowPunchStriking(pet, striking);
-                            TameableUtils.setShadowPunchTimes(pet, punchProgress);
                         }
-                    } else {
-                        if (punching != null) {
-                            boolean flag = true;
-                            for (int i = 0; i < Math.min(shadowHandsLevel, punchProgress.length); i++) {
-                                if (punchProgress[i] > 0) {
-                                    punchProgress[i] = punchProgress[i] - 1;
-                                    flag = false;
+                    }
+                    int oreLvl = TameableUtils.getEnchantLevel(pet, ModEnchantments.ORE_SCENTING);
+                    if (oreLvl > 0 && !entity.level().isClientSide && entity.isAlive()) {
+                        int interval = 100 + Math.max(150, 550 - oreLvl * 100);
+                        TameableUtils.detectRandomOres(pet, interval, 5 + oreLvl * 2, oreLvl * 50, oreLvl * 3);
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.LINKED_INVENTORY)) {
+                        if (!pet.canPickUpLoot()) {
+                            pet.setCanPickUpLoot(true);
+                        }
+                    }
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.HEALING_AURA) && !pet.level().isClientSide()) {
+                        int time = TameableUtils.getHealingAuraTime(pet);
+                        if (time > 0) {
+                            List<LivingEntity> hurtNearby = TameableUtils.getAuraHealables(pet);
+                            for (LivingEntity needsHealing : hurtNearby) {
+                                if (!needsHealing.hasEffect(MobEffects.REGENERATION)) {
+                                    needsHealing.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, TameableUtils.getEnchantLevel(pet, ModEnchantments.HEALING_AURA) - 1));
                                 }
                             }
-                            TameableUtils.setShadowPunchStriking(pet, new int[shadowHandsLevel]);
-                            TameableUtils.setShadowPunchTimes(pet, punchProgress);
-                            if (flag) {
-                                TameableUtils.setPetAttackTarget(pet, -1);
+                            time--;
+                            if (time == 0) {
+                                time = -600 - pet.getRandom().nextInt(600);
+                            }
+                        } else if (time < 0) {
+                            time++;
+                        } else if ((pet.tickCount + pet.getId()) % 200 == 0 || TameableUtils.getHealingAuraImpulse(pet)) {
+                            List<LivingEntity> hurtNearby = TameableUtils.getAuraHealables(pet);
+                            if (!hurtNearby.isEmpty()) {
+                                time = 200;
+                            }
+                            TameableUtils.setHealingAuraImpulse(pet, false);
+                        }
+                        TameableUtils.setHealingAuraTime(pet, time);
+                    }
+                    int psychicWallLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.PSYCHIC_WALL);
+                    if (psychicWallLevel > 0 && !entity.level().isClientSide()) {
+                        int cooldown = TameableUtils.getPsychicWallCooldown(pet);
+                        if (cooldown > 0) {
+                            TameableUtils.setPsychicWallCooldown(pet, cooldown - 1);
+                        } else {
+                            Entity blocking = null;
+                            Entity blockingFrom = null;
+                            if (pet.getTarget() != null) {
+                                blocking = pet.getTarget();
+                                blockingFrom = pet;
+                            } else if (TameableUtils.getOwnerOf(pet) instanceof LivingEntity owner) {
+                                if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtByMob())) {
+                                    blocking = owner.getLastHurtByMob();
+                                    blockingFrom = owner;
+                                }
+                                if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtMob())) {
+                                    blocking = owner.getLastHurtMob();
+                                    blockingFrom = owner;
+                                }
+                            }
+                            if (blocking != null) {
+                                int width = psychicWallLevel + 1;
+                                float yAdditional = blocking.getBbHeight() * 0.5F + width * 0.5F;
+                                Vec3 vec3 = blockingFrom.position().add(0, yAdditional, 0);
+                                Vec3 vec32 = blocking.position().add(0, yAdditional, 0);
+                                Vec3 vec33 = vec3.add(vec32);
+                                Vec3 avg = new Vec3(vec33.x / 2F, Math.floor(vec33.y / 2F), vec33.z / 2F);
+                                Vec3 rotationFrom = avg.subtract(vec3);
+                                Direction dir = Direction.getNearest(rotationFrom.x, rotationFrom.y, rotationFrom.z);
+                                PsychicWallEntity wall = ModEntities.PSYCHIC_WALL.get().create(pet.level());
+                                if (wall != null) {
+                                    wall.setPos(avg.x, avg.y, avg.z);
+                                    wall.setBlockWidth(width);
+                                    wall.setCreatorId(pet.getUUID());
+                                    wall.setLifespan(psychicWallLevel * 100);
+                                    wall.setWallDirection(dir);
+                                    pet.level().addFreshEntity(wall);
+                                    TameableUtils.setPsychicWallCooldown(pet, psychicWallLevel * 200 + 40);
+                                }
                             }
                         }
-                        Entity punchingTarget = null;
-                        if (pet.getTarget() != null) {
-                            punchingTarget = pet.getTarget();
-                        } else if (TameableUtils.getOwnerOf(pet) instanceof LivingEntity owner) {
-                            if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtByMob())) {
-                                punchingTarget = owner.getLastHurtByMob();
-                            }
-                            if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtMob())) {
-                                punchingTarget = owner.getLastHurtMob();
-                            }
-                        }
-                        if (punchingTarget != null && punchingTarget.isAlive()) {
-                            TameableUtils.setPetAttackTarget(pet, punchingTarget.getId());
-                        }
                     }
-                }
-            }
-            int oreLvl = TameableUtils.getEnchantLevel(pet, ModEnchantments.ORE_SCENTING);
-            if (oreLvl > 0 && !entity.level().isClientSide && entity.isAlive()) {
-                int interval = 100 + Math.max(150, 550 - oreLvl * 100);
-                TameableUtils.detectRandomOres(pet, interval, 5 + oreLvl * 2, oreLvl * 50, oreLvl * 3);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.LINKED_INVENTORY)) {
-                if (!pet.canPickUpLoot()) {
-                    pet.setCanPickUpLoot(true);
-                }
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.HEALING_AURA) && !pet.level().isClientSide()) {
-                int time = TameableUtils.getHealingAuraTime(pet);
-                if (time > 0) {
-                    List<LivingEntity> hurtNearby = TameableUtils.getAuraHealables(pet);
-                    for (LivingEntity needsHealing : hurtNearby) {
-                        if (!needsHealing.hasEffect(MobEffects.REGENERATION)) {
-                            needsHealing.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, TameableUtils.getEnchantLevel(pet, ModEnchantments.HEALING_AURA) - 1));
-                        }
-                    }
-                    time--;
-                    if (time == 0) {
-                        time = -600 - pet.getRandom().nextInt(600);
-                    }
-                } else if (time < 0) {
-                    time++;
-                } else if ((pet.tickCount + pet.getId()) % 200 == 0 || TameableUtils.getHealingAuraImpulse(pet)) {
-                    List<LivingEntity> hurtNearby = TameableUtils.getAuraHealables(pet);
-                    if (!hurtNearby.isEmpty()) {
-                        time = 200;
-                    }
-                    TameableUtils.setHealingAuraImpulse(pet, false);
-                }
-                TameableUtils.setHealingAuraTime(pet, time);
-            }
-            int psychicWallLevel = TameableUtils.getEnchantLevel(pet, ModEnchantments.PSYCHIC_WALL);
-            if (psychicWallLevel > 0 && !entity.level().isClientSide()) {
-                int cooldown = TameableUtils.getPsychicWallCooldown(pet);
-                if (cooldown > 0) {
-                    TameableUtils.setPsychicWallCooldown(pet, cooldown - 1);
-                } else {
-                    Entity blocking = null;
-                    Entity blockingFrom = null;
-                    if (pet.getTarget() != null) {
-                        blocking = pet.getTarget();
-                        blockingFrom = pet;
-                    } else if (TameableUtils.getOwnerOf(pet) instanceof LivingEntity owner) {
-                        if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtByMob())) {
-                            blocking = owner.getLastHurtByMob();
-                            blockingFrom = owner;
-                        }
-                        if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive() && !TameableUtils.hasSameOwnerAs(pet, owner.getLastHurtMob())) {
-                            blocking = owner.getLastHurtMob();
-                            blockingFrom = owner;
-                        }
-                    }
-                    if (blocking != null) {
-                        int width = psychicWallLevel + 1;
-                        float yAdditional = blocking.getBbHeight() * 0.5F + width * 0.5F;
-                        Vec3 vec3 = blockingFrom.position().add(0, yAdditional, 0);
-                        Vec3 vec32 = blocking.position().add(0, yAdditional, 0);
-                        Vec3 vec33 = vec3.add(vec32);
-                        Vec3 avg = new Vec3(vec33.x / 2F, Math.floor(vec33.y / 2F), vec33.z / 2F);
-                        Vec3 rotationFrom = avg.subtract(vec3);
-                        Direction dir = Direction.getNearest(rotationFrom.x, rotationFrom.y, rotationFrom.z);
-                        PsychicWallEntity wall = ModEntities.PSYCHIC_WALL.get().create(pet.level());
-                        if (wall != null) {
-                            wall.setPos(avg.x, avg.y, avg.z);
-                            wall.setBlockWidth(width);
-                            wall.setCreatorId(pet.getUUID());
-                            wall.setLifespan(psychicWallLevel * 100);
-                            wall.setWallDirection(dir);
-                            pet.level().addFreshEntity(wall);
-                            TameableUtils.setPsychicWallCooldown(pet, psychicWallLevel * 200 + 40);
-                        }
-                    }
-                }
-            }
 
-            int shepherdLvl = TameableUtils.getEnchantLevel(pet, ModEnchantments.SHEPHERD);
-            if (shepherdLvl > 0) {
-                TameableUtils.attractAnimals(pet, shepherdLvl * 3);
-            }
-            if (TameableUtils.hasEnchant(pet, ModEnchantments.MAGNETIC)) {
-                Entity sucking = TameableUtils.getPetAttackTarget(pet);
-                if (!pet.level().isClientSide()) {
-                    if (pet.getTarget() == null || !pet.getTarget().isAlive() || pet.distanceTo(pet.getTarget()) < 0.5F + pet.getBbWidth() || pet.getRootVehicle() instanceof GiantBubbleEntity) {
-                        if (TameableUtils.getPetAttackTargetID(pet) != -1) {
-                            TameableUtils.setPetAttackTarget(pet, -1);
-                        }
-                    } else {
-                        TameableUtils.setPetAttackTarget(pet, pet.getTarget().getId());
+                    int shepherdLvl = TameableUtils.getEnchantLevel(pet, ModEnchantments.SHEPHERD);
+                    if (shepherdLvl > 0) {
+                        TameableUtils.attractAnimals(pet, shepherdLvl * 3);
                     }
-                } else {
-                    if (sucking != null) {
-                        double dist = pet.distanceTo(sucking);
-                        Vec3 start = pet.position().add(0, pet.getBbHeight() * 0.5F, 0);
-                        Vec3 end = sucking.position().add(0, sucking.getBbHeight() * 0.5F, 0).subtract(start);
-                        for (float distStep = pet.getBbWidth() + 0.8F; distStep < (int) Math.ceil(dist); distStep++) {
-                            Vec3 vec3 = start.add(end.scale(distStep / dist));
-                            float f1 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
-                            float f2 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
-                            float f3 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
-                            pet.level().addParticle(ModParticles.MAGNET.get(), vec3.x + f1, vec3.y + f2, vec3.z + f3, 0.0F, 0.0F, 0.0F);
+                    if (TameableUtils.hasEnchant(pet, ModEnchantments.MAGNETIC)) {
+                        Entity sucking = TameableUtils.getPetAttackTarget(pet);
+                        if (!pet.level().isClientSide()) {
+                            if (pet.getTarget() == null || !pet.getTarget().isAlive() || pet.distanceTo(pet.getTarget()) < 0.5F + pet.getBbWidth() || pet.getRootVehicle() instanceof GiantBubbleEntity) {
+                                if (TameableUtils.getPetAttackTargetID(pet) != -1) {
+                                    TameableUtils.setPetAttackTarget(pet, -1);
+                                }
+                            } else {
+                                TameableUtils.setPetAttackTarget(pet, pet.getTarget().getId());
+                            }
+                        } else {
+                            if (sucking != null) {
+                                double dist = pet.distanceTo(sucking);
+                                Vec3 start = pet.position().add(0, pet.getBbHeight() * 0.5F, 0);
+                                Vec3 end = sucking.position().add(0, sucking.getBbHeight() * 0.5F, 0).subtract(start);
+                                for (float distStep = pet.getBbWidth() + 0.8F; distStep < (int) Math.ceil(dist); distStep++) {
+                                    Vec3 vec3 = start.add(end.scale(distStep / dist));
+                                    float f1 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
+                                    float f2 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
+                                    float f3 = 0.5F * (pet.getRandom().nextFloat() - 0.5F);
+                                    pet.level().addParticle(ModParticles.MAGNET.get(), vec3.x + f1, vec3.y + f2, vec3.z + f3, 0.0F, 0.0F, 0.0F);
+                                }
+                            }
+                        }
+                        if (sucking != null) {
+                            if (pet.tickCount % 15 == 0) {
+                                pet.playSound(ModSounds.MAGNET_LOOP.get(), 1F, 1F);
+                            }
+                            pet.setDeltaMovement(pet.getDeltaMovement().multiply(0.88D, 1.0D, 0.88D));
+                            Vec3 move = new Vec3(pet.getX() - sucking.getX(), pet.getY() - (double) sucking.getEyeHeight() / 2.0D - sucking.getY(), pet.getZ() - sucking.getZ());
+                            sucking.setDeltaMovement(sucking.getDeltaMovement().add(move.normalize().scale(pet.onGround() ? 0.15D : 0.05D)));
                         }
                     }
                 }
-                if (sucking != null) {
-                    if (pet.tickCount % 15 == 0) {
-                        pet.playSound(ModSounds.MAGNET_LOOP.get(), 1F, 1F);
-                    }
-                    pet.setDeltaMovement(pet.getDeltaMovement().multiply(0.88D, 1.0D, 0.88D));
-                    Vec3 move = new Vec3(pet.getX() - sucking.getX(), pet.getY() - (double) sucking.getEyeHeight() / 2.0D - sucking.getY(), pet.getZ() - sucking.getZ());
-                    sucking.setDeltaMovement(sucking.getDeltaMovement().add(move.normalize().scale(pet.onGround() ? 0.15D : 0.05D)));
-                }
-            }
-        }
 
-        if (frozenTime > 0) {
-            TameableUtils.setFrozenTimeTag(entity, frozenTime - 1);
-            AttributeInstance instance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
-            if (instance != null) {
-                float f = -0.1F * entity.getPercentFrozen();
-                if (frozenTime > 1) {
-                    AttributeModifier fangModifier = new AttributeModifier(FROST_FANG_SLOW, f, AttributeModifier.Operation.ADD_VALUE);
-                    if (!instance.hasModifier(FROST_FANG_SLOW)) {
-                        instance.addTransientModifier(fangModifier);
+                if (frozenTime > 0) {
+                    TameableUtils.setFrozenTimeTag(entity, frozenTime - 1);
+                    AttributeInstance instance = entity.getAttribute(Attributes.MOVEMENT_SPEED);
+                    if (instance != null) {
+                        float f = -0.1F * entity.getPercentFrozen();
+                        if (frozenTime > 1) {
+                            AttributeModifier fangModifier = new AttributeModifier(FROST_FANG_SLOW, f, AttributeModifier.Operation.ADD_VALUE);
+                            if (!instance.hasModifier(FROST_FANG_SLOW)) {
+                                instance.addTransientModifier(fangModifier);
+                            }
+                        } else {
+                            instance.removeModifier(FROST_FANG_SLOW);
+                        }
                     }
-                } else {
-                    instance.removeModifier(FROST_FANG_SLOW);
+                    for (int i = 0; i < 1 + entity.getRandom().nextInt(2); i++) {
+                        entity.level().addParticle(ParticleTypes.SNOWFLAKE, entity.getRandomX(0.7F), entity.getRandomY(), entity.getRandomZ(0.7F), 0.0F, 0.0F, 0.0F);
+                    }
                 }
-            }
-            for (int i = 0; i < 1 + entity.getRandom().nextInt(2); i++) {
-                entity.level().addParticle(ParticleTypes.SNOWFLAKE, entity.getRandomX(0.7F), entity.getRandomY(), entity.getRandomZ(0.7F), 0.0F, 0.0F, 0.0F);
             }
         }
     }

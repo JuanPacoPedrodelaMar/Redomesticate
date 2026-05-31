@@ -304,7 +304,6 @@ public class TameableUtils {
     }
 
     public static boolean hasEnchant(LivingEntity entity, ResourceKey<Enchantment> enchantment) {
-        if (!ModConfig.get().isEnchantmentEnabled(enchantment)) return false;
         return getEnchantLevel(entity, enchantment) > 0;
     }
 
@@ -638,7 +637,9 @@ public class TameableUtils {
     }
 
     public static int getFrozenTime(LivingEntity enchanted) {
-        CompoundTag tag = ModEntityData.getOrCreateEntityTag(enchanted);
+        CompoundTag tag = ModEntityData.getEntityTag(enchanted);
+        if (tag == null) return 0;
+
         return tag.getInt(FROZEN_TIME_TAG);
     }
 
