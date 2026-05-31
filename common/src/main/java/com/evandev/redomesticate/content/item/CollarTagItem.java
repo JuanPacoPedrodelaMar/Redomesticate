@@ -17,6 +17,6 @@ public class CollarTagItem extends Item {
 
     @Override
     public int getEnchantmentValue() {
-        return 1;
+        return 10;
     }
 }
