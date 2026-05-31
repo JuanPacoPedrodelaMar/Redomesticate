@@ -1,4 +1,8 @@
+### Added
+
+- Taming and transforming datapacks can now specify required entity data.
+    - Format: `"required_data": "{MyData: 1b}"`
+
 ### Fixed
 
-- Fixed tamed Fox behaviour.
-- Fixed issues with Ice & Fire Community Edition.
+- Fixed further issues with Caverns & Chasms Rats.

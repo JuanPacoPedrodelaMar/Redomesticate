@@ -8,6 +8,10 @@
     "minecraft:llama",
     "minecraft:skeleton_horse",
     {
+      "id": "caverns_and_chasms:rat",
+      "required": false
+    },
+    {
       "id": "scguns:supply_scamp",
       "required": false
     },

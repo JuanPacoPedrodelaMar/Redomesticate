@@ -18,6 +18,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -51,6 +52,12 @@ public class InteractionHandler {
             Registry<TamingDefinition> tamingRegistry = player.level().registryAccess().registryOrThrow(TamingDefinition.REGISTRY_KEY);
             Optional<TamingDefinition> tamingDef = tamingRegistry.stream()
                     .filter(def -> def.entities().contains(mob.getType().builtInRegistryHolder()) && def.items().test(itemInHand))
+                    .filter(def -> {
+                        if (def.requiredData().isEmpty()) return true;
+                        CompoundTag mobData = new CompoundTag();
+                        mob.saveWithoutId(mobData);
+                        return NbtUtils.compareNbt(def.requiredData().get(), mobData, true);
+                    })
                     .findFirst();
 
             if (tamingDef.isPresent()) {
@@ -185,6 +192,12 @@ public class InteractionHandler {
         Registry<TransformationDefinition> transformRegistry = player.level().registryAccess().registryOrThrow(TransformationDefinition.REGISTRY_KEY);
         Optional<TransformationDefinition> transformDef = transformRegistry.stream()
                 .filter(def -> def.targetEntity().contains(mob.getType().builtInRegistryHolder()) && def.triggerItem().test(itemInHand))
+                .filter(def -> {
+                    if (def.requiredData().isEmpty()) return true;
+                    CompoundTag mobData = new CompoundTag();
+                    mob.saveWithoutId(mobData);
+                    return NbtUtils.compareNbt(def.requiredData().get(), mobData, true);
+                })
                 .findFirst();
 
         if (transformDef.isPresent()) {
