@@ -24,15 +24,15 @@
       "required": false
     },
     {
-      "id": "iceandfire:firedragon",
+      "id": "iceandfire:fire_dragon",
       "required": false
     },
     {
-      "id": "iceandfire:icedragon",
+      "id": "iceandfire:ice_dragon",
       "required": false
     },
     {
-      "id": "iceandfire:lightningdragon",
+      "id": "iceandfire:lightning_dragon",
       "required": false
     },
     {

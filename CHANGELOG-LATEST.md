@@ -1,7 +1,3 @@
 ### Fixed
 
-- Additional performance improvements.
-
-### Changed
-
-- Increased enchantability of Collar Tags.
+- Fixed typo in the Ice and Fire CE integration.
