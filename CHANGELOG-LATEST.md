@@ -1,3 +1,4 @@
-### Fixed
+### Added
 
-- Fixed typo in the Ice and Fire CE integration.
+- Pets can now be configured to have a "home radius" where they won't wander outside of.
+- Added more modded entries to the default command blacklist.

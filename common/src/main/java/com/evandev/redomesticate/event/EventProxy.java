@@ -1,8 +1,10 @@
 package com.evandev.redomesticate.event;
 
 import com.evandev.redomesticate.Constants;
+import com.evandev.redomesticate.api.ICommandableMob;
 import com.evandev.redomesticate.api.IPetbedDataEntity;
 import com.evandev.redomesticate.api.ITameableEntity;
+import com.evandev.redomesticate.api.PetCommand;
 import com.evandev.redomesticate.client.data.RenderData;
 import com.evandev.redomesticate.config.ModConfig;
 import com.evandev.redomesticate.content.block.PetBedBlock;
@@ -525,6 +527,33 @@ public class EventProxy {
         if (entity instanceof Mob pet) {
             if (TameableUtils.couldBeTamed(pet) && !canTickCollar(pet)) {
                 return;
+            }
+
+            if (!pet.level().isClientSide() && TameableUtils.isTamed(pet)) {
+                if (ModConfig.get().enablePetRoamingRadius) {
+                    BlockPos bedPos = TameableUtils.getPetBedPos(pet);
+                    boolean shouldRestrict = false;
+
+                    if (bedPos != null) {
+                        if (pet instanceof ICommandableMob commandable) {
+                            shouldRestrict = commandable.redomesticate$getPetCommand() == PetCommand.WANDER;
+                        } else if (pet instanceof TamableAnimal tamable) {
+                            shouldRestrict = !tamable.isOrderedToSit();
+                        } else {
+                            shouldRestrict = true;
+                        }
+                    }
+
+                    if (shouldRestrict) {
+                        if (!pet.hasRestriction() || !pet.getRestrictCenter().equals(bedPos) || pet.getRestrictRadius() != ModConfig.get().petRoamingRadius) {
+                            pet.restrictTo(bedPos, ModConfig.get().petRoamingRadius);
+                        }
+                    } else if (pet.hasRestriction()) {
+                        pet.clearRestriction();
+                    }
+                } else if (pet.hasRestriction() && TameableUtils.getPetBedPos(pet) != null) {
+                    pet.clearRestriction();
+                }
             }
 
             if (pet instanceof IPetbedDataEntity dataEntity) {

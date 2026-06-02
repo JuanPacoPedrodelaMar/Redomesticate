@@ -80,6 +80,8 @@ public class ModConfig {
     public boolean enableDefusal = true;
     public boolean enableVoidCloud = true;
     public boolean enableUndeadCurse = true;
+    public boolean enablePetRoamingRadius = false;
+    public int petRoamingRadius = 32;
 
     public static ModConfig get() {
         if (INSTANCE == null) {

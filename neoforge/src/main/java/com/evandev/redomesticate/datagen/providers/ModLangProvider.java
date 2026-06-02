@@ -186,6 +186,11 @@ public class ModLangProvider extends LanguageProvider {
         add("redomesticate.configuration.petWontAttackWhenInjured.tooltip", "If true, tamed pets will refuse to attack dangerous enemies when their health is critically low.");
         add("redomesticate.configuration.petInjuredStatusHealthRatio", "Injured Health Threshold");
         add("redomesticate.configuration.petInjuredStatusHealthRatio.tooltip", "The health percentage (0.0 to 1.0) at which a pet is considered injured and stops attacking.");
+        add("redomesticate.configuration.enablePetRoamingRadius", "Enable Pet Roaming Radius");
+        add("redomesticate.configuration.enablePetRoamingRadius.tooltip", "If enabled, pets will be prevented from wandering outside a set radius from their pet bed or home position.");
+        add("redomesticate.configuration.petRoamingRadius", "Pet Roaming Radius");
+        add("redomesticate.configuration.petRoamingRadius.tooltip", "The maximum block distance a pet is allowed to wander from its pet bed or home position.");
+
 
         add("config.redomesticate.category.enchantments", "Enchantments");
         add("redomesticate.configuration.enableAmphibious", "Enable Amphibious");

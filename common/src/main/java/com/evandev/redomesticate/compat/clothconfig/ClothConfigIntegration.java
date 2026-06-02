@@ -84,6 +84,18 @@ public class ClothConfigIntegration {
                 .setTooltip(Component.translatable("redomesticate.configuration.petInjuredStatusHealthRatio.tooltip"))
                 .setSaveConsumer(val -> config.petInjuredStatusHealthRatio = val).build());
 
+        general.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.enablePetRoamingRadius"), config.enablePetRoamingRadius)
+                .setDefaultValue(false)
+                .setTooltip(Component.translatable("redomesticate.configuration.enablePetRoamingRadius.tooltip"))
+                .setSaveConsumer(val -> config.enablePetRoamingRadius = val).build());
+
+        general.addEntry(entryBuilder.startIntField(Component.translatable("redomesticate.configuration.petRoamingRadius"), config.petRoamingRadius)
+                .setDefaultValue(32)
+                .setMin(2)
+                .setMax(256)
+                .setTooltip(Component.translatable("redomesticate.configuration.petRoamingRadius.tooltip"))
+                .setSaveConsumer(val -> config.petRoamingRadius = val).build());
+
         // Loot Category
         loot.addEntry(entryBuilder.startBooleanToggle(Component.translatable("redomesticate.configuration.petCurseEnchantmentsLootOnly"), config.petCurseEnchantmentsLootOnly)
                 .setDefaultValue(true)
