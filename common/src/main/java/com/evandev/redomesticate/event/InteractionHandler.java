@@ -30,6 +30,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -79,6 +80,10 @@ public class InteractionHandler {
 
                     commandable.redomesticate$setCommand(0);
 
+                    if (mob instanceof Fox fox) {
+                        fox.setSitting(false);
+                    }
+
                     mob.setTarget(null);
                     mob.setLastHurtByMob(null);
                     if (mob.getBrain().hasMemoryValue(MemoryModuleType.ATTACK_TARGET)) {
@@ -124,7 +129,9 @@ public class InteractionHandler {
                     tameable.redomesticate$setTame(true);
                     tameable.redomesticate$setTameOwnerUUID(player.getUUID());
                     commandable.redomesticate$setCommand(1);
-
+                    if (mob instanceof Fox fox) {
+                        fox.setSitting(true);
+                    }
                     player.swing(hand);
                     if (!player.getAbilities().instabuild) itemInHand.shrink(1);
                     return InteractionResult.CONSUME;

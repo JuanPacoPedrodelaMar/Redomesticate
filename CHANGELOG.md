@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Pets can now be configured to have a "home radius" where they won't wander outside.
 - Added more modded entries to the default command blacklist.
 
+### Fixed
+
+- Fixed desync with Fox sitting states.
+
 ## [1.7.2] - 2026-05-31
 
 ### Fixed

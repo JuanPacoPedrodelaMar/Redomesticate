@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.player.Player;
 
 public interface ICommandableMob {
@@ -30,12 +31,15 @@ public interface ICommandableMob {
         if (!owner.level().isClientSide()) {
             PetCommand nextCommand = redomesticate$getPetCommand().next();
             this.redomesticate$setPetCommand(nextCommand);
-
             this.redomesticate$sendCommandMessage(owner, nextCommand.getId(), ourselves.getName());
 
             if (ourselves instanceof TamableAnimal tamable) {
                 tamable.setOrderedToSit(nextCommand == PetCommand.SIT);
                 tamable.setInSittingPose(nextCommand == PetCommand.SIT);
+            }
+
+            if (ourselves instanceof Fox fox) {
+                fox.setSitting(nextCommand == PetCommand.SIT);
             }
         }
     }
